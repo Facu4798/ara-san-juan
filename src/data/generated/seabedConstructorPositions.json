@@ -1,0 +1,207 @@
+[
+ {
+  "parte": 2,
+  "fechaHoraLocal": "2018-09-09T06:00:00-03:00",
+  "lat": -46.23333,
+  "lon": -59.67833,
+  "psnTexto": "LAT. 46° 14 ́.0 S / LONG. 059° 40 ́.7 W",
+  "areasMencionadas": []
+ },
+ {
+  "parte": 8,
+  "fechaHoraLocal": "2018-09-12T06:00:00-03:00",
+  "lat": -46.22667,
+  "lon": -59.67667,
+  "psnTexto": "LAT. 46° 13.6´ S / LONG. 059° 40.6´ W",
+  "areasMencionadas": [
+   "1",
+   "2"
+  ]
+ },
+ {
+  "parte": 9,
+  "fechaHoraLocal": "2018-09-12T16:00:00-03:00",
+  "lat": -46.23167,
+  "lon": -59.97833,
+  "psnTexto": "LAT. 46° 13.9´ S / LONG. 059° 58.7´ W",
+  "areasMencionadas": [
+   "1",
+   "2"
+  ]
+ },
+ {
+  "parte": 10,
+  "fechaHoraLocal": "2018-09-13T06:00:00-03:00",
+  "lat": -45.94833,
+  "lon": -59.68833,
+  "psnTexto": "LAT. 45° 56.9´ S / LONG. 059° 41.3´ W",
+  "areasMencionadas": [
+   "1",
+   "2"
+  ]
+ },
+ {
+  "parte": 22,
+  "fechaHoraLocal": "2018-09-19T06:00:00-03:00",
+  "lat": -46.19833,
+  "lon": -59.955,
+  "psnTexto": "LAT. 46° 11.9´ S / LONG. 059° 57.3´ W",
+  "areasMencionadas": [
+   "1",
+   "3A",
+   "3B",
+   "4"
+  ]
+ },
+ {
+  "parte": 23,
+  "fechaHoraLocal": "2018-09-19T16:00:00-03:00",
+  "lat": -46.18667,
+  "lon": -60.20167,
+  "psnTexto": "LAT. 46° 11.2´ S / LONG. 060° 12.1´ W",
+  "areasMencionadas": [
+   "1",
+   "2",
+   "3A",
+   "3B",
+   "4"
+  ]
+ },
+ {
+  "parte": 26,
+  "fechaHoraLocal": "2018-09-21T06:00:00-03:00",
+  "lat": -46.38833,
+  "lon": -59.61167,
+  "psnTexto": "LAT. 46° 23.3´ S / LONG. 059° 36.7´ W",
+  "areasMencionadas": [
+   "3A",
+   "4"
+  ]
+ },
+ {
+  "parte": 28,
+  "fechaHoraLocal": "2018-09-22T06:00:00-03:00",
+  "lat": -46.27833,
+  "lon": -60.25333,
+  "psnTexto": "LAT. 46° 16.7´ S / LONG. 060° 15.2´ W",
+  "areasMencionadas": [
+   "4",
+   "5"
+  ]
+ },
+ {
+  "parte": 29,
+  "fechaHoraLocal": "2018-09-22T16:00:00-03:00",
+  "lat": -46.31333,
+  "lon": -60.27,
+  "psnTexto": "LAT. 46° 18.8´ S / LONG. 060° 16.2´ W",
+  "areasMencionadas": [
+   "2",
+   "4",
+   "5"
+  ]
+ },
+ {
+  "parte": 37,
+  "fechaHoraLocal": "2018-09-26T16:00:00-03:00",
+  "lat": -46.19833,
+  "lon": -59.35167,
+  "psnTexto": "LAT. 46° 11.9´ S / LONG. 059° 21.1´ W",
+  "areasMencionadas": [
+   "2",
+   "5"
+  ]
+ },
+ {
+  "parte": 40,
+  "fechaHoraLocal": "2018-09-28T06:00:00-03:00",
+  "lat": -45.83667,
+  "lon": -60.055,
+  "psnTexto": "LAT. 45° 50.2´ S / LONG. 060° 03.3´ W",
+  "areasMencionadas": [
+   "5"
+  ]
+ },
+ {
+  "parte": 44,
+  "fechaHoraLocal": "2018-09-30T06:00:00-03:00",
+  "lat": -45.78667,
+  "lon": -60.11,
+  "psnTexto": "LAT. 45° 47.2´ S / LONG. 060° 06.6´ W",
+  "areasMencionadas": [
+   "2",
+   "5"
+  ]
+ },
+ {
+  "parte": 45,
+  "fechaHoraLocal": "2018-09-30T16:00:00-03:00",
+  "lat": -45.80167,
+  "lon": -60.22667,
+  "psnTexto": "LAT. 45° 48.1´ S / LONG. 060° 13.6´ W",
+  "areasMencionadas": [
+   "5"
+  ]
+ },
+ {
+  "parte": 51,
+  "fechaHoraLocal": "2018-10-05T06:00:00-03:00",
+  "lat": -45.74023,
+  "lon": -60.20023,
+  "psnTexto": "LAT. 45° 44´.414 S / LONG. 060° 12´.014 W",
+  "areasMencionadas": [
+   "5"
+  ]
+ },
+ {
+  "parte": 52,
+  "fechaHoraLocal": "2018-10-05T16:00:00-03:00",
+  "lat": -45.59742,
+  "lon": -59.61463,
+  "psnTexto": "LAT. 45° 35´.845 S / LONG. 059° 36´.878 W",
+  "areasMencionadas": [
+   "5",
+   "6"
+  ]
+ },
+ {
+  "parte": 126,
+  "fechaHoraLocal": "2018-11-13T06:00:00-03:00",
+  "lat": -46.31833,
+  "lon": -59.98833,
+  "psnTexto": "LAT. 46° 19.1´ S / LONG. 059° 59.3´ W",
+  "areasMencionadas": [
+   "15A-2",
+   "15A-3",
+   "20A"
+  ]
+ },
+ {
+  "parte": 128,
+  "fechaHoraLocal": "2018-11-14T06:00:00-03:00",
+  "lat": -42.82833,
+  "lon": -58.09633,
+  "psnTexto": "LAT. 42° 49.7´ S / LONG. 058° 05.78´ W",
+  "areasMencionadas": []
+ },
+ {
+  "parte": 132,
+  "fechaHoraLocal": "2018-11-16T06:00:00-03:00",
+  "lat": -43.02,
+  "lon": -58.17167,
+  "psnTexto": "LAT. 43° 01.2´ S / LONG. 058° 10.3´ W",
+  "areasMencionadas": [
+   "15A-4"
+  ]
+ },
+ {
+  "parte": 133,
+  "fechaHoraLocal": "2018-11-16T16:00:00-03:00",
+  "lat": -44.81833,
+  "lon": -59.10167,
+  "psnTexto": "LAT. 44° 49.1´ S / LONG. 059° 06.1´ W",
+  "areasMencionadas": [
+   "15A-4"
+  ]
+ }
+]
