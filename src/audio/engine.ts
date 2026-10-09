@@ -1,41 +1,37 @@
 /**
- * Motor de audio.
+ * MOTOR DE SONIDO AMBIENTE.
  *
- * TODO el sonido es SINTETIZADO en el navegador con la Web Audio API: no hay
- * ninguna grabación del submarino, del mar ni del evento del 15/11/2017.
- * Es diseño sonoro, no dato. Se declara así en la sección de metodología.
+ * Todo el sonido se SINTETIZA en el navegador (Web Audio API): no hay grabaciones del
+ * submarino, del mar ni del evento del 15/11/2017. Es diseño sonoro, no dato, y así se
+ * declara en la metodología. No hay narración por voz.
  *
- * Reglas:
- * - Nada suena hasta que la persona activa el sonido (además los navegadores
- *   bloquean el audio automático).
- * - `silenceAll()` corta todo: se usa en el evento de las 10:51 y durante el
- *   capítulo del silencio.
+ * Tres capas que se mezclan según el momento del relato:
+ *   mar      ruido filtrado con oleaje lento (superficie)
+ *   casco    zumbido grave de máquinas y ventilación (interior de un submarino)
+ *   profundo retumbo muy grave que se cierra con la profundidad
+ * Nunca se llega a silencio total: el ambiente acompaña siempre, también en «El silencio».
+ * Las señales puntuales (ping, tic, ola de presión) son deliberadamente tenues.
  */
-
-export type EffectName = 'alarm' | 'ping' | 'creak' | 'tick' | 'reveal';
+import type { SoundScene } from '../story/beats';
 
 interface AudioState {
   ready: boolean;
   muted: boolean;
-  subtitle: string | null;
-  speaking: boolean;
-  /** true si la narración usa archivos de voz propios en vez del sintetizador. */
-  ownVoice: boolean;
-  /** Aviso cuando la voz del navegador no está disponible o no es la esperada. */
-  voiceInfo: string | null;
+  /** true mientras suena un audio de evidencia (el ambiente se atenúa). */
+  evidencePlaying: boolean;
+  /** Volumen elegido por el usuario (0 a 1). */
+  volume: number;
 }
 
-type Listener = () => void;
-
-let state: AudioState = { ready: false, muted: false, subtitle: null, speaking: false, ownVoice: false, voiceInfo: null };
-const listeners = new Set<Listener>();
+let state: AudioState = { ready: false, muted: false, evidencePlaying: false, volume: 0.8 };
+const listeners = new Set<() => void>();
 const emit = (patch: Partial<AudioState>) => {
   state = { ...state, ...patch };
   listeners.forEach((l) => l());
 };
 
 export const audioStore = {
-  subscribe(l: Listener) {
+  subscribe(l: () => void) {
     listeners.add(l);
     return () => {
       listeners.delete(l);
@@ -46,26 +42,19 @@ export const audioStore = {
 
 let ctx: AudioContext | null = null;
 let master: GainNode | null = null;
-let droneA: OscillatorNode | null = null;
-let droneB: OscillatorNode | null = null;
-let droneGain: GainNode | null = null;
-let hissFilter: BiquadFilterNode | null = null;
-let hissGain: GainNode | null = null;
+let seaGain: GainNode | null = null;
+let seaFilter: BiquadFilterNode | null = null;
+let hullGain: GainNode | null = null;
+let deepGain: GainNode | null = null;
+let deepFilter: BiquadFilterNode | null = null;
 let echo: DelayNode | null = null;
 
+let scene: SoundScene = 'superficie';
 let depth = 0;
-let silence = false;
-let ducked = false;
-const crossed = new Set<number>();
-const DEPTH_MARKS = [100, 300, 500, 700, 850];
+const MASTER = 0.85;
 
-let narrationEl: HTMLAudioElement | null = null;
-let subtitleTimer: number | null = null;
-let watchdog: number | null = null;
-let manifest: Record<string, string> = {};
-
-/** Ruido rosa: base del siseo de presión. */
-function pinkNoise(c: AudioContext, seconds = 4): AudioBuffer {
+/** Ruido rosa (oleaje, ventilación). */
+function pinkNoise(c: AudioContext, seconds = 6): AudioBuffer {
   const buf = c.createBuffer(1, Math.floor(c.sampleRate * seconds), c.sampleRate);
   const d = buf.getChannelData(0);
   let b0 = 0, b1 = 0, b2 = 0;
@@ -79,430 +68,271 @@ function pinkNoise(c: AudioContext, seconds = 4): AudioBuffer {
   return buf;
 }
 
-async function loadManifest() {
-  try {
-    const r = await fetch(`${import.meta.env.BASE_URL}audio/manifest.json`);
-    if (!r.ok) return;
-    const json = (await r.json()) as { narracion?: Record<string, string> };
-    manifest = json.narracion ?? {};
-    if (Object.keys(manifest).length) emit({ ownVoice: true });
-  } catch {
-    manifest = {};
+/** Ruido marrón (retumbo profundo). */
+function brownNoise(c: AudioContext, seconds = 6): AudioBuffer {
+  const buf = c.createBuffer(1, Math.floor(c.sampleRate * seconds), c.sampleRate);
+  const d = buf.getChannelData(0);
+  let last = 0;
+  for (let i = 0; i < d.length; i++) {
+    last = (last + 0.02 * (Math.random() * 2 - 1)) / 1.02;
+    d[i] = last * 3.2;
   }
+  return buf;
 }
 
-/** Debe llamarse desde un gesto del usuario. */
+function loop(c: AudioContext, buf: AudioBuffer) {
+  const s = c.createBufferSource();
+  s.buffer = buf;
+  s.loop = true;
+  s.start();
+  return s;
+}
+
+/** Debe llamarse desde un gesto del usuario (los navegadores bloquean el audio automático). */
 export async function start() {
   if (ctx) {
     await ctx.resume();
-    emit({ ready: true });
+    if (!state.ready) emit({ ready: true });
     return;
   }
   const Ctor = window.AudioContext ?? (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
   if (!Ctor) return;
   ctx = new Ctor();
-  await ctx.resume();
+  const c = ctx;
+  await c.resume();
 
-  master = ctx.createGain();
-  master.gain.value = 0.9;
-  master.connect(ctx.destination);
+  master = c.createGain();
+  master.gain.value = 0;
+  const comp = c.createDynamicsCompressor();
+  comp.threshold.value = -18;
+  comp.ratio.value = 3;
+  master.connect(comp).connect(c.destination);
 
-  echo = ctx.createDelay(1);
-  echo.delayTime.value = 0.34;
-  const feedback = ctx.createGain();
-  feedback.gain.value = 0.32;
-  const echoOut = ctx.createGain();
-  echoOut.gain.value = 0.5;
-  echo.connect(feedback).connect(echo);
-  echo.connect(echoOut).connect(master);
+  // Eco largo y suave para las señales puntuales.
+  echo = c.createDelay(1.5);
+  echo.delayTime.value = 0.42;
+  const fb = c.createGain();
+  fb.gain.value = 0.35;
+  const wet = c.createGain();
+  wet.gain.value = 0.4;
+  echo.connect(fb).connect(echo);
+  echo.connect(wet).connect(master);
 
-  // Zumbido grave: dos osciladores apenas desafinados.
-  droneGain = ctx.createGain();
-  droneGain.gain.value = 0;
-  const droneFilter = ctx.createBiquadFilter();
-  droneFilter.type = 'lowpass';
-  droneFilter.frequency.value = 320;
-  droneGain.connect(droneFilter).connect(master);
-  droneA = ctx.createOscillator();
-  droneA.type = 'sine';
-  droneA.frequency.value = 46;
-  droneB = ctx.createOscillator();
-  droneB.type = 'triangle';
-  droneB.frequency.value = 46.7;
-  const bGain = ctx.createGain();
-  bGain.gain.value = 0.35;
-  droneA.connect(droneGain);
-  droneB.connect(bGain).connect(droneGain);
-  droneA.start();
-  droneB.start();
+  // ——— Mar: ruido rosa con un oleaje lento que modula volumen y brillo ———
+  seaGain = c.createGain();
+  seaGain.gain.value = 0;
+  seaFilter = c.createBiquadFilter();
+  seaFilter.type = 'lowpass';
+  seaFilter.frequency.value = 700;
+  const swell = c.createGain();
+  swell.gain.value = 0.7;
+  loop(c, pinkNoise(c)).connect(seaFilter).connect(swell).connect(seaGain).connect(master);
+  const lfo = c.createOscillator();
+  lfo.frequency.value = 0.085;
+  const lfoDepth = c.createGain();
+  lfoDepth.gain.value = 0.3;
+  lfo.connect(lfoDepth).connect(swell.gain);
+  lfo.start();
+  const lfo2 = c.createOscillator();
+  lfo2.frequency.value = 0.13;
+  const lfo2Depth = c.createGain();
+  lfo2Depth.gain.value = 180;
+  lfo2.connect(lfo2Depth).connect(seaFilter.frequency);
+  lfo2.start();
 
-  // Siseo de presión.
-  const hiss = ctx.createBufferSource();
-  hiss.buffer = pinkNoise(ctx);
-  hiss.loop = true;
-  hissFilter = ctx.createBiquadFilter();
-  hissFilter.type = 'lowpass';
-  hissFilter.frequency.value = 900;
-  hissGain = ctx.createGain();
-  hissGain.gain.value = 0;
-  hiss.connect(hissFilter).connect(hissGain).connect(master);
-  hiss.start();
+  // ——— Casco: zumbido de máquinas y siseo de ventilación ———
+  hullGain = c.createGain();
+  hullGain.gain.value = 0;
+  const hullFilter = c.createBiquadFilter();
+  hullFilter.type = 'lowpass';
+  hullFilter.frequency.value = 420;
+  hullGain.connect(master);
+  hullFilter.connect(hullGain);
+  [
+    [55, 'sine', 0.55],
+    [110.4, 'triangle', 0.16],
+    [165.3, 'sine', 0.06],
+  ].forEach(([f, type, g]) => {
+    const o = c.createOscillator();
+    o.type = type as OscillatorType;
+    o.frequency.value = f as number;
+    const og = c.createGain();
+    og.gain.value = g as number;
+    o.connect(og).connect(hullFilter);
+    o.start();
+  });
+  const vent = c.createBiquadFilter();
+  vent.type = 'bandpass';
+  vent.frequency.value = 950;
+  vent.Q.value = 0.8;
+  const ventGain = c.createGain();
+  ventGain.gain.value = 0.22;
+  loop(c, pinkNoise(c, 5)).connect(vent).connect(ventGain).connect(hullGain);
+
+  // ——— Profundo: retumbo grave que se oscurece con la profundidad ———
+  deepGain = c.createGain();
+  deepGain.gain.value = 0;
+  deepFilter = c.createBiquadFilter();
+  deepFilter.type = 'lowpass';
+  deepFilter.frequency.value = 220;
+  loop(c, brownNoise(c)).connect(deepFilter).connect(deepGain).connect(master);
 
   emit({ ready: true });
-  setDepth(depth);
-  void loadManifest();
+  master.gain.setTargetAtTime(state.muted ? 0 : MASTER * state.volume, c.currentTime, 1.2);
+  applyMix(2.5);
+}
 
-  // Chrome entrega la lista de voces de forma asincrónica y a veces vacía en la
-  // primera llamada: se fuerza la carga y se reintenta.
-  if ('speechSynthesis' in window) {
-    window.speechSynthesis.getVoices();
-    window.setTimeout(() => pickVoice(), 250);
-    window.setTimeout(() => pickVoice(), 1500);
+/** Niveles de cada capa por escena. Ninguna escena deja el ambiente en cero. */
+function mix(): { sea: number; hull: number; deep: number; seaCut: number; deepCut: number } {
+  const k = Math.min(1, Math.max(0, depth / 907));
+  switch (scene) {
+    case 'superficie':
+      return { sea: 0.5, hull: 0, deep: 0.04, seaCut: 900, deepCut: 220 };
+    case 'mapa':
+      return { sea: 0.32, hull: 0.1, deep: 0.06, seaCut: 750, deepCut: 220 };
+    case 'casco':
+      return { sea: 0.16, hull: 0.42, deep: 0.06, seaCut: 600, deepCut: 220 };
+    case 'silencio':
+      // Se apaga el casco: las comunicaciones se cortaron. Queda el mar, lejano.
+      return { sea: 0.2, hull: 0, deep: 0.1, seaCut: 420, deepCut: 200 };
+    case 'profundo':
+      return { sea: 0.3 * (1 - k) + 0.02, hull: 0, deep: 0.12 + 0.3 * k, seaCut: 700 - 560 * k, deepCut: 220 - 120 * k };
+    case 'concepto':
+      return { sea: 0.03, hull: 0, deep: 0.22, seaCut: 300, deepCut: 120 };
+    case 'memoria':
+      return { sea: 0.42, hull: 0, deep: 0.05, seaCut: 820, deepCut: 220 };
   }
 }
 
-/** Ayuda de diagnóstico: en la consola, `araVoces()` lista las voces disponibles. */
-export function listVoices(): string[] {
-  if (!('speechSynthesis' in window)) return ['sin síntesis de voz'];
-  return window.speechSynthesis.getVoices().map((v) => `${v.name} · ${v.lang}${v.default ? ' (predeterminada)' : ''}`);
+function applyMix(tc = 0.8) {
+  if (!ctx || !seaGain || !hullGain || !deepGain || !seaFilter || !deepFilter) return;
+  const m = mix();
+  const duck = state.evidencePlaying ? 0.3 : 1;
+  const now = ctx.currentTime;
+  seaGain.gain.setTargetAtTime(m.sea * duck, now, tc);
+  hullGain.gain.setTargetAtTime(m.hull * duck, now, tc);
+  deepGain.gain.setTargetAtTime(m.deep * duck, now, tc);
+  seaFilter.frequency.setTargetAtTime(m.seaCut, now, tc);
+  deepFilter.frequency.setTargetAtTime(m.deepCut, now, tc);
 }
 
-if (typeof window !== 'undefined') {
-  (window as unknown as { araVoces: () => string[] }).araVoces = listVoices;
+export function setScene(s: SoundScene) {
+  if (s === scene) return;
+  scene = s;
+  applyMix(1.1);
+}
+
+/** Profundidad en metros: cierra el filtro del mar y acerca el retumbo. */
+export function setDepth(d: number) {
+  if (Math.abs(d - depth) < 1) return;
+  depth = d;
+  if (scene === 'profundo') applyMix(0.5);
 }
 
 export function setMuted(m: boolean) {
   emit({ muted: m });
-  if (m) stopNarration();
-  if (ctx && master) master.gain.setTargetAtTime(m ? 0 : 0.9, ctx.currentTime, 0.15);
+  if (ctx && master) master.gain.setTargetAtTime(m ? 0 : MASTER * state.volume, ctx.currentTime, 0.3);
+  if (m) stopEvidence();
 }
 
-const ambientLevel = () => (silence || state.muted ? 0 : 1) * (ducked ? 0.45 : 1);
-
-/** Profundidad actual en metros: mueve el zumbido, el siseo y dispara umbrales. */
-export function setDepth(d: number) {
-  depth = d;
-  if (!ctx || !droneA || !droneB || !droneGain || !hissFilter || !hissGain) return;
-  const k = Math.min(1, Math.max(0, d / 907));
-  const now = ctx.currentTime;
-  const a = ambientLevel();
-  droneA.frequency.setTargetAtTime(46 - 17 * k, now, 0.4);
-  droneB.frequency.setTargetAtTime(46.7 - 17 * k, now, 0.4);
-  droneGain.gain.setTargetAtTime(a * (0.05 + 0.11 * k), now, 0.5);
-  hissFilter.frequency.setTargetAtTime(900 - 720 * k, now, 0.5);
-  hissGain.gain.setTargetAtTime(a * (0.015 + 0.055 * k), now, 0.5);
-
-  for (const th of DEPTH_MARKS) {
-    if (d >= th && !crossed.has(th)) {
-      crossed.add(th);
-      effect(th === 100 ? 'alarm' : 'creak');
-    } else if (d < th - 25) {
-      crossed.delete(th);
-    }
-  }
+export function setVolume(v: number) {
+  const vol = Math.min(1, Math.max(0, v));
+  emit({ volume: vol, muted: vol === 0 ? true : state.muted && vol > 0 ? false : state.muted });
+  if (ctx && master) master.gain.setTargetAtTime(state.muted ? 0 : MASTER * vol, ctx.currentTime, 0.15);
 }
 
-export function effect(name: EffectName) {
-  if (!ctx || !master || state.muted || silence) return;
+export type Cue = 'ping' | 'tick' | 'swell';
+
+/** Señales puntuales, muy tenues. */
+export function cue(name: Cue) {
+  if (!ctx || !master || state.muted) return;
   const c = ctx;
-  const out = master;
   const t = c.currentTime;
-
-  const env = (g: GainNode, t0: number, peak: number, attack: number, hold: number, release: number) => {
+  const env = (g: GainNode, t0: number, peak: number, attack: number, release: number) => {
     g.gain.setValueAtTime(0.0001, t0);
     g.gain.linearRampToValueAtTime(peak, t0 + attack);
-    g.gain.setValueAtTime(peak, t0 + attack + hold);
-    g.gain.exponentialRampToValueAtTime(0.0001, t0 + attack + hold + release);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + attack + release);
   };
 
-  if (name === 'alarm') {
-    // Tres pulsos: marca el cruce del límite preventivo de 100 m.
-    for (let i = 0; i < 3; i++) {
-      const t0 = t + i * 0.36;
-      const o = c.createOscillator();
-      o.type = 'square';
-      o.frequency.value = 740;
-      const f = c.createBiquadFilter();
-      f.type = 'lowpass';
-      f.frequency.value = 1700;
-      const g = c.createGain();
-      env(g, t0, 0.07, 0.015, 0.12, 0.14);
-      o.connect(f).connect(g).connect(out);
-      o.start(t0);
-      o.stop(t0 + 0.34);
-    }
-    return;
-  }
-
   if (name === 'ping') {
+    // Señal de sonar lejana: marca la llegada a un lugar documentado.
     const o = c.createOscillator();
     o.type = 'sine';
-    o.frequency.setValueAtTime(980, t);
-    o.frequency.exponentialRampToValueAtTime(760, t + 0.5);
+    o.frequency.setValueAtTime(1180, t);
+    o.frequency.exponentialRampToValueAtTime(940, t + 0.6);
     const g = c.createGain();
-    env(g, t, 0.06, 0.01, 0.04, 1.1);
-    o.connect(g).connect(out);
+    env(g, t, 0.028, 0.02, 1.4);
+    o.connect(g).connect(master);
     if (echo) g.connect(echo);
     o.start(t);
-    o.stop(t + 1.4);
-    return;
-  }
-
-  if (name === 'creak') {
-    // Ruido filtrado con barrido: tensión del casco. Representación, no registro.
-    const src = c.createBufferSource();
-    src.buffer = pinkNoise(c, 1.2);
-    const f = c.createBiquadFilter();
-    f.type = 'bandpass';
-    f.Q.value = 9;
-    f.frequency.setValueAtTime(180 + Math.random() * 90, t);
-    f.frequency.linearRampToValueAtTime(120 + Math.random() * 60, t + 0.9);
-    const g = c.createGain();
-    env(g, t, 0.12, 0.12, 0.2, 0.6);
-    src.connect(f).connect(g).connect(out);
-    src.start(t);
-    src.stop(t + 1.1);
+    o.stop(t + 1.6);
     return;
   }
 
   if (name === 'tick') {
-    const o = c.createOscillator();
-    o.type = 'sine';
-    o.frequency.value = 1500;
-    const g = c.createGain();
-    env(g, t, 0.035, 0.005, 0.01, 0.05);
-    o.connect(g).connect(out);
-    o.start(t);
-    o.stop(t + 0.1);
-    return;
-  }
-
-  // reveal: acorde grave al llegar al fondo.
-  [110, 164.8, 220].forEach((freq, i) => {
-    const o = c.createOscillator();
-    o.type = 'sine';
-    o.frequency.value = freq;
-    const g = c.createGain();
-    env(g, t + i * 0.12, 0.05, 1.2, 0.8, 2.6);
-    o.connect(g).connect(out);
-    o.start(t);
-    o.stop(t + 5.2);
-  });
-  effect('ping');
-}
-
-/** Corta todo el sonido. Se usa en el evento de las 10:51. */
-export function silenceAll() {
-  silence = true;
-  stopNarration();
-  if (!ctx || !droneGain || !hissGain) return;
-  const now = ctx.currentTime;
-  droneGain.gain.cancelScheduledValues(now);
-  hissGain.gain.cancelScheduledValues(now);
-  droneGain.gain.setTargetAtTime(0, now, 0.25);
-  hissGain.gain.setTargetAtTime(0, now, 0.25);
-}
-
-export function resumeAmbient() {
-  if (!silence) return;
-  silence = false;
-  setDepth(depth);
-}
-
-export const isSilenced = () => silence;
-
-function duck(on: boolean) {
-  ducked = on;
-  setDepth(depth);
-}
-
-/**
- * Cierra la locución. `holdMs` es cuánto queda el subtítulo en pantalla; con
- * `keepSpeaking` el estado sigue en "hablando" durante ese rato, que es lo que
- * pasa cuando no hay voz instalada y el subtítulo hace de narración.
- */
-function endNarration(holdMs = 900, keepSpeaking = false) {
-  if (watchdog) window.clearTimeout(watchdog);
-  watchdog = null;
-  duck(false);
-  if (subtitleTimer) window.clearTimeout(subtitleTimer);
-  if (keepSpeaking) {
-    subtitleTimer = window.setTimeout(() => emit({ subtitle: null, speaking: false }), holdMs);
-  } else {
-    emit({ speaking: false });
-    subtitleTimer = window.setTimeout(() => emit({ subtitle: null }), holdMs);
-  }
-}
-
-export function stopNarration() {
-  if (narrationEl) {
-    narrationEl.onended = null;
-    narrationEl.onerror = null;
-    narrationEl.pause();
-    narrationEl = null;
-  }
-  speakToken++;
-  if (pendingSpeak) window.clearTimeout(pendingSpeak);
-  pendingSpeak = null;
-  stopPump();
-  if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-  if (subtitleTimer) window.clearTimeout(subtitleTimer);
-  if (watchdog) window.clearTimeout(watchdog);
-  watchdog = null;
-  duck(false);
-  emit({ speaking: false, subtitle: null });
-}
-
-let cachedVoice: SpeechSynthesisVoice | null = null;
-let voicesChecked = false;
-
-/** Elige la mejor voz disponible. Prefiere español rioplatense y baja de ahí. */
-function pickVoice(): SpeechSynthesisVoice | null {
-  if (cachedVoice) return cachedVoice;
-  if (!('speechSynthesis' in window)) return null;
-  const voices = window.speechSynthesis.getVoices();
-  if (!voices.length) return null;
-  const lang = (v: SpeechSynthesisVoice) => v.lang.replace('_', '-').toLowerCase();
-  const pref = ['es-ar', 'es-mx', 'es-us', 'es-cl', 'es-co', 'es-es', 'es'];
-  for (const p of pref) {
-    const v = voices.find((x) => lang(x).startsWith(p));
-    if (v) {
-      cachedVoice = v;
-      voicesChecked = true;
-      emit({ voiceInfo: null });
-      return v;
+    // Teletipo: aparece un documento.
+    for (let i = 0; i < 3; i++) {
+      const o = c.createOscillator();
+      o.type = 'square';
+      o.frequency.value = 1650;
+      const f = c.createBiquadFilter();
+      f.type = 'lowpass';
+      f.frequency.value = 2400;
+      const g = c.createGain();
+      const t0 = t + i * 0.09;
+      env(g, t0, 0.01, 0.003, 0.04);
+      o.connect(f).connect(g).connect(master);
+      o.start(t0);
+      o.stop(t0 + 0.06);
     }
-  }
-  // Hay voces, pero ninguna en español: se usa la predeterminada y se avisa.
-  voicesChecked = true;
-  cachedVoice = voices.find((v) => v.default) ?? voices[0];
-  emit({
-    voiceInfo:
-      'No hay voz en español instalada: se usa la voz predeterminada del navegador. Se puede agregar una en Configuración de Windows → Hora e idioma → Voz.',
-  });
-  return cachedVoice;
-}
-
-if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-  // En Chrome la lista de voces llega de forma asincrónica.
-  window.speechSynthesis.addEventListener('voiceschanged', () => {
-    cachedVoice = null;
-    pickVoice();
-  });
-}
-
-/** Chrome corta la locución alrededor de los 15 s si no se la "empuja". */
-let pump: number | null = null;
-const startPump = () => {
-  stopPump();
-  pump = window.setInterval(() => {
-    const s = window.speechSynthesis;
-    if (s.speaking && !s.paused) s.resume();
-  }, 6000);
-};
-const stopPump = () => {
-  if (pump) window.clearInterval(pump);
-  pump = null;
-};
-
-let pendingSpeak: number | null = null;
-/** Cada locución tiene un número; al cancelarse, la cadena vieja se descarta. */
-let speakToken = 0;
-
-/**
- * Parte el texto en frases cortas. Chrome corta las locuciones largas
- * (bug conocido de ~15 s), así que se encadenan pedazos breves.
- */
-function splitForSpeech(text: string, max = 120): string[] {
-  const parts = text.split(/(?<=[.:;])\s+/);
-  const out: string[] = [];
-  for (const p of parts) {
-    const last = out[out.length - 1];
-    if (last && last.length + p.length + 1 <= max) out[out.length - 1] = `${last} ${p}`;
-    else out.push(p);
-  }
-  return out.filter((s) => s.trim().length);
-}
-
-function speakSynth(text: string) {
-  // Tiempo de lectura estimado, para cuando el subtítulo tiene que narrar solo.
-  const estimate = Math.min(22000, 1800 + text.length * 62);
-  const synth = 'speechSynthesis' in window ? window.speechSynthesis : null;
-  if (!synth) {
-    emit({ voiceInfo: 'Este navegador no tiene síntesis de voz: quedan los subtítulos.' });
-    endNarration(estimate, true);
     return;
   }
 
-  const utter = () => {
-    pendingSpeak = null;
-    const token = ++speakToken;
-    const chunks = splitForSpeech(text);
-    let i = 0;
-    let reallyStarted = false;
-
-    const speakNext = () => {
-      if (token !== speakToken) return; // la locución fue reemplazada
-      if (i >= chunks.length) {
-        stopPump();
-        if (reallyStarted) endNarration();
-        else {
-          // Nunca arrancó: no hay voz utilizable. El subtítulo hace de narración.
-          if (voicesChecked) emit({ voiceInfo: 'El navegador no pudo reproducir la voz: quedan los subtítulos.' });
-          endNarration(estimate, true);
-        }
-        return;
-      }
-      const u = new SpeechSynthesisUtterance(chunks[i++]);
-      const v = pickVoice();
-      if (v) u.voice = v;
-      u.lang = v?.lang ?? 'es-AR';
-      u.rate = 0.95;
-      u.pitch = 1;
-      u.onstart = () => {
-        reallyStarted = true;
-        startPump();
-      };
-      u.onend = () => speakNext();
-      u.onerror = (ev: SpeechSynthesisErrorEvent) => {
-        stopPump();
-        // 'canceled' e 'interrupted' los provocamos nosotros al cambiar de paso:
-        // no significan que la voz no funcione y no deben desactivar nada.
-        if (ev.error === 'canceled' || ev.error === 'interrupted' || token !== speakToken) return;
-        emit({ voiceInfo: `El navegador no pudo reproducir la voz (${ev.error}): quedan los subtítulos.` });
-        endNarration(estimate, true);
-      };
-      if (synth.paused) synth.resume();
-      synth.speak(u);
-    };
-
-    speakNext();
-  };
-
-  // Chrome descarta la locución si `speak` va pegado a `cancel`.
-  synth.cancel();
-  if (pendingSpeak) window.clearTimeout(pendingSpeak);
-  pendingSpeak = window.setTimeout(utter, 120);
-
-  // Red de seguridad: si `onend` nunca llega, el subtítulo se libera igual.
-  if (watchdog) window.clearTimeout(watchdog);
-  watchdog = window.setTimeout(() => endNarration(), estimate + 6000);
+  // swell: ola de presión muy grave y lenta para la representación conceptual. No es un estruendo.
+  const o = c.createOscillator();
+  o.type = 'sine';
+  o.frequency.setValueAtTime(42, t);
+  o.frequency.exponentialRampToValueAtTime(28, t + 3);
+  const g = c.createGain();
+  env(g, t, 0.16, 0.9, 2.8);
+  o.connect(g).connect(master);
+  o.start(t);
+  o.stop(t + 4);
+  const n = c.createBufferSource();
+  n.buffer = brownNoise(c, 2);
+  const nf = c.createBiquadFilter();
+  nf.type = 'lowpass';
+  nf.frequency.value = 160;
+  const ng = c.createGain();
+  env(ng, t + 0.6, 0.08, 0.15, 1.6);
+  n.connect(nf).connect(ng).connect(master);
+  n.start(t + 0.6);
+  n.stop(t + 2.6);
 }
 
-/** Narra un texto. Usa el archivo propio si existe en public/audio/manifest.json. */
-export function narrate(id: string, text: string) {
-  // La voz sí puede hablar sobre el silencio ambiental (capítulo "El silencio").
+// ——— Evidencia sonora (sólo con un clic) ———
+let evidenceEl: HTMLAudioElement | null = null;
+
+export function playEvidence(url: string) {
+  stopEvidence();
   if (!state.ready || state.muted) return;
-  stopNarration();
-  emit({ subtitle: text, speaking: true });
-  duck(true);
-  const file = manifest[id];
-  if (file) {
-    narrationEl = new Audio(`${import.meta.env.BASE_URL}audio/${file}`);
-    narrationEl.onended = () => endNarration();
-    narrationEl.onerror = () => speakSynth(text);
-    void narrationEl.play().catch(() => speakSynth(text));
-  } else {
-    speakSynth(text);
+  evidenceEl = new Audio(url);
+  evidenceEl.onended = () => stopEvidence();
+  evidenceEl.onerror = () => stopEvidence();
+  emit({ evidencePlaying: true });
+  applyMix(0.4);
+  void evidenceEl.play().catch(() => stopEvidence());
+}
+
+export function stopEvidence() {
+  if (evidenceEl) {
+    evidenceEl.onended = null;
+    evidenceEl.onerror = null;
+    evidenceEl.pause();
+    evidenceEl = null;
+  }
+  if (state.evidencePlaying) {
+    emit({ evidencePlaying: false });
+    applyMix(0.6);
   }
 }

@@ -45,16 +45,33 @@ export function useGeoData() {
   return { data, error };
 }
 
-/** Valor de la grilla por interpolación bilineal (lat/lon ascendentes). */
-export function sampleGrid(g: Grid, lat: number, lon: number): number {
-  const dLat = g.lats[1] - g.lats[0];
-  const dLon = g.lons[1] - g.lons[0];
-  const fy = Math.min(Math.max((lat - g.lats[0]) / dLat, 0), g.rows - 1.0001);
-  const fx = Math.min(Math.max((lon - g.lons[0]) / dLon, 0), g.cols - 1.0001);
-  const y0 = Math.floor(fy), x0 = Math.floor(fx);
-  const ty = fy - y0, tx = fx - x0;
-  const v = (y: number, x: number) => g.elevation[y * g.cols + x];
-  return (
-    v(y0, x0) * (1 - tx) * (1 - ty) + v(y0, x0 + 1) * tx * (1 - ty) + v(y0 + 1, x0) * (1 - tx) * ty + v(y0 + 1, x0 + 1) * tx * ty
-  );
+export interface ProvinceFeature {
+  type: 'Feature';
+  properties: { nombre: string; codigo: string };
+  geometry: { type: 'MultiPolygon'; coordinates: number[][][][] };
+}
+
+export interface ExploreData {
+  provincias: ProvinceFeature[];
+  /** Relieve GEBCO de Argentina (0,12°). null si todavía no se generó el archivo. */
+  argentina: Grid | null;
+}
+
+/** Datos del modo exploración: se cargan recién cuando se entra a explorar. */
+export function useExploreData(enabled: boolean) {
+  const [data, setData] = useState<ExploreData | null>(null);
+  useEffect(() => {
+    if (!enabled || data) return;
+    let alive = true;
+    Promise.all([
+      getJson<{ features: ProvinceFeature[] }>('provincias-ar.json'),
+      getJson<Grid>('bathy_argentina.json').catch(() => null),
+    ])
+      .then(([prov, argentina]) => alive && setData({ provincias: prov.features, argentina }))
+      .catch(() => alive && setData({ provincias: [], argentina: null }));
+    return () => {
+      alive = false;
+    };
+  }, [enabled, data]);
+  return data;
 }

@@ -4,7 +4,13 @@
  */
 
 /** Nivel epistémico de un dato. Se muestra en la interfaz, no solo en metodología. */
-export type Certainty = 'hecho' | 'estimacion' | 'hipotesis';
+/**
+ * hecho: confirmado por una fuente documental identificable.
+ * estimacion: valor aproximado obtenido con un procedimiento explícito.
+ * hipotesis: reconstrucción o hipótesis propia, siempre rotulada (trazado esquemático, alcance a 5 nudos…).
+ * desconocido: no puede establecerse con las fuentes disponibles.
+ */
+export type Certainty = 'hecho' | 'estimacion' | 'hipotesis' | 'desconocido';
 
 export type SourceKind =
   | 'oficial'
@@ -12,7 +18,8 @@ export type SourceKind =
   | 'cientifica'
   | 'empresa'
   | 'periodistica'
-  | 'dataset';
+  | 'dataset'
+  | 'registro-visual';
 
 export interface Source {
   id: string;
@@ -126,4 +133,44 @@ export interface Grid {
   rows: number;
   cols: number;
   elevation: number[];
+}
+
+/** Estructura de altura conocida, usada sólo como referencia de escala. */
+export interface Landmark {
+  id: string;
+  nombre: string;
+  /** Altura total publicada (m). Es el único dato que se usa: la forma 3D es esquemática. */
+  alturaM: number;
+  /** Lado de la base (m), si está publicado. */
+  baseM?: number;
+  forma: 'obelisco' | 'torre' | 'rascacielos';
+  sourceIds: string[];
+}
+
+/** Nodo del trazado del viaje. Sólo los nodos con `esquematico: false` son lugares documentados. */
+export interface RouteNode {
+  id: string;
+  lat: number;
+  lon: number;
+  esquematico: boolean;
+  label?: string;
+  /** Fecha documentada en ese lugar (texto para mostrar). */
+  fecha?: string;
+  sourceIds?: string[];
+}
+
+/** Pieza de evidencia documental mostrada en un momento del relato. */
+export interface EvidenceItem {
+  id: string;
+  beatId: string;
+  tipo: 'documento' | 'imagen' | 'audio';
+  titulo: string;
+  fecha: string;
+  /** Texto literal del documento (entre comillas en la fuente). */
+  texto?: string;
+  /** Ruta dentro de public/. */
+  archivo?: string;
+  credito?: string;
+  sourceIds: string[];
+  nota?: string;
 }

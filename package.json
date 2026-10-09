@@ -2,15 +2,17 @@
   "name": "ara-san-juan-contar-con-datos",
   "private": true,
   "version": "0.1.0",
-  "description": "Experiencia de datos sobre el ARA San Juan — MVP para el concurso Contar con Datos (UdeSA)",
+  "description": "Experiencia de datos 3D sobre el ARA San Juan para el concurso Contar con Datos (UdeSA)",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "typecheck": "tsc --noEmit",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "verify": "node scripts/verify-data.mjs"
   },
   "dependencies": {
+    "@react-three/drei": "^10.7.9",
     "@react-three/fiber": "^9.7.0",
     "d3": "^7.9.0",
     "react": "~19.2.0",

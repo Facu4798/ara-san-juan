@@ -1,0 +1,4 @@
+{
+  "_comentario": "Lugar preparado para evidencia sonora. Para agregar un audio: copiar el archivo en esta carpeta y sumar un objeto a 'audio' con beatId (por ejemplo 'c0600'), archivo, titulo, fecha, fuente (URL verificable), transcripcion y licencia. Se reproduce sólo con un clic y baja el sonido ambiente mientras suena. Hoy está vacío: no se encontró una grabación publicada del reporte del ingreso de agua (fue un mensaje escrito).",
+  "audio": []
+}

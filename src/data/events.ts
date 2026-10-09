@@ -27,7 +27,7 @@ export const events: TimelineEvent[] = [
     titulo: 'Sale hacia su área de patrulla',
     detalle: 'Entre el 10 y el 11 participa de maniobras con unidades de la flota; luego inicia la patrulla en la zona denominada "Juliana".',
     certainty: 'hecho', sourceIds: [REQ, 'infobae2017tripulantes'],
-    nota: 'Infobae (30/11/2017) indica que partieron de Ushuaia el lunes 13. Se prioriza el requerimiento fiscal. El recorrido entre Ushuaia y la posición del 15/11 no está publicado: no se dibuja.',
+    nota: 'Infobae (30/11/2017) indica que partieron de Ushuaia el lunes 13. Se prioriza el requerimiento fiscal. El recorrido entre Ushuaia y la posición del 15/11 no está publicado: sólo se dibuja un trazado esquemático, rotulado como tal.',
   },
 
   // ——— ÚLTIMAS HORAS ———
@@ -143,7 +143,7 @@ export const events: TimelineEvent[] = [
   {
     id: 'sitio-2', datetime: '2018-11-14T06:00:00-03:00', precision: 'minuto', phase: 'busqueda-2018',
     titulo: 'El buque deja el Sitio 1 rumbo al Sitio 2',
-    detalle: 'Posición: 42°49,7′ S — 58°05,78′ O, unos 350 km al norte del lugar donde sería hallado el submarino.',
+    detalle: 'Posición: 42°49,7′ S — 58°05,78′ O, unos 370 km al norte del lugar donde sería hallado el submarino (cálculo propio: 372 km).',
     certainty: 'hecho', sourceIds: ['armadaPartes2018'], positionId: 'seco-128',
   },
   {

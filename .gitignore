@@ -3,3 +3,8 @@ dist/
 scripts/_raw_partes/
 *.log
 .DS_Store
+scripts/_raw_retratos/
+__pycache__/
+*.pyc
+.env
+.env.*

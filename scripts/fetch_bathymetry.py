@@ -15,6 +15,8 @@ GRIDS = [
     ("wreck_local", -46.06, -45.84, -59.93, -59.61, 0.004),
     ("regional", -47.8, -44.8, -62.0, -57.4, 0.04),
     ("shelf", -60.0, -32.0, -76.0, -30.0, 0.25),
+    # Argentina continental (módulo «Las 44 vidas»): relieve más fino para leer provincias y orígenes.
+    ("argentina", -55.5, -21.5, -74.0, -53.0, 0.12),
 ]
 
 

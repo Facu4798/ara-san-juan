@@ -1,97 +1,191 @@
-# ARA San Juan — 367 días entre dos coordenadas
+# ARA San Juan — 44 personas, una coordenada, 367 días
 
-Experiencia de datos para el concurso **Contar con Datos** (Universidad de San Andrés).
+Experiencia de datos en 3D para el concurso **Contar con Datos** (Universidad de San Andrés). Combina un
+documental interactivo, un atlas tridimensional, un memorial digital y un laboratorio de exploración de datos.
+Tiene dos modos que comparten datos y componentes:
 
-Pregunta central: **entre la última coordenada informada del ARA San Juan (15/11/2017, 00:28) y la siguiente (el hallazgo, 17/11/2018) pasaron 367 días. ¿Qué se sabía, y qué no, sobre dónde estaba?**
+- **Historia guiada:** un relato de un minuto, con 66 s en modo exposición. Empieza por las 44 personas, sigue
+  por el viaje, las últimas horas, el silencio y el descenso a 907 m, y cierra con los 44 nombres.
+- **Exploración libre:** cuatro módulos conectados en los que cada persona filtra, compara y consulta las
+  fuentes.
 
-La experiencia recorre el viaje, las últimas comunicaciones, el silencio, la búsqueda, el descenso a 907 m y los 44 tripulantes. Cada dato está referenciado y clasificado como **hecho documentado**, **estimación** o **hipótesis**.
+Cada dato está referenciado y clasificado con ícono y color:
+
+| | Categoría | Qué significa |
+|---|---|---|
+| ✓ | **Confirmado** | Respaldado por una fuente documental identificable. |
+| ≈ | **Estimado** | Valor aproximado obtenido con un procedimiento explícito. |
+| ◇ | **Reconstrucción** | Construcción propia, siempre rotulada. |
+| ? | **No determinado** | No puede establecerse con las fuentes disponibles. |
 
 ---
 
-## Requisitos
-
-- Node.js 20 o superior (probado con Node 24.21 LTS)
-- Navegador con WebGL para la escena 3D. Sin WebGL se muestra la versión 2D.
-
 ## Uso
+
+Requisitos: Node.js 20 o superior y un navegador con WebGL.
 
 ```bash
 npm install
-npm run dev
+npm run dev        # http://localhost:5173
+npm run verify     # verificación de datos (fuentes, distancias, provincias, edades, trazado, retratos)
+npm run build      # typecheck + build de producción en dist/
 ```
 
-Abrir la URL que muestra Vite (por defecto http://localhost:5173).
+## Los cuatro módulos de exploración
 
-Otros comandos:
+### 1 · Las 44 vidas
 
-```bash
-npm run typecheck   # verificación de tipos
-npm run build       # typecheck + build de producción en dist/
-npm run preview     # servir el build
-```
+**Escena:** mapa 3D de Argentina con relieve (GEBCO 2020) y límites provinciales del IGN. Cada lugar de
+nacimiento es una columna sobre su coordenada oficial (Georef), con altura proporcional a la cantidad de
+personas nacidas allí. Los países vecinos se atenúan con una máscara calculada a partir de los límites
+oficiales.
+
+**Filtros combinados:**
+- provincia, que se elige en la lista, en el gráfico o tocando la provincia en el mapa;
+- rango de edad al 15/11/2017;
+- sexo (dato oficial agregado);
+- grado;
+- localidad;
+- nombre.
+
+Mapa, contador, lista, histograma y barras cambian juntos. Hay un botón para restablecer los filtros.
+
+**Los 44 rostros:** el panel de resultados abre como mosaico con los 44 retratos oficiales. Están siempre
+todos —la nómina completa es el dato— y los que no cumplen los filtros se atenúan en lugar de desaparecer,
+para no perder la escala del conjunto. También puede verse como lista con datos.
+
+**Fichas:** cada persona tiene retrato, grado, edad calculada con su fecha de nacimiento oficial, lugar de
+nacimiento con su precisión, distancia a la base y biografía oficial del memorial.
+
+**Hallazgos calculados con los datos:**
+- Jujuy y Salta suman 16 nacimientos, más que la provincia de Buenos Aires (12), donde estaba la base.
+- La mitad de la tripulación nació a más de 1.206 km de Mar del Plata.
+- En 9 de los 26 casos con edad publicada por la prensa en 2017, esa edad difiere de la que surge de la fecha
+  oficial.
+
+### 2 · La última travesía
+
+**Escena:** mapa 3D del Atlántico Sur, con relieve y batimetría.
+
+**Línea de tiempo:** se arrastra, se reproduce y se pausa. Tiene velocidades de 0,5×, 1× y 2×, saltos entre
+acontecimientos y desaceleración al llegar a cada uno. Es por tramos y lo declara: las tres semanas de misión
+ocupan el 30 % y las últimas 13 horas el 70 %.
+
+**Capas combinables:**
+- trazado esquemático;
+- posiciones documentadas;
+- comunicaciones;
+- acontecimientos técnicos;
+- hipótesis de alcance;
+- evento acústico;
+- batimetría;
+- hallazgo.
+
+**Posición del submarino:** es confirmada en Mar del Plata, en Ushuaia y a las 00:28; reconstruida
+(esquemática) entre esos lugares; y no determinada después de las 00:28.
+
+**Submarino en 3D:** se abre tocando el submarino-símbolo. Es un modelo esquemático que se puede inspeccionar.
+Sólo tiene puntos interactivos en las cuatro partes informadas en el fondo (proa, casco, vela y popa). Los
+componentes sin ubicación publicada se listan aparte y no se dibujan.
+
+**Hallazgos calculados con los datos:** las 6 h 51 min entre la última posición y la última comunicación sin
+ninguna coordenada; sólo 4 de los 13 acontecimientos tienen lugar publicado; el hallazgo quedó a 91,4 km de la
+coordenada de las 00:28, dentro del círculo de 96 km alcanzable a 5 nudos hasta el evento acústico (cota
+geométrica, no una trayectoria).
+
+### 3 · La búsqueda
+
+- **Línea de fechas:** del 15/11/2017 al hallazgo, con un contador de días.
+- **Posiciones del buque:** las del Seabed Constructor que figuran en los partes oficiales.
+- **Fase:** filtro entre la búsqueda de la Armada (2017–18) y la de Ocean Infinity (2018).
+- **Comparación de dos períodos:** muestra sólo los conteos que los datos permiten.
+- **Métricas:** cada una con su definición y su fuente.
+- **Zonas de búsqueda:** no se publicaron, así que no se dibujan ni se estiman.
+- **Hallazgos calculados con los datos:** la primera posición publicada de un buque es del día 298 de 367; en
+  los 298 días anteriores no hay ninguna; las 19 posiciones recuperadas son todas de 2018 y los partes llegan
+  hasta el N.º 133, así que no cubren la campaña.
+
+### 4 · 907 metros
+
+- **Control de profundidad:** se arrastra, se usa la rueda o el teclado, y tiene paradas rápidas.
+- **Comparaciones:** aparecen de a una y en su tramo (Obelisco, Torre Eiffel, Burj Khalifa, hallazgo). Cada
+  estructura se dibuja con la base a esa profundidad y la punta en la superficie, a la misma escala física, y
+  la cámara la encuadra completa.
+- **Datos físicos:** presión con la fórmula y sus parámetros, zona de luz (NOAA). La temperatura no se
+  muestra porque no hay mediciones del sitio para esa fecha.
+- **Hallazgos calculados con los datos:** 907 m son 9,1 veces el límite preventivo de 100 m con el que operaba;
+  entre 100 y 907 m hay 807 m (el 89 % de la columna) sin ningún dato publicado; ≈ 91,2 atm, unos 93 kg sobre
+  cada cm²; 13,8 veces su propia eslora.
+
+**Escala y orientación**, en todos los módulos: como la cámara es libre, arriba a la derecha hay una barra de
+escala que mide una distancia real en el plano del punto de mira y una rosa que señala el norte según la
+orientación de la cámara (se atenúa cuando el norte queda casi perpendicular a la pantalla). El texto declara la
+exageración vertical del relieve o la escala 1:1, según la escena.
+
+**Teclado**, en exploración: `1` a `4` cambian de módulo y `Esc` cierra el panel abierto más reciente.
+
+**Panel de evidencia**, en cada acontecimiento: qué se sabe, el fragmento citado (identificado como
+transcripción), el documento asociado, el lugar, las fuentes con sus limitaciones y la clasificación.
 
 ## Estructura
 
 ```
 src/
-  data/           datos y tipos, separados del código visual
-    types.ts          Tripulante, Position, TimelineEvent, Source, DepthMarker…
-    sources.ts        registro de fuentes (URL, institución, fecha, aporta, limitaciones)
-    events.ts         cronología con fuente y nivel de certeza
-    positions.ts      posiciones documentadas / estimadas / hipótesis explícita
-    crew.ts           los 44 (Decreto 212/2020 + Infobae 30/11/2017)
-    depth.ts          profundidades documentadas y dimensiones del modelo
-    search.ts         cifras de la búsqueda
-    discrepancies.ts  diferencias entre fuentes y decisión tomada
-    generated/        datos extraídos por scripts (posiciones del buque de búsqueda)
-  components/     piezas de interfaz (intro, explorador, metodología, badges)
-  scenes/         capítulos narrativos (mapa, descenso 3D, 44)
-  visualizations/ mapa D3, corte 2D, visualización de tripulantes, línea de tiempo
-  utils/          geodesia, física, formato, carga de datos, hooks de scroll
-  styles/         CSS global
-public/data/      costa (Natural Earth) y batimetría (GEBCO 2020) en JSON
-scripts/          reproducción de la descarga y extracción de datos
-docs/             informe de investigación de fuentes
+  app/            estado compartido (modo, módulo, filtros, tiempo, capas, profundidad) y barra superior
+  story/          historia guiada: guion de 13 momentos, controlador de scroll y reproducción, descenso
+  explore/        exploración: modelos de datos y paneles de cada módulo, panel de evidencia
+    vidas/ travesia/ busqueda/ profundidad/
+  three/          escena 3D (un solo Canvas)
+    map/              piezas del mapa compartidas (relieve, costa, marcas, hipótesis)
+    explore/          mundos de cada módulo y cámara orbital (CameraControls)
+    MapWorld · DepthWorld · Landmarks · ImplosionConcept · Memorial · SubmarineModel
+  overlay/        interfaz de la historia guiada
+  audio/          ambiente sintetizado (mar, casco, profundidad); sin voz
+  data/           datos con fuente y certeza, separados de la interfaz
+    generated/        tripulantes_memorial.json, retratos44.json, posiciones del buque
+public/data/      batimetría GEBCO (plataforma, región, sitio, Argentina), costa, provincias IGN
+public/tripulantes/  44 retratos oficiales
+scripts/          descarga, procesamiento y verificación reproducibles
 ```
 
 ## Datos reproducibles
 
 ```bash
-python scripts/fetch_bathymetry.py   # GEBCO 2020 vía api.opentopodata.org (1 req/s)
-python scripts/fetch_partes.py       # partes oficiales 2018 desde la Wayback Machine
+python scripts/fetch_bathymetry.py [argentina]  # GEBCO 2020 vía OpenTopoData
+python scripts/fetch_partes.py                  # partes oficiales 2018 (Wayback Machine)
+python scripts/fetch_retratos.py                # retratos del memorial «44 Presentes» (Wayback)
+python scripts/build_tripulantes.py             # nacimiento, edad y biografía (memorial) + coordenadas Georef
+python scripts/build_provincias.py              # límites del IGN, simplificados (Douglas–Peucker ≈ 1 km)
+npm run verify                                  # comprueba todo lo anterior contra el código
 ```
-
-`fetch_bathymetry.py` escribe JSON crudos; `public/data/bathy_*.json` son esos mismos valores redondeados a metros enteros.
-
-## Tecnología
-
-React 19 · TypeScript · Vite · Three.js con React Three Fiber (escena 3D cargada bajo demanda) · D3 (mapa en canvas + SVG, isóbatas, línea de tiempo). No se usan mosaicos de mapas externos: la costa y la batimetría viajan con el proyecto.
 
 ## Sonido
 
-Hay un botón **«Activar sonido»** en la portada (los navegadores no permiten audio automático) y un
-control de silencio en la barra superior.
-
-- **Efectos sintetizados** con la Web Audio API: no hay archivos ni grabaciones. Un zumbido grave sigue
-  la profundidad, la alarma marca el cruce del límite preventivo de 100 m, hay crujidos de presión a
-  300, 500, 700 y 850 m, ping de sonar durante la búsqueda y un acorde al llegar al fondo.
-- **El evento de las 10:51 corta todo el sonido.** El capítulo del silencio se escucha en silencio.
-- **Narración** con la voz del navegador y subtítulos siempre visibles. Para usar una voz grabada, ver
-  `public/audio/README.md`: alcanza con dejar los MP3 y listarlos en `manifest.json`.
-
-Nada del audio es un dato: está declarado como diseño sonoro en la sección de metodología.
+El ambiente es sintetizado (Web Audio), sin voz ni grabaciones reales. Arranca con el primer gesto del usuario
+y se puede activar, silenciar y ajustar el volumen desde la barra superior. Tiene tres capas, mar, casco y
+profundidad, que siguen al momento de la historia o al módulo y a la profundidad elegida. En
+`public/evidencia/evidencia.json` queda preparado un lugar para un audio documental con fuente verificable.
 
 ## Principios
 
-- No se inventan posiciones, trayectorias, comunicaciones, causas ni condiciones ambientales.
-- Lo que no está publicado no se dibuja (recorrido, posición de las 07:19, zonas de búsqueda de 2017, elipses sin centro).
-- La única hipótesis (área alcanzable a 5 nudos) está rotulada, rayada en ámbar y con sus supuestos a la vista.
-- Sin fotografías ni imágenes generadas.
+- **No se inventan** coordenadas, horarios, trayectorias, fotografías, audios, causas, polígonos ni mediciones.
+- **Rotulado de lo que no está documentado:** el trazado del viaje es esquemático, el alcance a 5 nudos y la
+  implosión son reconstrucciones, y las formas de los modelos 3D son genéricas.
+- **Escalas declaradas:**
+  - mapa: relieve ×25 bajo el mar y ×8 en tierra;
+  - profundidad: escala real 1:1;
+  - submarino en el mapa: símbolo, no a escala.
+- **Retratos:** oficiales, cotejados uno por uno con el Decreto 212/2020. No se muestran imágenes de los
+  restos, por pedido de las familias.
 
-Ver `docs/INVESTIGACION.md` para el inventario de fuentes, lo que no se encontró y la narrativa.
+Detalle completo en el anexo de metodología de la propia experiencia y en `docs/INVESTIGACION.md`.
 
-## Licencias de datos
+## Licencias y créditos
 
-- GEBCO Compilation Group (2020) GEBCO 2020 Grid — dominio público, atribución requerida.
-- Natural Earth — dominio público.
-- Textos oficiales citados: Boletín Oficial, Ministerio de Defensa, Armada Argentina, CTBTO.
+- GEBCO Compilation Group (2020) GEBCO 2020 Grid · Natural Earth: dominio público.
+- Límites provinciales: Instituto Geográfico Nacional (IGN).
+- Coordenadas de localidades: API Georef (datos.gob.ar).
+- Retratos y biografías: memorial «44 Presentes» (Ministerio de Defensa y Armada Argentina), recuperado del
+  archivo web. Se usan con fines de homenaje y con atribución.
+- Foto del ARA San Juan (2017): Juan Kulichevsky, CC BY-SA 2.0.
+- Zonas de luz: NOAA National Ocean Service.

@@ -49,6 +49,30 @@ export const discrepancies: Discrepancy[] = [
     decision: 'Se muestra el cálculo, identificado como tal.',
   },
   {
+    dato: 'Ubicación del evento acústico',
+    valores: [
+      { valor: '−46,12 / −59,69 (comunicado del 23/11/2017): 20 km de los restos', sourceId: 'ctbto2017' },
+      { valor: 'Relocalización con arribos secundarios: 3,5 km de los restos', sourceId: 'vergoz2021' },
+    ],
+    decision: 'En el mapa se dibuja la estimación del CTBTO, que es la única con coordenada publicada. La relocalización de 2021 se cita en el texto.',
+  },
+  {
+    dato: 'Edad de los tripulantes',
+    valores: [
+      { valor: 'Calculada al 15/11/2017 a partir de la fecha de nacimiento oficial (44 de 44)', sourceId: 'memorial44' },
+      { valor: 'Publicada en 2017 para 26 personas; en 9 de esos casos difiere de la calculada (en general, por un año)', sourceId: 'infobae2017tripulantes' },
+    ],
+    decision: 'Se usa la edad calculada con la fecha oficial. La edad de prensa se muestra en la ficha cuando difiere.',
+  },
+  {
+    dato: 'Origen de los tripulantes',
+    valores: [
+      { valor: 'Lugar de nacimiento (44 de 44)', sourceId: 'memorial44' },
+      { valor: 'Localidad de origen, que puede ser la de residencia (36 de 44)', sourceId: 'infobae2017tripulantes' },
+    ],
+    decision: 'El mapa usa el lugar de nacimiento oficial. La localidad de prensa se muestra en la ficha como dato secundario.',
+  },
+  {
     dato: 'Nombre de un tripulante',
     valores: [
       { valor: 'Fabricio Alejandro Alcaraz Coria', sourceId: 'decreto212' },

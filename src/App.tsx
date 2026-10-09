@@ -1,80 +1,81 @@
-import { useEffect, useMemo, useState } from 'react';
-import { Intro } from './components/Intro';
-import { MapChapter } from './scenes/MapChapter';
-import { DescentChapter } from './scenes/DescentChapter';
-import { CrewChapter } from './scenes/CrewChapter';
-import { Explorer } from './components/Explorer';
+import { lazy, Suspense, useEffect, useLayoutEffect, useMemo, useRef } from 'react';
+import { Overlay } from './overlay/Overlay';
 import { Methodology } from './components/Methodology';
-import { useGeoData } from './utils/loadData';
+import { useGeoData, useExploreData } from './utils/loadData';
 import { hasWebGL } from './utils/webgl';
-import { AudioToggle, Subtitles } from './components/AudioControls';
+import { installStoryDriver, storyHeightVh, stop as stopStory } from './story/store';
+import { useSoundDirector } from './audio/useSound';
+import { useApp } from './app/appStore';
+import { TopBar } from './app/TopBar';
+import { ExploreUI } from './explore/ExploreUI';
 
-const NAV = [
-  { id: 'viaje', label: 'Viaje' },
-  { id: 'profundidad', label: '907 m' },
-  { id: 'los44', label: '44' },
-  { id: 'explorar', label: 'Explorar' },
-  { id: 'metodologia', label: 'Metodología' },
-];
+/** La escena 3D (three.js) se descarga aparte, mientras se ve la portada. */
+const Stage = lazy(() => import('./three/Stage'));
 
+/**
+ * ESTRUCTURA DE LA PÁGINA
+ *   TopBar    título, historia guiada ↔ exploración, módulos, fuentes y sonido.
+ *   .stage    Canvas 3D fijo a pantalla completa (un solo contexto WebGL), compartido por ambos modos.
+ *   Historia guiada: Overlay + #story (su scroll mueve el relato, ~66 s en modo exposición) + anexo.
+ *   Exploración: ExploreUI (paneles, filtros, líneas de tiempo) sobre la escena; sin scroll de página.
+ */
 export default function App() {
   const { data: geo, error } = useGeoData();
   const webgl = useMemo(() => hasWebGL(), []);
-  const [force2D, setForce2D] = useState(false);
-  const [active, setActive] = useState<string | null>(null);
+  const mode = useApp((s) => s.mode);
+  const explore = useExploreData(mode === 'explore');
+  const storyScroll = useRef(0);
 
+  useEffect(() => installStoryDriver(), []);
+  useSoundDirector();
+
+  // Al pasar de un modo a otro se conserva la posición de la historia guiada.
+  useLayoutEffect(() => {
+    document.body.classList.toggle('explore-mode', mode === 'explore');
+    if (mode === 'explore') {
+      stopStory();
+      window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+    } else {
+      window.scrollTo({ top: storyScroll.current, behavior: 'instant' as ScrollBehavior });
+    }
+  }, [mode]);
   useEffect(() => {
-    const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => e.isIntersecting && setActive(e.target.id)),
-      { rootMargin: '-45% 0px -45% 0px' },
-    );
-    NAV.forEach((n) => {
-      const el = document.getElementById(n.id);
-      if (el) io.observe(el);
-    });
-    return () => io.disconnect();
-  }, [geo]);
+    if (mode !== 'story') return;
+    const onScroll = () => {
+      if (!document.body.classList.contains('explore-mode')) storyScroll.current = window.scrollY;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [mode]);
+
+  const status = !webgl ? 'no-webgl' : error ? 'error' : geo && (mode === 'story' || explore) ? 'ok' : 'loading';
 
   return (
     <>
-      <nav className="topnav" aria-label="Capítulos">
-        <ol>
-          {NAV.map((n) => (
-            <li key={n.id}>
-              <a href={`#${n.id}`} aria-current={active === n.id}>{n.label}</a>
-            </li>
-          ))}
-        </ol>
-        <div className="topnav-actions">
-        <AudioToggle />
-        <button
-          className="toggle2d"
-          aria-pressed={force2D || !webgl}
-          disabled={!webgl}
-          onClick={() => setForce2D((v) => !v)}
-          title={webgl ? 'Alternar entre escena 3D y corte 2D' : 'WebGL no disponible: se muestra la versión 2D'}
-        >
-          {webgl ? (force2D ? 'Versión 2D' : 'Ver en 2D') : 'Versión 2D (sin WebGL)'}
-        </button>
-        </div>
-      </nav>
-      <Subtitles />
-
-      <main>
-        <Intro />
-        {error && <p className="section muted">No se pudieron cargar los datos geográficos: {error}</p>}
-        <MapChapter geo={geo} />
-        <DescentChapter geo={geo} use3D={webgl && !force2D} />
-        <CrewChapter />
-        <Explorer geo={geo} />
-        <Methodology />
-      </main>
-
-      <footer>
-        Proyecto para «Contar con Datos» (UdeSA). Todos los datos visualizados están referenciados en la sección de metodología.
-        <br />
-        En memoria de los 44 tripulantes del ARA San Juan.
-      </footer>
+      <TopBar />
+      <div className="stage">
+        {webgl && geo && (
+          <Suspense fallback={null}>
+            <Stage geo={geo} explore={explore} />
+          </Suspense>
+        )}
+      </div>
+      {mode === 'story' ? (
+        <>
+          <Overlay status={status} />
+          <main>
+            <div id="story" style={{ height: `${storyHeightVh}vh` }} aria-hidden="true" />
+            <Methodology />
+          </main>
+          <footer className="site-footer">
+            Proyecto para «Contar con Datos» (Universidad de San Andrés). Cada dato está referenciado en la metodología.
+            <br />
+            En memoria de los 44 tripulantes del ARA San Juan.
+          </footer>
+        </>
+      ) : (
+        <ExploreUI status={status} />
+      )}
     </>
   );
 }

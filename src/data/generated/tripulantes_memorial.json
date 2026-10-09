@@ -1,0 +1,1102 @@
+[
+ {
+  "orden": 1,
+  "nombreMemorial": "Pedro Martín Fernández",
+  "gradoMemorial": "Capitán de Fragata *Ascenso post mortem a Capitán de Navío en trámite en el Senado de la Nación.",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "San Miguel de Tucumán",
+   "fecha": "1972-12-01",
+   "localidad": "San Miguel de Tucumán",
+   "provincia": "Tucumán",
+   "lat": -26.83039,
+   "lon": -65.20378,
+   "georefId": "90084010",
+   "precision": "localidad",
+   "nota": null
+  },
+  "edad": 44,
+  "bio": [
+   "Pedro Martín Fernández, nacido en San Miguel de Tucumán el 1ro. de diciembre de 1972, fue Capitán de Fragata, su ascenso post mortem a Capitán de Navío se encuentra en trámite en el Senado de la Nación.",
+   "Sus tareas y misiones en el A.R.A. “San Juan” previas fueron como Segundo Comandante en 2015 y como Comandante en su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en la Lancha Patrullera A.R.A. “Barranqueras” en Ushuaia.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Orientación y Capacitación en Submarino en 1998; Jefe de Brigada en el Viaje de Instrucción de la Fragata A.R.A. “Libertad” en 2008; Curso Comando y Estado Mayor “Escuela de Guerra Naval” en 2011; Comandante del Buque Hidrográfico A.R.A. “Puerto Deseado” en 2012; Oficial de Comunicaciones en la República de Chipre – Misión ONU en 2014; Segundo Comandante del Submarino A.R.A. “San Juan” en 2015 y Comandante del Submarino A.R.A. “San Juan” en 2017.",
+   "Su primer contacto con el A.R.A. “San Juan” fue el 11 de Marzo de 1998, embarcó durante el Curso de Capacitación en Submarinos en la Base Naval Mar del Plata."
+  ]
+ },
+ {
+  "orden": 2,
+  "nombreMemorial": "Jorge Ignacio Bergallo",
+  "gradoMemorial": "Capitán de Fragata (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "Mar del Plata",
+   "fecha": "1975-10-11",
+   "localidad": "Mar del Plata",
+   "provincia": "Buenos Aires",
+   "lat": -37.99761,
+   "lon": -57.54816,
+   "georefId": "06357110",
+   "precision": "localidad",
+   "nota": null
+  },
+  "edad": 42,
+  "bio": [
+   "Jorge Ignacio Bergallo, nacido en Mar del Plata el 11 de octubre de 1975, fue Capitán de Corbeta, llegando al grado de Capitán de Fragata (post mortem).",
+   "Sus tareas y misiones en el A.R.A. “San Juan” previas fueron una Navegación de Adiestramiento en 2002 y 2006 y como Segundo Comandante en su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en el Transporte A.R.A. “Canal Beagle” en Buenos Aires.",
+   "Algunos hitos clave de su carrera militar incluyen: la Comisión en el buque U.S.S “Monterrey” en Estados Unidos en 1999; el Curso de Capacitación en Submarinos en 2002; Observador Militar en Sahara Occidental – Misión ONU en 2008; Jefe de Brigada en el Viaje de Instrucción de la Fragata A.R.A. “Libertad” en 2010; Curso Comando y Estado Mayor en la “Escuela de Guerra Naval” en 2014; Recepción, Alistamiento, Traslado e Incorporación de buques clase “Neftegaz” desde la Federación de Rusia en 2015; Comandante del Aviso A.R.A. “Bahía Agradable” en 2016, Segundo Comandante del Submarino A.R.A . “San Juan” en 2017.",
+   "Su primer contacto con el A.R.A. “San Juan” fue el 20 de marzo del 2002, embarcó durante el Curso de Capacitación en Submarinos en la Base Naval Mar del Plata."
+  ]
+ },
+ {
+  "orden": 3,
+  "nombreMemorial": "Fernando Ariel Mendoza",
+  "gradoMemorial": "Capitán de Corbeta (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "Concordia, Entre Ríos",
+   "fecha": "1979-11-28",
+   "localidad": "Concordia",
+   "provincia": "Entre Ríos",
+   "lat": -31.39196,
+   "lon": -58.01701,
+   "georefId": "30015060",
+   "precision": "localidad",
+   "nota": null
+  },
+  "edad": 37,
+  "bio": [
+   "Fernando Ariel Mendoza, nacido en Concordia, Entre Ríos, el 28 de noviembre de 1979, fue Teniente de Navío, llegando al grado de Capitán de Corbeta (post mortem).",
+   "Sus tareas y misiones en el A.R.A. “San Juan” previas fueron ser Jefe del Cargo Propulsión y Departamento de Máquinas desde el año 2011 en adelante y como Jefe del Departamento de Máquinas en su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en la Lancha Patrullera A.R.A. “Barranqueras” en Ushuaia.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en 2010.",
+   "Su primer contacto con el A.R.A. “San Juan” fue el 16 de febrero del 2011 como Jefe del cargo Propulsión en Buenos Aires."
+  ]
+ },
+ {
+  "orden": 4,
+  "nombreMemorial": "Diego Manuel Wagner",
+  "gradoMemorial": "Capitán de Corbeta (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "Olavarría, Buenos Aires",
+   "fecha": "1979-11-07",
+   "localidad": "Olavarría",
+   "provincia": "Buenos Aires",
+   "lat": -36.89384,
+   "lon": -60.32319,
+   "georefId": "06595070",
+   "precision": "localidad",
+   "nota": null
+  },
+  "edad": 38,
+  "bio": [
+   "Diego Manuel Wagner, nacido en Olavarría, Buenos Aires, el 7 de noviembre de 1979, fue Teniente de Navío, llegando al grado de Capitán de Corbeta (post mortem).",
+   "Sus tareas y misiones en el A.R.A. “San Juan” previas fueron como Jefe de Cargo de Electricidad de 2011 al 2013 y en 2016 y como Jefe de Cargo de Electricidad en su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en el Remolcador A.R.A. “Toba” en Ushuaia.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en 2009 y Subjefe de la Base “Orcadas” en la Antártida Argentina en 2014.",
+   "Su primer contacto con el A.R.A. “San Juan” fue el 7 de febrero del 2011 como Jefe de Cargo de Electricidad en Buenos Aires."
+  ]
+ },
+ {
+  "orden": 5,
+  "nombreMemorial": "Victor Andrés Maroli",
+  "gradoMemorial": "Capitán de Corbeta (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "Villa María, Córdoba",
+   "fecha": "1980-12-10",
+   "localidad": "Villa María",
+   "provincia": "Córdoba",
+   "lat": -32.4135,
+   "lon": -63.24833,
+   "georefId": "14042170",
+   "precision": "localidad",
+   "nota": null
+  },
+  "edad": 36,
+  "bio": [
+   "Víctor Andrés Maroli, nacido en Villa María, Córdoba, el 10 de diciembre de 1980, fue Teniente de Navío, llegando al grado de Capitán de Corbeta (post mortem).",
+   "Sus tareas y misiones en el A.R.A. “San Juan” previas fueron ser Dotación Complementaria en 2016 y Dotación Complementaria en su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en el Buque Logístico A.R.A. “Patagonia” en Puerto Belgrano.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en 2011.",
+   "Su primer contacto con el A.R.A. “San Juan” fue el 30 de marzo del año 2016 durante una navegación de adiestramiento, como Dotación Complementaria en la Base Naval Mar Del Plata."
+  ]
+ },
+ {
+  "orden": 6,
+  "nombreMemorial": "Eliana María Krawczyk",
+  "gradoMemorial": "Capitán de Corbeta (post mortem)",
+  "sexo": "mujer",
+  "nacimiento": {
+   "texto": "Oberá, Misiones",
+   "fecha": "1982-03-05",
+   "localidad": "Oberá",
+   "provincia": "Misiones",
+   "lat": -27.48679,
+   "lon": -55.12006,
+   "georefId": "54091080",
+   "precision": "localidad",
+   "nota": null
+  },
+  "edad": 35,
+  "bio": [
+   "Eliana María Krawczyk, nacida en Oberá, Misiones, el 5 de marzo de 1982, fue Teniente de Navío, llegando al grado de Capitán de Corbeta (post mortem). Fue la primera oficial submarinista en la historia argentina.",
+   "Sus tareas y misiones en el A.R.A. “San Juan” previas fueron una Navegación de Adiestramiento en 2016 y como Jefe del Departamento de Armamento en su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en la Corbeta A.R.A. “Robinson” en Puerto Belgrano.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en 2012.",
+   "Su primer contacto con el A.R.A. “San Juan” fue el 21 de diciembre del año 2016 durante una navegación de adiestramiento, como Dotación Complementaria en la Base Naval Mar Del Plata."
+  ]
+ },
+ {
+  "orden": 7,
+  "nombreMemorial": "Alejandro Damián Tagliapietra",
+  "gradoMemorial": "Teniente de Fragata (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "San Isidro, Buenos Aires",
+   "fecha": "1990-07-21",
+   "localidad": "San Isidro",
+   "provincia": "Buenos Aires",
+   "lat": -34.46988,
+   "lon": -58.51129,
+   "georefId": "0675601005",
+   "precision": "localidad",
+   "nota": null
+  },
+  "edad": 27,
+  "bio": [
+   "Alejandro Damián Tagliapietra, nacido en San Isidro, Buenos Aires, el 21 de julio de 1990, fue Teniente de Corbeta, llegando al grado de Teniente de Fragata (post mortem).",
+   "Sus tareas y misiones en el A.R.A. “San Juan” previas fueron Navegaciones de Adiestramiento como Oficial Alumno del Curso de Capacitación en Submarinos en 2017 y Oficial Alumno en período de embarco del Curso de Capacitación en Submarinos, en su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en el Destructor A.R.A. “La Argentina” en Puerto Belgrano.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en 2017.",
+   "Su primer contacto con el A.R.A. “San Juan” fue el 21 de diciembre del año 2016 durante una navegación de adiestramiento en la Base Naval Mar del Plata."
+  ]
+ },
+ {
+  "orden": 8,
+  "nombreMemorial": "Javier Alejandro Gallardo",
+  "gradoMemorial": "Suboficial Mayor (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "Mar del Plata, Buenos Aires",
+   "fecha": "1970-04-19",
+   "localidad": "Mar del Plata",
+   "provincia": "Buenos Aires",
+   "lat": -37.99761,
+   "lon": -57.54816,
+   "georefId": "06357110",
+   "precision": "localidad",
+   "nota": null
+  },
+  "edad": 47,
+  "bio": [
+   "Javier Alejandro Gallardo, nacido en Mar del Plata, Buenos Aires, el 19 de abril de 1970, fue Suboficial Principal, llegando al grado de Suboficial Mayor (post mortem).",
+   "Sus tareas y misiones en el A.R.A. \"San Juan\" previas fueron como Suboficial de Unidad hasta su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en el Destructor A.R.A. “Santísima Trinidad”.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en 1992.",
+   "Su primer contacto con el A.R.A. \"San Juan\" fue el 10 de diciembre del año 1992 como Ayudante a Cargo de Reparaciones Electrónicas."
+  ]
+ },
+ {
+  "orden": 9,
+  "nombreMemorial": "Víctor Hugo Coronel",
+  "gradoMemorial": "Suboficial Principal (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "Calilegua, Ledesma, Jujuy",
+   "fecha": "1978-05-03",
+   "localidad": "Calilegua",
+   "provincia": "Jujuy",
+   "lat": -23.77457,
+   "lon": -64.77004,
+   "georefId": "38035040",
+   "precision": "localidad",
+   "nota": null
+  },
+  "edad": 39,
+  "bio": [
+   "Víctor Hugo Coronel, nacido en Calilegua, Ledesma, Jujuy, el 03 de mayo de 1978, fue Suboficial Primero, llegando al grado de Suboficial Principal (post mortem).",
+   "Sus tareas y misiones en el A.R.A. \"San Juan\" previas fueron Cargo Sanidad hasta su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en el Hospital Naval Buenos Aires “Cirujano Mayor Dr. Pedro Mallo”.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en 1999, el Curso auxiliar medicina de buceo en el año 2000 y el Curso de radiología y catastro en 2005.",
+   "Su primer contacto con el A.R.A. \"San Juan\" fue el 06 de octubre del año 2017 en Cargo Sanidad."
+  ]
+ },
+ {
+  "orden": 10,
+  "nombreMemorial": "Walter Germán Real",
+  "gradoMemorial": "Suboficial Principal (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "Pinamar, General Juan Madariaga, Buenos Aires",
+   "fecha": "1974-08-05",
+   "localidad": "Pinamar",
+   "provincia": "Buenos Aires",
+   "lat": -37.11108,
+   "lon": -56.86523,
+   "georefId": "06644010",
+   "precision": "localidad",
+   "nota": null
+  },
+  "edad": 43,
+  "bio": [
+   "Walter Germán Real, nacido en Pinamar, General Juan Madariaga, Buenos Aires, el 05 de agosto de 1974, fue Suboficial Primero, llegando al grado de Suboficial Principal (post mortem).",
+   "Sus tareas y misiones en el A.R.A. \"San Juan\" previas fueron Encargado Subcargo Motores Propulsión en 2015 y 2017, Encargado Cargo Electricidad en 2016 y Encargado Subcargo Motores Propulsión en su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en el Destructor A.R.A. “Hércules”.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en 1999.",
+   "Su primer contacto con el A.R.A. \"San Juan\" fue el 06 de febrero del año 2015 como Encargado Subcargo Motores Propulsión."
+  ]
+ },
+ {
+  "orden": 11,
+  "nombreMemorial": "Hernán Ramón Rodríguez",
+  "gradoMemorial": "Suboficial Principal (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "General Alvear, Mendoza",
+   "fecha": "1974-02-22",
+   "localidad": "General Alvear",
+   "provincia": "Mendoza",
+   "lat": -34.97747,
+   "lon": -67.69618,
+   "georefId": "50014030",
+   "precision": "localidad",
+   "nota": null
+  },
+  "edad": 43,
+  "bio": [
+   "Hernán Ramón Rodríguez, nació en General Alvear, Mendoza, el 22 de febrero de 1974 y creció en Real del Padre, Mendoza. Fue Suboficial Primero, llegando al grado de Suboficial Principal (post mortem).",
+   "Sus tareas y misiones en el A.R.A. \"San Juan\" previas fueron Cargo control de Averías en 1999 y Encargado Cargo Propulsión desde 2015 hasta su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en la Base Naval Mar del Plata.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en 1998.",
+   "Su primer contacto con el A.R.A. \"San Juan\" fue el 03 de diciembre del año 1998 con el Cargo de Control de Averías."
+  ]
+ },
+ {
+  "orden": 12,
+  "nombreMemorial": "Roberto Daniel Medina",
+  "gradoMemorial": "Suboficial Primero (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "Salta",
+   "fecha": "1977-09-18",
+   "localidad": "Salta",
+   "provincia": "Salta",
+   "lat": -24.7832,
+   "lon": -65.41025,
+   "georefId": "6602805003",
+   "precision": "ambigua",
+   "nota": "El memorial dice «Salta»: puede ser la ciudad o la provincia. Se ubica en la ciudad capital."
+  },
+  "edad": 40,
+  "bio": [
+   "Roberto Daniel Medina, nacido en Salta el 18 de septiembre de 1977, fue Suboficial Segundo, llegando al grado de Suboficial Primero (post mortem).",
+   "Sus tareas y misiones en el A.R.A. \"San Juan\" previas fueron como Encargado Subcargo Máquinas Auxiliares desde el año 2004 al 2006 y desde el 2008 al 2009 y como Encargado Cargo Control Averías desde el 2016 hasta su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en el Buque Hidrográfico A.R.A. “Puerto Deseado”.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en el año 2003.",
+   "Su primer contacto con el A.R.A. \"San Juan\" fue el 02 de diciembre del año 2003, en Subcargo Máquinas Auxiliares."
+  ]
+ },
+ {
+  "orden": 13,
+  "nombreMemorial": "Celso Oscar Vallejos",
+  "gradoMemorial": "Suboficial Primero (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "Resistencia, Chaco",
+   "fecha": "1979-03-18",
+   "localidad": "Resistencia",
+   "provincia": "Chaco",
+   "lat": -27.45108,
+   "lon": -58.98648,
+   "georefId": "22140060",
+   "precision": "localidad",
+   "nota": null
+  },
+  "edad": 38,
+  "bio": [
+   "Celso Oscar Vallejos, nacido en Resistencia, Chaco, el 18 de marzo de 1979, fue Suboficial Segundo, llegando al grado de Suboficial Primero (post mortem).",
+   "Sus tareas y misiones en el A.R.A. \"San Juan\" previas fueron como Ayudante Suboficial de Cargo Sonares en el año 2006 y como Encargado Cargo Sonar desde el 2016 hasta su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en la Segunda División Corbetas.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en el año 2005.",
+   "Su primer contacto con el A.R.A. \"San Juan\" fue el 09 de diciembre del año 2005, como Ayudante Suboficial de Cargo Sonares."
+  ]
+ },
+ {
+  "orden": 14,
+  "nombreMemorial": "Hugo Arnaldo Herrera",
+  "gradoMemorial": "Suboficial Primero (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "Palpalá, Jujuy",
+   "fecha": "1978-11-30",
+   "localidad": "Palpalá",
+   "provincia": "Jujuy",
+   "lat": -24.25994,
+   "lon": -65.20618,
+   "georefId": "3804204001",
+   "precision": "localidad",
+   "nota": null
+  },
+  "edad": 38,
+  "bio": [
+   "Hugo Arnaldo Herrera, nacido en Palpalá, Jujuy, el 30 de noviembre de 1978, fue Suboficial Segundo, llegando al grado de Suboficial Primero (post mortem).",
+   "Sus tareas y misiones en el A.R.A. \"San Juan\" previas fueron como Encargado Subcargo Armas Menores en el año 2012 y como Cargo Control Tiro desde el 2013 hasta su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en la Corbeta A.R.A. “Granville”.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en el año 2004.",
+   "Su primer contacto con el A.R.A. \"San Juan\" fue el 13 de febrero del año 2012, como Encargado Subcargo Armas Menores."
+  ]
+ },
+ {
+  "orden": 15,
+  "nombreMemorial": "Víctor Marcelo Enríquez",
+  "gradoMemorial": "Suboficial Primero (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "Gaona, Anta, Salta",
+   "fecha": "1977-12-03",
+   "localidad": "Gaona",
+   "provincia": "Salta",
+   "lat": -25.24149,
+   "lon": -64.03722,
+   "georefId": "66007070",
+   "precision": "localidad",
+   "nota": null
+  },
+  "edad": 39,
+  "bio": [
+   "Víctor Marcelo Enríquez, nacido en Gaona, Anta, Salta, el 03 de diciembre de 1977, fue Suboficial Segundo, llegando al grado de Suboficial Primero (post mortem).",
+   "Sus tareas y misiones en el A.R.A. \"San Juan\" previas fueron como Cargo Comunicaciones hasta su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en el Servicio de Comunicaciones Navales.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en el año 2007.",
+   "Su primer contacto con el A.R.A. \"San Juan\" fue el 13 de febrero del año 2017, en el Cargo de Comunicaciones."
+  ]
+ },
+ {
+  "orden": 16,
+  "nombreMemorial": "Ricardo Gabriel Alfaro Rodríguez",
+  "gradoMemorial": "Suboficial Primero (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "Rivadavia, San Juan",
+   "fecha": "1980-10-02",
+   "localidad": "Rivadavia",
+   "provincia": "San Juan",
+   "lat": -31.53244,
+   "lon": -68.59714,
+   "georefId": "70084010",
+   "precision": "localidad",
+   "nota": null
+  },
+  "edad": 37,
+  "bio": [
+   "Ricardo Gabriel Alfaro Rodríguez, nacido en Rivadavia, San Juan, el 02 de octubre de 1980, fue Suboficial Segundo, llegando al grado de Suboficial Primero (post mortem).",
+   "Sus tareas y misiones en el A.R.A. \"San Juan\" previas fueron como Cargo Cocina desde el año 2014 hasta su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en la Corbeta A.R.A. “Robinson”.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en el año 2009.",
+   "Su primer contacto con el A.R.A. \"San Juan\" fue el 11 de octubre del año 2013, como Encargado de Cocina."
+  ]
+ },
+ {
+  "orden": 17,
+  "nombreMemorial": "Daniel Adrián Fernández",
+  "gradoMemorial": "Suboficial Primero (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "Base Naval Puerto Belgrano",
+   "fecha": "1976-12-14",
+   "localidad": "Punta Alta",
+   "provincia": "Buenos Aires",
+   "lat": -38.88046,
+   "lon": -62.075,
+   "georefId": "06182030",
+   "precision": "aproximada",
+   "nota": "La Base Naval Puerto Belgrano no figura en el nomenclador: se ubica en Punta Alta, ciudad contigua."
+  },
+  "edad": 40,
+  "bio": [
+   "Daniel Adrián Fernández, nacido en la Base Naval Puerto Belgrano, el 14 de Diciembre de 1976, fue Suboficial Segundo, llegando al grado de Suboficial Primero (post mortem).",
+   "Sus tareas y misiones en el A.R.A. \"San Juan\" previas fueron como Encargado Cámara en el año 2014 y como Subcargo Cámara desde el año 2011 al 2013 y desde el año 2016 hasta su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en la Corbeta A.R.A. “Guerrico”.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en el año 2006.",
+   "Su primer contacto con el A.R.A. \"San Juan\" fue el 19 de mayo del año 2011, en Subcargo Cámaras."
+  ]
+ },
+ {
+  "orden": 18,
+  "nombreMemorial": "Fernando Gabriel Santilli",
+  "gradoMemorial": "Suboficial Segundo (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "San Pedro, General San Martín, Mendoza",
+   "fecha": "1983-01-05",
+   "localidad": "San Martín",
+   "provincia": "Mendoza",
+   "lat": -33.08069,
+   "lon": -68.47045,
+   "georefId": "5009810002",
+   "precision": "departamento",
+   "nota": "«San Pedro» no figura en el nomenclador: se ubica la cabecera del departamento General San Martín."
+  },
+  "edad": 34,
+  "bio": [
+   "Fernando Gabriel Santilli, nacido en San Pedro, General San Martín, Mendoza, el 05 de enero de 1983, fue Cabo Principal, llegando al grado de Suboficial Segundo (post mortem).",
+   "Sus tareas y misiones en el A.R.A. \"San Juan\" previas fueron en Dotación Complementaria hasta su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en el Logístico A.R.A. “Patagonia”.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en el año 2008.",
+   "Su primer contacto con el A.R.A. \"San Juan\" fue el 17 de febrero del año 2017, como Dotación Complementaria."
+  ]
+ },
+ {
+  "orden": 19,
+  "nombreMemorial": "Jorge Eduardo Valdez",
+  "gradoMemorial": "Suboficial Segundo (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "Hipólito Yrigoyen, Oran, Salta",
+   "fecha": "1984-02-07",
+   "localidad": "Hipólito Yrigoyen",
+   "provincia": "Salta",
+   "lat": -23.24434,
+   "lon": -64.27655,
+   "georefId": "66126040",
+   "precision": "localidad",
+   "nota": null
+  },
+  "edad": 33,
+  "bio": [
+   "Jorge Eduardo Valdez, nacido en Hipólito Yrigoyen, Oran, Salta, el 07 de febrero de 1984, fue Cabo Principal, llegando al grado de Suboficial Segundo (post mortem).",
+   "Sus tareas y misiones en el A.R.A. \"San Juan\" previas fueron en Subcargo Máquinas Auxiliares desde 2016 hasta su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en la Corbeta A.R.A. “Drummond”.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en el año 2009.",
+   "Su primer contacto con el A.R.A. \"San Juan\" fue el 05 de febrero del año 2016, en Subcargo Máquinas Auxiliares."
+  ]
+ },
+ {
+  "orden": 20,
+  "nombreMemorial": "Sergio Antonio Cuellar",
+  "gradoMemorial": "Suboficial Segundo (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "Pocitos, San Martín, Salta",
+   "fecha": "1982-04-22",
+   "localidad": "Profesor Salvador Mazza",
+   "provincia": "Salta",
+   "lat": -22.05166,
+   "lon": -63.69189,
+   "georefId": "66056200",
+   "precision": "localidad",
+   "nota": "Pocitos es el nombre usual de la localidad de Profesor Salvador Mazza."
+  },
+  "edad": 35,
+  "bio": [
+   "Sergio Antonio Cuellar, nacido en Pocitos, San Martín, Salta, el 22 de abril de 1982, fue Cabo Principal, llegando al grado de Suboficial Segundo (post mortem).",
+   "Sus tareas y misiones en el A.R.A. \"San Juan\" previas fueron en Dotación Complementaria hasta su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en el Aviso A.R.A. “Comandante General Irigoyen”.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en el año 2010.",
+   "Su primer contacto con el A.R.A. \"San Juan\" fue el 17 de febrero del año 2017, como Dotación Complementaria."
+  ]
+ },
+ {
+  "orden": 21,
+  "nombreMemorial": "Alberto Ramiro Arjona",
+  "gradoMemorial": "Suboficial Segundo (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "Olacapato, Los Andes, Salta",
+   "fecha": "1984-06-21",
+   "localidad": "Olacapato",
+   "provincia": "Salta",
+   "lat": -24.13749,
+   "lon": -66.71883,
+   "georefId": "66105010",
+   "precision": "localidad",
+   "nota": null
+  },
+  "edad": 33,
+  "bio": [
+   "Alberto Ramiro Arjona, nacido en Olacapato, Los Andes, Salta, el 21 de junio del año 1984, fue Cabo Principal, llegando al grado de Suboficial Segundo (post mortem).",
+   "Sus tareas y misiones en el A.R.A. \"San Juan\" previas fueron en Dotación Complementaria hasta su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en la Lancha Patrullera A.R.A. “Punta Mogotes”.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en el año 2007.",
+   "Su primer contacto con el A.R.A. \"San Juan\" fue el 13 de febrero del año 2017, como Dotación Complementaria."
+  ]
+ },
+ {
+  "orden": 22,
+  "nombreMemorial": "Cristian David Ibañez",
+  "gradoMemorial": "Suboficial Segundo (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "San Ramón de la nueva Oran, Salta",
+   "fecha": "1981-08-18",
+   "localidad": "San Ramón de la Nueva Orán",
+   "provincia": "Salta",
+   "lat": -23.13609,
+   "lon": -64.32293,
+   "georefId": "66126070",
+   "precision": "localidad",
+   "nota": null
+  },
+  "edad": 36,
+  "bio": [
+   "Cristian David Ibañez, nacido en San Ramón de la nueva Oran, Salta, el 18 de agosto del año 1981, fue Cabo Principal, llegando al grado de Suboficial Segundo (post mortem).",
+   "Sus tareas y misiones en el A.R.A. \"San Juan\" previas fueron en Dotación Complementaria hasta su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en el Área Naval Atlántica.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en el año 2010.",
+   "Su primer contacto con el A.R.A. \"San Juan\" fue el 13 de febrero del año 2017, como Dotación Complementaria."
+  ]
+ },
+ {
+  "orden": 23,
+  "nombreMemorial": "Mario Armando Toconas",
+  "gradoMemorial": "Suboficial Segundo (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "San Salvador de Jujuy, Jujuy",
+   "fecha": "1981-03-08",
+   "localidad": "San Salvador de Jujuy",
+   "provincia": "Jujuy",
+   "lat": -24.18583,
+   "lon": -65.29948,
+   "georefId": "38021060",
+   "precision": "localidad",
+   "nota": null
+  },
+  "edad": 36,
+  "bio": [
+   "Mario Armando Toconas, nacido en San Salvador de Jujuy, Jujuy, el 08 de marzo del año 1981, fue Cabo Principal, llegando al grado de Suboficial Segundo (post mortem).",
+   "Sus tareas y misiones en el A.R.A. \"San Juan\" previas fueron en Dotación Complementaria hasta su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en el Arsenal Aeronaval Comandante Espora.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en el año 2010.",
+   "Su primer contacto con el A.R.A. \"San Juan\" fue el 13 de febrero del año 2017, como Dotación Complementaria."
+  ]
+ },
+ {
+  "orden": 24,
+  "nombreMemorial": "Franco Javier Espinoza",
+  "gradoMemorial": "Suboficial Segundo (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "San Salvador de Jujuy, Jujuy",
+   "fecha": "1984-01-26",
+   "localidad": "San Salvador de Jujuy",
+   "provincia": "Jujuy",
+   "lat": -24.18583,
+   "lon": -65.29948,
+   "georefId": "38021060",
+   "precision": "localidad",
+   "nota": null
+  },
+  "edad": 33,
+  "bio": [
+   "Franco Javier Espinoza, nacido en San Salvador de Jujuy, Jujuy, el 26 de enero del año 1984, fue Cabo Principal, llegando al grado de Suboficial Segundo (post mortem).",
+   "Sus tareas y misiones en el A.R.A. \"San Juan\" previas fueron en Dotación Complementaria hasta su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en el Buque Escuela Fragata A.R.A. “Libertad”.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en el año 2011.",
+   "Su primer contacto con el A.R.A. \"San Juan\" fue el 12 de diciembre del año 2016, como Dotación Complementaria."
+  ]
+ },
+ {
+  "orden": 25,
+  "nombreMemorial": "Jorge Isabelino Ortiz",
+  "gradoMemorial": "Suboficial Segundo (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "Posadas, Misiones",
+   "fecha": "1985-05-13",
+   "localidad": "Posadas",
+   "provincia": "Misiones",
+   "lat": -27.36643,
+   "lon": -55.89398,
+   "georefId": "54028030",
+   "precision": "localidad",
+   "nota": null
+  },
+  "edad": 32,
+  "bio": [
+   "Jorge Isabelino Ortiz, nacido en Posadas, Misiones, el 13 de mayo del año 1985, fue Cabo Principal, llegando al grado de Suboficial Segundo (post mortem).",
+   "Sus tareas y misiones en el A.R.A. \"San Juan\" previas fueron en Dotación Complementaria hasta su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en el Patrullero A.R.A. “King”.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en el año 2009.",
+   "Su primer contacto con el A.R.A. \"San Juan\" fue el 12 de diciembre del año 2016, como Dotación Complementaria."
+  ]
+ },
+ {
+  "orden": 26,
+  "nombreMemorial": "Enrique Damián Castillo",
+  "gradoMemorial": "Suboficial Segundo (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "Capital Federal, Buenos Aires",
+   "fecha": "1981-12-02",
+   "localidad": "Ciudad Autónoma de Buenos Aires",
+   "provincia": "Ciudad Autónoma de Buenos Aires",
+   "lat": -34.61444,
+   "lon": -58.44588,
+   "georefId": "02",
+   "precision": "localidad",
+   "nota": "«Capital Federal»: Ciudad Autónoma de Buenos Aires."
+  },
+  "edad": 35,
+  "bio": [
+   "Enrique Damián Castillo, nacido en Capital Federal, Buenos Aires, el 02 de diciembre del año 1981, fue Cabo Principal, llegando al grado de Suboficial Segundo (post mortem).",
+   "Sus tareas y misiones en el A.R.A. \"San Juan\" previas fueron en Comisión hasta su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en el Servicio de Comunicaciones Navales.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso para Cambio de Escalafón a Informaciones en el año 2014.",
+   "Su primer contacto con el A.R.A. \"San Juan\" fue en el puesto de Comisión."
+  ]
+ },
+ {
+  "orden": 27,
+  "nombreMemorial": "Hugo Dante César Aramayo",
+  "gradoMemorial": "Suboficial Segundo (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "San Salvador de Jujuy, Jujuy",
+   "fecha": "1984-10-15",
+   "localidad": "San Salvador de Jujuy",
+   "provincia": "Jujuy",
+   "lat": -24.18583,
+   "lon": -65.29948,
+   "georefId": "38021060",
+   "precision": "localidad",
+   "nota": null
+  },
+  "edad": 33,
+  "bio": [
+   "Hugo Dante César Aramayo, nacido en San Salvador de Jujuy, Jujuy, el 15 de octubre del año 1984, fue Cabo Principal, llegando al grado de Suboficial Segundo (post mortem).",
+   "Sus tareas y misiones en el A.R.A. \"San Juan\" previas fueron en Dotación Complementaria desde 2014 hasta su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en la Corbeta A.R.A. “Gómez Roca”.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en el año 2013.",
+   "Su primer contacto con el A.R.A. \"San Juan\" fue el 13 de diciembre del año 2013, como Dotación Complementaria."
+  ]
+ },
+ {
+  "orden": 28,
+  "nombreMemorial": "Luis Esteban García",
+  "gradoMemorial": "Suboficial Segundo (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "San Miguel de Tucumán, Tucumán",
+   "fecha": "1986-03-14",
+   "localidad": "San Miguel de Tucumán",
+   "provincia": "Tucumán",
+   "lat": -26.83039,
+   "lon": -65.20378,
+   "georefId": "90084010",
+   "precision": "localidad",
+   "nota": null
+  },
+  "edad": 31,
+  "bio": [
+   "Luis Esteban García, nacido en San Miguel de Tucumán, Tucumán, el 14 de marzo del año 1986, fue Cabo Principal, llegando al grado de Suboficial Segundo (post mortem).",
+   "Sus tareas y misiones en el A.R.A. \"San Juan\" previas fueron en Dotación Complementaria hasta su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en la Corbeta A.R.A. “Guerrico”.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en el año 2015.",
+   "Su primer contacto con el A.R.A. \"San Juan\" fue el 06 de febrero del año 2017, como Dotación Complementaria."
+  ]
+ },
+ {
+  "orden": 29,
+  "nombreMemorial": "Germán Oscar Suárez",
+  "gradoMemorial": "Cabo Principal (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "Santa Fe",
+   "fecha": "1988-07-12",
+   "localidad": "Santa Fe",
+   "provincia": "Santa Fe",
+   "lat": -31.65747,
+   "lon": -60.71048,
+   "georefId": "82063170",
+   "precision": "ambigua",
+   "nota": "El memorial dice «Santa Fe»: puede ser la ciudad o la provincia. Se ubica en la ciudad capital."
+  },
+  "edad": 29,
+  "bio": [
+   "Germán Oscar Suárez, nacido en Santa Fe, el 12 de julio de 1988, fue Cabo Primero, llegando al grado de Cabo Principal (post mortem).",
+   "Sus tareas y misiones en el A.R.A. \"San Juan\" previas fueron como Dotación Complementaria en el año 2014 y 2015 y como Ayudante Cargo Sonar desde 2016 hasta su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en la Corbeta A.R.A. “Granville”.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en el año 2011.",
+   "Su primer contacto con el A.R.A. \"San Juan\" fue el 20 de febrero del año 2014, como Dotación Complementaria, Ayudante Cargo Sonar."
+  ]
+ },
+ {
+  "orden": 30,
+  "nombreMemorial": "Daniel Alejandro Polo",
+  "gradoMemorial": "Cabo Principal (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "San Pedro, Jujuy",
+   "fecha": "1986-06-30",
+   "localidad": "San Pedro",
+   "provincia": "Jujuy",
+   "lat": -24.23173,
+   "lon": -64.86782,
+   "georefId": "38063180",
+   "precision": "localidad",
+   "nota": null
+  },
+  "edad": 31,
+  "bio": [
+   "Daniel Alejandro Polo, nacido en San Pedro, Jujuy, el 30 de junio del año 1986, fue Cabo Primero, llegando al grado de Cabo Principal (post mortem).",
+   "Sus tareas y misiones en el A.R.A. \"San Juan\" previas fueron como Encargado Subcargo Armas de Inf. Munic. Y Quim. Guerra desde 2016 hasta su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en la Corbeta A.R.A. “Drummond”.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en el año 2014.",
+   "Su primer contacto con el A.R.A. \"San Juan\" fue el 10 de febrero del año 2016, como Encargado Subcargo Armas de Inf. Munic. Y Quim. Guerra."
+  ]
+ },
+ {
+  "orden": 31,
+  "nombreMemorial": "Luis Alberto Niz",
+  "gradoMemorial": "Cabo Principal (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "San Miguel, General Sarmiento, Buenos Aires",
+   "fecha": "1990-08-19",
+   "localidad": "San Miguel",
+   "provincia": "Buenos Aires",
+   "lat": -34.54313,
+   "lon": -58.7092,
+   "georefId": "0676001004",
+   "precision": "localidad",
+   "nota": "General Sarmiento es el antiguo partido, hoy San Miguel."
+  },
+  "edad": 27,
+  "bio": [
+   "Luis Alberto Niz, nacido en San Miguel, General Sarmiento, Buenos Aires, el 19 de agosto de 1990, fue Cabo Primero, llegando al grado de Cabo Principal (post mortem).",
+   "Sus tareas y misiones en el A.R.A. \"San Juan\" previas fueron Dotación Complementaria hasta su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en el Buque Escuela Fragata A.R.A. “Libertad”.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en el año 2016.",
+   "Su primer contacto con el A.R.A. \"San Juan\" fue el 06 de octubre del año 2017, como Dotación Complementaria."
+  ]
+ },
+ {
+  "orden": 32,
+  "nombreMemorial": "Leandro Fabián Cisneros",
+  "gradoMemorial": "Cabo Principal (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "San Salvador de Jujuy, Jujuy",
+   "fecha": "1989-07-25",
+   "localidad": "San Salvador de Jujuy",
+   "provincia": "Jujuy",
+   "lat": -24.18583,
+   "lon": -65.29948,
+   "georefId": "38021060",
+   "precision": "localidad",
+   "nota": null
+  },
+  "edad": 28,
+  "bio": [
+   "Leandro Fabián Cisneros, nacido en San Salvador de Jujuy, Jujuy, 25 de Julio del año 1989, fue Cabo Primero, llegando al grado de Cabo Principal (post mortem).",
+   "Sus tareas y misiones en el A.R.A. \"San Juan\" previas fueron de Auxiliar Cargo Armas Submarinas desde el año 2016 hasta su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en el Destructor A.R.A. “Sarandí”.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en el año 2015.",
+   "Su primer contacto con el A.R.A. \"San Juan\" fue el 14 de diciembre del año 2015, como Auxiliar Cargo Armas Submarinas."
+  ]
+ },
+ {
+  "orden": 33,
+  "nombreMemorial": "Fabricio Alejandro Alcaraz Coria",
+  "gradoMemorial": "Cabo Principal (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "San Luis",
+   "fecha": "1990-08-22",
+   "localidad": "San Luis",
+   "provincia": "San Luis",
+   "lat": -33.30209,
+   "lon": -66.33685,
+   "georefId": "74056150",
+   "precision": "ambigua",
+   "nota": "El memorial dice «San Luis»: puede ser la ciudad o la provincia. Se ubica en la ciudad capital."
+  },
+  "edad": 27,
+  "bio": [
+   "Fabricio Alejandro Alcaraz Coria, nacido en San Luis, el 22 de agosto de 1990, fue Cabo Primero, llegando al grado de Cabo Principal (post mortem).",
+   "Sus tareas y misiones en el A.R.A. \"San Juan\" previas fueron Dotación Complementaria desde el año 2016 hasta su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en la Corbeta A.R.A. “Drummond”.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en el año 2015.",
+   "Su primer contacto con el A.R.A. \"San Juan\" fue el 06 de marzo del año 2016, como Dotación Complementaria."
+  ]
+ },
+ {
+  "orden": 34,
+  "nombreMemorial": "Fernando Vicente Villarreal",
+  "gradoMemorial": "Capitán de Fragata (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "Base Naval Puerto Belgrano",
+   "fecha": "1979-08-23",
+   "localidad": "Punta Alta",
+   "provincia": "Buenos Aires",
+   "lat": -38.88046,
+   "lon": -62.075,
+   "georefId": "06182030",
+   "precision": "aproximada",
+   "nota": "La Base Naval Puerto Belgrano no figura en el nomenclador: se ubica en Punta Alta, ciudad contigua."
+  },
+  "edad": 38,
+  "bio": [
+   "Fernando Vicente Villarreal, nacido en la Base Naval Puerto Belgrano el 23 de agosto de 1979, fue Capitán de Corbeta, llegando al grado de Capitán de Fragata (post mortem).",
+   "Sus tareas y misiones en el A.R.A. “San Juan” previas fueron una Navegación de Adiestramiento en 2016 y era Jefe del Departamento de Operaciones en su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en el Destructor A.R.A. “Heroína” en Puerto Belgrano.",
+   "Algunos hitos clave de su carrera militar incluyen el Viaje de Instrucción en el Buque Escuela “Brasil” en 2004, el Curso de Capacitación en Submarinos en 2007; se desempeñó como Oficial de Logística República de Haití – Misión ONU en 2009 y en 2012 participó del Intercambio de Oficiales Submarinistas con la República del Perú.",
+   "Su primer contacto con el A.R.A. “San Juan” fue el 30 de Marzo del 2016, embarcó durante una Navegación de Adiestramiento en la Base Naval Mar del Plata."
+  ]
+ },
+ {
+  "orden": 35,
+  "nombreMemorial": "Adrián Zunda Meoqui",
+  "gradoMemorial": "Capitán de Corbeta (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "Mar del Plata, Buenos Aires",
+   "fecha": "1985-09-21",
+   "localidad": "Mar del Plata",
+   "provincia": "Buenos Aires",
+   "lat": -37.99761,
+   "lon": -57.54816,
+   "georefId": "06357110",
+   "precision": "localidad",
+   "nota": null
+  },
+  "edad": 32,
+  "bio": [
+   "Adrián Zunda Meoqui, nacido en Mar del Plata, Buenos Aires, el 21 de septiembre de 1985, fue Teniente de Navío, llegando al grado de Capitán de Corbeta (post mortem).",
+   "Sus tareas y misiones en el A.R.A. “San Juan” previas fueron ser Jefe de Cargo Navegación del 2014 al 2015; Jefe de Cargo Comunicaciones en 2016 y Jefe de Cargo Navegación y Comunicaciones en su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en la Corbeta A.R.A. “Drummond” en Mar del Plata.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en 2014.",
+   "Su primer contacto con el A.R.A. “San Juan” fue el 22 de diciembre del año 2014 como Jefe del Cargo Navegación, en Buenos Aires."
+  ]
+ },
+ {
+  "orden": 36,
+  "nombreMemorial": "Renzo David Martin Silva",
+  "gradoMemorial": "Capitán de Corbeta (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "San Juan",
+   "fecha": "1985-11-01",
+   "localidad": "San Juan",
+   "provincia": "San Juan",
+   "lat": -31.53726,
+   "lon": -68.52502,
+   "georefId": "70028010",
+   "precision": "ambigua",
+   "nota": "El memorial dice «San Juan»: puede ser la ciudad o la provincia. Se ubica en la ciudad capital."
+  },
+  "edad": 32,
+  "bio": [
+   "Renzo David Martin Silva, nacido en San Juan, el 01 de noviembre de 1985, fue Teniente de Navío, llegando al grado de Capitán de Corbeta (post mortem).",
+   "Sus tareas y misiones en el A.R.A. “San Juan” previas fueron una Navegación de Adiestramiento en 2014; ser Dotación Complementaria en 2015; una Navegación de Adiestramiento en 2016 y estar Embarcado en Comisión en su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en el Destructor A.R.A. “La Argentina” en Puerto Belgrano.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en 2014.",
+   "Su primer contacto con el A.R.A. “San Juan” fue el 30 de octubre del año 2014, fue una Navegación de Adiestramiento como Oficial Alumno en la Base Naval Mar del Plata."
+  ]
+ },
+ {
+  "orden": 37,
+  "nombreMemorial": "Jorge Luis Mealla",
+  "gradoMemorial": "Teniente de Navío (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "San Salvador de Jujuy, Jujuy",
+   "fecha": "1986-12-31",
+   "localidad": "San Salvador de Jujuy",
+   "provincia": "Jujuy",
+   "lat": -24.18583,
+   "lon": -65.29948,
+   "georefId": "38021060",
+   "precision": "localidad",
+   "nota": null
+  },
+  "edad": 30,
+  "bio": [
+   "Jorge Luis Mealla, nacido en San Salvador de Jujuy, Jujuy, el 31 de diciembre de 1986, fue Teniente de Fragata, llegando al grado de Teniente de Navío (post mortem).",
+   "Sus tareas y misiones en el A.R.A. “San Juan” previas fueron Navegaciones de Adiestramiento como Oficial Alumno del Curso de Capacitación en Submarinos en 2017 y Oficial Alumno en período de embarco del Curso de Capacitación en Submarinos, en su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en el Destructor A.R.A. “Sarandí” en Puerto Belgrano.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en 2017.",
+   "Su primer contacto con el A.R.A. “San Juan” fue el 21 de diciembre del año 2016 durante una navegación de adiestramiento en la Base Naval Mar del Plata."
+  ]
+ },
+ {
+  "orden": 38,
+  "nombreMemorial": "Alberto Cipriano Sánchez",
+  "gradoMemorial": "Suboficial Mayor (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "Mar del Plata, Buenos Aires",
+   "fecha": "1971-03-01",
+   "localidad": "Mar del Plata",
+   "provincia": "Buenos Aires",
+   "lat": -37.99761,
+   "lon": -57.54816,
+   "georefId": "06357110",
+   "precision": "localidad",
+   "nota": null
+  },
+  "edad": 46,
+  "bio": [
+   "Alberto Cipriano Sánchez, nacido en Mar del Plata, Buenos Aires, el 01 de marzo de 1971, fue Suboficial Principal, llegando al grado de Suboficial Mayor (post mortem).",
+   "Sus tareas y misiones en el A.R.A. \"San Juan\" previas fueron como Cargo Material Naval desde el año 2004 al 2006 y como Encargado a Cargo de Armas Submarinas desde 2015 hasta su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en el Destructor A.R.A. “Sarandí”.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en 1994.",
+   "Su primer contacto con el A.R.A. \"San Juan\" fue el 07 de febrero del año 2005 como Ayudante Cargo Material Naval."
+  ]
+ },
+ {
+  "orden": 39,
+  "nombreMemorial": "Cayetano Hipólito Vargas",
+  "gradoMemorial": "Suboficial Principal (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "San Martín, San Juan",
+   "fecha": "1971-11-29",
+   "localidad": "Villa San Martín",
+   "provincia": "San Juan",
+   "lat": -31.51669,
+   "lon": -68.35012,
+   "georefId": "70091070",
+   "precision": "departamento",
+   "nota": "«San Martín» es un departamento: se ubica su cabecera, Villa San Martín."
+  },
+  "edad": 45,
+  "bio": [
+   "Cayetano Hipólito Vargas, nacido en San Martín, San Juan, el 29 de noviembre de 1971, fue Suboficial Primero, llegando al grado de Suboficial Principal (post mortem).",
+   "Sus tareas y misiones en el A.R.A. \"San Juan\" previas fueron Ayudante Cargo Reparaciones Electrónicas desde 1997 a 1999, Cargo Informática en el año 2000, Ayudante Suboficial Cargo Reparaciones Electrónicas desde el 2001 al 2003, Encargado Cargo Operaciones Electrónicas desde 2016 hasta su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en el Arsenal Naval Puerto Belgrano.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en 1997 y el Curso de Buceo de Borda en 1999.",
+   "Su primer contacto con el A.R.A. \"San Juan\" fue el 10 de diciembre del año 1997 como Ayudante en el Cargo de Reparaciones Electrónicas."
+  ]
+ },
+ {
+  "orden": 40,
+  "nombreMemorial": "Luis Marcelo Leiva",
+  "gradoMemorial": "Suboficial Principal (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "González Catán, La Matanza, Buenos Aires",
+   "fecha": "1978-01-16",
+   "localidad": "González Catán",
+   "provincia": "Buenos Aires",
+   "lat": -34.77303,
+   "lon": -58.64404,
+   "georefId": "0642701003",
+   "precision": "localidad",
+   "nota": null
+  },
+  "edad": 39,
+  "bio": [
+   "Luis Marcelo Leiva, nacido en González Catán, La Matanza, Buenos Aires, el 16 de enero de 1978, fue Suboficial Primero, llegando al grado de Suboficial Principal (post mortem).",
+   "Sus tareas y misiones en el A.R.A. \"San Juan\" previas fueron en Cargo Cocina hasta su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en el Aviso A.R.A. “Suboficial Castillo”.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en el año 2000.",
+   "Su primer contacto con el A.R.A. \"San Juan\" fue el 12 de febrero del año 2007, en el Cargo de Cocina."
+  ]
+ },
+ {
+  "orden": 41,
+  "nombreMemorial": "Jorge Ariel Monzón",
+  "gradoMemorial": "Suboficial Primero (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "Lanús, Buenos Aires",
+   "fecha": "1980-06-09",
+   "localidad": "Lanús",
+   "provincia": "Buenos Aires",
+   "lat": -34.70756,
+   "lon": -58.39113,
+   "georefId": "06434010",
+   "precision": "localidad",
+   "nota": null
+  },
+  "edad": 37,
+  "bio": [
+   "Jorge Ariel Monzón, nacido en Lanús, Buenos Aires, el 09 de junio de 1980, fue Suboficial Segundo, llegando al grado de Suboficial Primero (post mortem).",
+   "Sus tareas y misiones en el A.R.A. \"San Juan\" previas fueron como Encargado Cargo Comunicaciones desde el año 2016 hasta su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue la Jefatura Militar del Estado Mayor General de la Armada.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en el año 2008.",
+   "Su primer contacto con el A.R.A. \"San Juan\" fue el 05 de febrero del año 2016, como Encargado Cargo Comunicaciones."
+  ]
+ },
+ {
+  "orden": 42,
+  "nombreMemorial": "Luis Carlos Nolasco",
+  "gradoMemorial": "Suboficial Segundo (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "Salta",
+   "fecha": "1987-06-03",
+   "localidad": "Salta",
+   "provincia": "Salta",
+   "lat": -24.7832,
+   "lon": -65.41025,
+   "georefId": "6602805003",
+   "precision": "ambigua",
+   "nota": "El memorial dice «Salta»: puede ser la ciudad o la provincia. Se ubica en la ciudad capital."
+  },
+  "edad": 30,
+  "bio": [
+   "Luis Carlos Nolasco, nacido en Salta, el 03 de junio del año 1987, fue Cabo Principal, llegando al grado de Suboficial Segundo (post mortem).",
+   "Sus tareas y misiones en el A.R.A. \"San Juan\" previas fueron en Auxiliar Cargo Electricidad desde 2015 hasta su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en el Destructor A.R.A. “La Argentina”.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en el año 2013.",
+   "Su primer contacto con el A.R.A. \"San Juan\" fue el 07 de agosto del año 2015, como Auxiliar Cargo Electricidad."
+  ]
+ },
+ {
+  "orden": 43,
+  "nombreMemorial": "David Adolfo Melián",
+  "gradoMemorial": "Suboficial Segundo (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "San Andrés del Sur, Jimenez, Santiago del Estero",
+   "fecha": "1986-07-08",
+   "localidad": "San Andrés del Sur",
+   "provincia": "Santiago del Estero",
+   "lat": -26.79775,
+   "lon": -64.30602,
+   "georefId": "86091A29",
+   "precision": "localidad",
+   "nota": "Paraje del departamento Jiménez (Base de Asentamientos Humanos)."
+  },
+  "edad": 31,
+  "bio": [
+   "David Adolfo Melián, nacido en San Andrés del Sur, Jimenez, Santiago del Estero, el 8 de julio de 1986, fue Cabo Principal, llegando al grado de Suboficial Segundo (post mortem).",
+   "Sus tareas y misiones en el A.R.A. \"San Juan\" previas fueron como Dotación Complementaria en el año 2014 y como Ayudante Cargo Reparaciones Eléctricas desde 2015 hasta su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en el Servicio de Análisis Operativo, Armas y Guerra Electrónica.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en el año 2013.",
+   "Su primer contacto con el A.R.A. \"San Juan\" fue el 16 de diciembre del año 2013, como Dotación Complementaria."
+  ]
+ },
+ {
+  "orden": 44,
+  "nombreMemorial": "Aníbal Tolaba",
+  "gradoMemorial": "Cabo Principal (post mortem)",
+  "sexo": "varón",
+  "nacimiento": {
+   "texto": "San Salvador de Jujuy, Jujuy",
+   "fecha": "1991-12-12",
+   "localidad": "San Salvador de Jujuy",
+   "provincia": "Jujuy",
+   "lat": -24.18583,
+   "lon": -65.29948,
+   "georefId": "38021060",
+   "precision": "localidad",
+   "nota": null
+  },
+  "edad": 25,
+  "bio": [
+   "Aníbal Tolaba, nacido en San Salvador de Jujuy, Jujuy, el 12 de diciembre de 1991, fue Cabo Primero, llegando al grado de Cabo Principal (post mortem).",
+   "Sus tareas y misiones en el A.R.A. \"San Juan\" previas fueron como Ayudante de Sonar desde el año 2014 hasta su última misión en 2017.",
+   "Su primera residencia de la Carrera Militar fue en la Escuela de Submarinos y Buceo.",
+   "Algunos hitos clave de su carrera militar incluyen el Curso de Capacitación en Submarinos en el año 2013.",
+   "Su primer contacto con el A.R.A. \"San Juan\" fue el 16 de diciembre de 2013, como Ayudante de Sonar."
+  ]
+ }
+]

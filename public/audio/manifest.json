@@ -1,4 +1,0 @@
-{
-  "_comentario": "Para narrar con una voz propia en lugar del sintetizador del navegador: grabá un archivo por clave, guardalo en esta carpeta y listalo acá como \"clave\": \"archivo.mp3\". Las claves están en src/audio/narration.ts. Si el objeto queda vacío, se usa la voz del navegador.",
-  "narracion": {}
-}
