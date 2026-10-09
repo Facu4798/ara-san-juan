@@ -50,6 +50,103 @@ export function gridMesh(
   return geom;
 }
 
+/**
+ * Uniformes compartidos del relieve. `uTrue` (0 a 1) lleva el relieve de la exageración del mapa
+ * (×25 en el mar, ×8 en tierra) a la escala real 1:1: al acercarse al sitio del hallazgo el fondo
+ * «se aplana» hasta sus proporciones verdaderas. `uHole` recorta el hueco donde se dibuja la
+ * parcela fina del sitio (x0, x1, z0, z1 en km; el último valor es la opacidad del recorte).
+ */
+export const terrainUniforms = {
+  uTrue: { value: 0 },
+  uExagSea: { value: 25 },
+  uExagLand: { value: 8 },
+  uHole: { value: new THREE.Vector4(0, 0, 0, 0) },
+  uHoleOn: { value: 0 },
+};
+
+/**
+ * Igual que gridMesh, pero guarda la elevación real de cada vértice (aElev, en m) y una segunda
+ * normal calculada a escala real (aNormalTrue): el material la mezcla según uTrue, así el
+ * sombreado acompaña la desexageración del relieve.
+ */
+export function gridMeshMorph(
+  g: Grid,
+  toPos: ToPos,
+  color: (elevM: number, out: THREE.Color, row: number, col: number) => void,
+  edgeFade?: { cells: number; color: string },
+) {
+  const geom = gridMesh(g, toPos, color, edgeFade);
+  const n = g.rows * g.cols;
+  const elev = new Float32Array(n);
+  for (let i = 0; i < n; i++) elev[i] = g.elevation[i];
+  geom.setAttribute('aElev', new THREE.BufferAttribute(elev, 1));
+  // Normales a escala real: misma malla con y = elevación en km.
+  const pos = geom.getAttribute('position') as THREE.BufferAttribute;
+  const flat = new THREE.BufferGeometry();
+  const fp = new Float32Array(n * 3);
+  for (let i = 0; i < n; i++) fp.set([pos.getX(i), elev[i] / 1000, pos.getZ(i)], i * 3);
+  flat.setAttribute('position', new THREE.BufferAttribute(fp, 3));
+  flat.setIndex(geom.getIndex());
+  flat.computeVertexNormals();
+  geom.setAttribute('aNormalTrue', flat.getAttribute('normal').clone());
+  flat.dispose();
+  return geom;
+}
+
+/** Material estándar del relieve con desexageración continua (ver terrainUniforms). */
+export function terrainMaterial(opts: { polygonOffset?: boolean; hole?: boolean } = {}) {
+  const m = new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.95, metalness: 0 });
+  if (opts.polygonOffset) {
+    m.polygonOffset = true;
+    m.polygonOffsetFactor = -2;
+    m.polygonOffsetUnits = -4;
+  }
+  m.onBeforeCompile = (shader) => {
+    Object.assign(shader.uniforms, terrainUniforms);
+    shader.vertexShader = shader.vertexShader
+      .replace(
+        '#include <common>',
+        `#include <common>
+         attribute float aElev;
+         attribute vec3 aNormalTrue;
+         uniform float uTrue;
+         uniform float uExagSea;
+         uniform float uExagLand;
+         varying vec2 vTerrainXZ;`,
+      )
+      .replace(
+        '#include <beginnormal_vertex>',
+        'vec3 objectNormal = normalize(mix(vec3(normal), aNormalTrue, uTrue));',
+      )
+      .replace(
+        '#include <begin_vertex>',
+        `vec3 transformed = vec3(position);
+         float exag = aElev < 0.0 ? mix(uExagSea, 1.0, uTrue) : mix(uExagLand, 1.0, uTrue);
+         transformed.y = aElev * 0.001 * exag;
+         vTerrainXZ = position.xz;`,
+      );
+    if (opts.hole) {
+      shader.fragmentShader = shader.fragmentShader
+        .replace(
+          '#include <common>',
+          `#include <common>
+           uniform vec4 uHole;
+           uniform float uHoleOn;
+           varying vec2 vTerrainXZ;`,
+        )
+        .replace(
+          '#include <clipping_planes_fragment>',
+          `#include <clipping_planes_fragment>
+           if (uHoleOn > 0.5 && vTerrainXZ.x > uHole.x && vTerrainXZ.x < uHole.y && vTerrainXZ.y > uHole.z && vTerrainXZ.y < uHole.w) discard;`,
+        );
+    } else {
+      shader.fragmentShader = shader.fragmentShader.replace('#include <common>', '#include <common>\n varying vec2 vTerrainXZ;');
+    }
+  };
+  m.customProgramCacheKey = () => `terrain-morph-${opts.hole ? 'hole' : 'plain'}`;
+  return m;
+}
+
 /** Isóbatas reales (marching squares de d3) como segmentos 3D, en una sola geometría. */
 export function gridContours(g: Grid, thresholds: number[], toPos: ToPos, lift = 0) {
   const sets = contours().size([g.cols, g.rows]).thresholds(thresholds)(g.elevation);

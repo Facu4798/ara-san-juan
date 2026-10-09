@@ -8,7 +8,7 @@ import type { Grid } from '../../data/types';
 import { HYPOTHESIS_SPEED, referencePlaces } from '../../data/positions';
 import { fmt0, fmt1 } from '../../utils/format';
 import { mapPoint } from '../geoFrame';
-import { gridMesh, gridContours, hypsometric } from '../terrain';
+import { gridMesh, gridMeshMorph, gridContours, hypsometric, terrainMaterial, terrainUniforms } from '../terrain';
 import { Label } from '../Label';
 
 /**
@@ -193,9 +193,14 @@ export function Cities({ ids, size = 6, labels = true }: { ids: string[]; size?:
   );
 }
 
+/** Materiales del relieve compartidos: cambian de exageración con terrainUniforms.uTrue. */
+const MAT_TERRAIN = terrainMaterial({ hole: true });
+const MAT_REGIONAL = terrainMaterial({ polygonOffset: true, hole: true });
+
 /**
  * Base del mapa del Atlántico Sur: relieve GEBCO (tierra + mar, el color codifica la
  * elevación), detalle regional opcional, isóbatas, superficie translúcida, costa y retícula.
+ * El relieve está exagerado (×25 mar, ×8 tierra) y se desexagera hasta 1:1 al acercarse (uTrue).
  */
 export function MapBase({
   geo,
@@ -209,30 +214,39 @@ export function MapBase({
   /** false: el fondo marino se muestra en un tono neutro (capa «batimetría» apagada). */
   bathymetry?: boolean;
 }) {
-  const terrain = cached(geo.shelf, 'terrain', () => gridMesh(geo.shelf, mapPoint, hypsometric, { cells: 9, color: MAP_BG }));
-  const flat = cached(geo.shelf, 'terrain-flat', () =>
-    gridMesh(geo.shelf, mapPoint, (e, out) => (e < 0 ? out.set('#2a4e60') : hypsometric(e, out)), { cells: 9, color: MAP_BG }),
+  const terrain = cached(geo.shelf, 'terrain-morph', () => gridMeshMorph(geo.shelf, mapPoint, hypsometric, { cells: 9, color: MAP_BG }));
+  const flat = cached(geo.shelf, 'terrain-flat-morph', () =>
+    gridMeshMorph(geo.shelf, mapPoint, (e, out) => (e < 0 ? out.set('#2a4e60') : hypsometric(e, out)), { cells: 9, color: MAP_BG }),
   );
-  const regional = cached(geo.regional, 'terrain', () => gridMesh(geo.regional, mapPoint, hypsometric));
+  const regional = cached(geo.regional, 'terrain-morph', () => gridMeshMorph(geo.regional, mapPoint, hypsometric));
   const shelfEdge = cached(geo.shelf, 'iso200', () => gridContours(geo.shelf, [-200], mapPoint, 0.6));
   const deepIso = cached(geo.shelf, 'isoDeep', () => gridContours(geo.shelf, [-1000, -3000], mapPoint, 0.6));
   const coast = cached(geo.land, 'coast', () => coastGeometry(geo.land));
+
+  // Las líneas del mapa (isóbatas, costa, retícula) están dibujadas sobre el relieve exagerado:
+  // se desvanecen al desexagerar para no quedar flotando sobre el mar real.
+  const lines = useRef<(THREE.LineSegments | null)[]>([]);
+  const base = useRef([0.45, 0.18, 0.6, graticuleOpacity]);
+  base.current[3] = graticuleOpacity;
+  useFrame(() => {
+    const k = 1 - terrainUniforms.uTrue.value;
+    lines.current.forEach((l, i) => {
+      if (!l) return;
+      l.visible = k > 0.02;
+      (l.material as THREE.LineBasicMaterial).opacity = base.current[i] * k;
+    });
+  });
+
   return (
     <group>
-      <mesh geometry={bathymetry ? terrain : flat}>
-        <meshStandardMaterial vertexColors roughness={0.95} metalness={0} />
-      </mesh>
-      {bathymetry && (
-        <mesh geometry={regional} visible={detail}>
-          <meshStandardMaterial vertexColors roughness={0.95} metalness={0} polygonOffset polygonOffsetFactor={-2} polygonOffsetUnits={-4} />
-        </mesh>
-      )}
+      <mesh geometry={bathymetry ? terrain : flat} material={MAT_TERRAIN} />
+      {bathymetry && <mesh geometry={regional} visible={detail} material={MAT_REGIONAL} />}
       {bathymetry && (
         <>
-          <lineSegments geometry={shelfEdge}>
+          <lineSegments geometry={shelfEdge} ref={(l) => { lines.current[0] = l; }}>
             <lineBasicMaterial color="#bfe3ee" transparent opacity={0.45} />
           </lineSegments>
-          <lineSegments geometry={deepIso}>
+          <lineSegments geometry={deepIso} ref={(l) => { lines.current[1] = l; }}>
             <lineBasicMaterial color="#9fcfdf" transparent opacity={0.18} />
           </lineSegments>
         </>
@@ -241,10 +255,10 @@ export function MapBase({
         <planeGeometry args={[9000, 9000]} />
         <meshStandardMaterial color="#2b6479" transparent opacity={0.3} depthWrite={false} roughness={0.35} metalness={0.1} />
       </mesh>
-      <lineSegments geometry={coast}>
+      <lineSegments geometry={coast} ref={(l) => { lines.current[2] = l; }}>
         <lineBasicMaterial color="#e9f1f3" transparent opacity={0.6} />
       </lineSegments>
-      <lineSegments geometry={GRATICULE}>
+      <lineSegments geometry={GRATICULE} ref={(l) => { lines.current[3] = l; }}>
         <lineBasicMaterial color="#dbe8ec" transparent opacity={graticuleOpacity} />
       </lineSegments>
     </group>

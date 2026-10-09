@@ -7,7 +7,7 @@ import { WRECK_DEPTH_M, SUBMARINE, depthMarkers } from '../../data/depth';
 import { landmarkById } from '../../data/landmarks';
 import { comparisonAt } from '../../explore/profundidad/depthModel';
 import { Water } from '../Water';
-import { Seabed, WreckSite } from '../DepthWorld';
+import { Seabed, WreckSite } from '../depthParts';
 import { Silhouette } from '../Landmarks';
 import { SubmarineModel } from '../SubmarineModel';
 import { Label } from '../Label';

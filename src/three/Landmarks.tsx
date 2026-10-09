@@ -52,7 +52,7 @@ export function Silhouette({ id, height, baseM, opacity = 1 }: { id: string; hei
         <meshBasicMaterial color="#bcdbe6" transparent opacity={0.07 * opacity} depthWrite={false} side={THREE.DoubleSide} />
       </mesh>
       <mesh geometry={geometry}>
-        <meshBasicMaterial color="#d7e9ef" wireframe transparent opacity={0.4 * opacity} depthWrite={false} />
+        <meshBasicMaterial color="#d7e9ef" wireframe transparent opacity={0.26 * opacity} depthWrite={false} />
       </mesh>
     </group>
   );

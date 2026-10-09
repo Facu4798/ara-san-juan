@@ -47,11 +47,11 @@ export const ROUTE_BACK: RouteNode[] = [
  * Las paradas corresponden a lugares y fechas documentados.
  */
 export const VOYAGE_TIMING = {
-  holdMdp: [0, 0.12],
-  out: [0.12, 0.46],
-  holdUshuaia: [0.46, 0.6],
-  back: [0.6, 0.92],
-  holdEnd: [0.92, 1],
+  holdMdp: [0, 0.36],
+  out: [0.36, 0.62],
+  holdUshuaia: [0.62, 0.7],
+  back: [0.7, 0.94],
+  holdEnd: [0.94, 1],
 } as const;
 
 export type VoyageStop = 'mdp' | 'navegando-1' | 'ushuaia' | 'navegando-2' | 'patrulla';

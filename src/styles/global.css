@@ -67,10 +67,16 @@ button { font: inherit; color: inherit; }
 .overlay { position: fixed; inset: 0; z-index: 2; pointer-events: none; transition: opacity 400ms ease; }
 .overlay.hidden { opacity: 0; visibility: hidden; }
 .overlay > * { pointer-events: auto; }
-.overlay > .curtain, .overlay > .scale-note, .overlay > .clock, .overlay > .act-label { pointer-events: none; }
+.overlay > .screenfx, .overlay > .scale-note, .overlay > .clock, .overlay > .act-label { pointer-events: none; }
 
-.curtain { position: fixed; inset: 0; background: var(--bg); animation: curtain 950ms ease forwards; z-index: 1; }
-@keyframes curtain { 0% { opacity: 1; } 35% { opacity: 1; } 100% { opacity: 0; } }
+/* Efectos de pantalla de la presión (viñeta, ámbar, ruido, destello, oscurecimiento) */
+.screenfx { position: fixed; inset: 0; z-index: 1; overflow: hidden; }
+.screenfx .fx { position: absolute; inset: 0; opacity: 0; will-change: opacity; }
+.fx-amber { box-shadow: inset 0 0 180px 30px rgba(213, 166, 93, 0.38); }
+.fx-grain { background-size: 180px 180px; mix-blend-mode: overlay; }
+.fx-black { background: #02070c; }
+.fx-flash { background: radial-gradient(circle at center, #ffffff 0%, #e4f6ff 45%, #a9dcf0 100%); }
+
 
 .act-label {
   position: fixed; top: calc(var(--top) + 12px); left: var(--gutter); z-index: 4;
@@ -209,7 +215,9 @@ button { font: inherit; color: inherit; }
 /* ——— Profundidad: lectura y carril ——— */
 .depth-hud { position: fixed; inset: 0 0 var(--bar) 0; z-index: 3; pointer-events: none; }
 .readout { position: absolute; right: var(--gutter); top: calc(var(--top) + 12px); text-align: right; font-family: var(--mono); }
-.readout .depth { font-size: clamp(48px, 6.4vw, 92px); line-height: 0.95; color: var(--ink); }
+.readout-main { display: flex; align-items: center; justify-content: flex-end; gap: 14px; }
+.readout .gauge { display: block; flex: none; filter: drop-shadow(0 4px 14px rgba(0,0,0,.35)); }
+.readout .depth { font-size: clamp(44px, 5.2vw, 78px); line-height: 0.95; color: var(--ink); }
 .readout .unit { font-size: 18px; color: var(--muted); margin-left: 6px; }
 .readout .pressure { margin-top: 8px; font-size: 14px; color: var(--ink-2); }
 .readout .obel { margin-top: 2px; font-size: 14px; color: var(--hecho); }
@@ -261,13 +269,29 @@ button { font: inherit; color: inherit; }
 .transport .play { color: var(--ink); border-color: var(--ink-2); min-width: 42px; }
 .transport button:hover, .presenter .sound:hover { color: var(--ink); border-color: var(--ink-2); }
 .transport .time { font-family: var(--mono); font-size: 12px; color: var(--muted); margin-left: 6px; white-space: nowrap; }
-.timeline { flex: 1; display: flex; gap: 3px; list-style: none; margin: 0; padding: 0; min-width: 0; }
-.timeline li { position: relative; flex-basis: 0; min-width: 6px; }
-.timeline li button { display: block; width: 100%; height: 14px; background: none; border: 0; padding: 5px 0; cursor: pointer; }
-.timeline li button::before { content: ''; display: block; height: 4px; background: rgba(225, 233, 236, 0.16); }
-.timeline .fill { position: absolute; left: 0; right: 0; top: 5px; height: 4px; background: var(--ink-2); transform-origin: left; pointer-events: none; }
-.timeline li button[aria-current='true']::before { background: rgba(225, 233, 236, 0.28); }
-.timeline .act-tick { position: absolute; left: 0; top: -14px; font-family: var(--mono); font-size: 10px; color: var(--muted); pointer-events: none; }
+/* Línea de tiempo continua con hitos documentados */
+.jt { position: relative; flex: 1; height: 34px; min-width: 0; cursor: pointer; touch-action: none; user-select: none; -webkit-user-select: none; }
+.jt:focus-visible { outline: 2px solid var(--estimacion); outline-offset: 2px; }
+.jt-acts { position: absolute; left: 0; right: 0; top: 15px; height: 4px; display: flex; gap: 3px; pointer-events: none; }
+.jt-seg { position: relative; flex-basis: 0; min-width: 4px; background: rgba(225, 233, 236, 0.16); }
+.jt-seg.on { background: rgba(225, 233, 236, 0.3); }
+.jt-seg em { position: absolute; left: 0; top: -15px; font-style: normal; font-family: var(--mono); font-size: 10px; color: var(--muted); }
+.jt-fill { position: absolute; left: 0; top: 15px; height: 4px; background: var(--ink-2); pointer-events: none; opacity: 0.9; }
+.jt-handle { position: absolute; top: 8px; width: 3px; height: 18px; background: var(--ink); transform: translateX(-50%); border-radius: 1px; box-shadow: 0 0 10px rgba(234, 244, 248, 0.6); pointer-events: none; }
+.jt.dragging .jt-handle { height: 22px; top: 6px; box-shadow: 0 0 14px rgba(234, 244, 248, 0.9); }
+.jt-hito { position: absolute; top: 4px; width: 22px; height: 26px; margin-left: -11px; background: none; border: 0; padding: 0; cursor: pointer; }
+.jt-hito i { position: absolute; left: 50%; top: 5px; width: 8px; height: 8px; transform: translateX(-50%) rotate(45deg); border: 1.5px solid var(--ink-2); background: var(--bg); transition: transform 150ms ease, background 150ms ease; }
+.jt-hito.past i { background: var(--ink-2); }
+.jt-hito.on i { background: var(--hecho); border-color: var(--hecho); box-shadow: 0 0 8px rgba(234, 244, 248, 0.7); }
+.jt-hito:hover i, .jt-hito:focus-visible i { transform: translateX(-50%) rotate(45deg) scale(1.35); }
+.jt-tip {
+  position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); white-space: nowrap; pointer-events: none;
+  background: var(--panel-solid); border: 1px solid var(--line); padding: 5px 9px; font-family: var(--mono); font-size: 11.5px; color: var(--ink-2);
+  opacity: 0; transition: opacity 140ms ease;
+}
+.jt-tip b { color: var(--ink); font-weight: 500; margin-right: 4px; }
+.jt-hito:hover .jt-tip, .jt-hito:focus-visible .jt-tip { opacity: 1; }
+.jt-now { font-family: var(--mono); font-size: 12px; color: var(--estimacion); min-width: 3.4em; white-space: nowrap; }
 .presenter .sound { white-space: nowrap; }
 .presenter .sound[aria-pressed='true'] { color: var(--estimacion); border-color: var(--estimacion); }
 
