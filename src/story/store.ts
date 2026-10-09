@@ -94,12 +94,19 @@ function setT(t: number, extra: Partial<StoryState> = {}) {
   emit({ ...state, ...extra, t: c, index, p });
 }
 
-/** Sólo desarrollo: congela el tiempo para tomar capturas exactas. */
-let devLock = false;
+/**
+ * Bloqueo del relato: mientras vale true el scroll, la rueda, el teclado y los gestos no mueven el tiempo.
+ * Lo usa el tour (que fija el tiempo con seekNow) y, en desarrollo, el atajo `freeze` para tomar capturas exactas.
+ */
+let locked = false;
+export function setStoryLocked(v: boolean) {
+  locked = v;
+}
+export const isStoryLocked = () => locked;
 
 function readScroll() {
   const el = storyEl();
-  if (!el || devLock) return;
+  if (!el || locked) return;
   const d = window.scrollY - el.offsetTop;
   scrollT = Math.min(TOTAL_SECONDS, Math.max(0, d / pxPerSecond()));
   const inStory = d < TOTAL_SECONDS * pxPerSecond() + window.innerHeight * 0.6;
@@ -276,13 +283,14 @@ export function installStoryDriver(): () => void {
   };
   // Cualquier gesto de scroll del usuario toma el control y pausa la reproducción.
   const onUserScroll = () => {
+    if (locked) return;
     if (state.playing || state.flying) {
       cancelAnimationFrame(flightRaf);
       stop();
     }
   };
   const onKey = (e: KeyboardEvent) => {
-    if (!storyEl() || !state.inStory || e.metaKey || e.ctrlKey || e.altKey) return;
+    if (!storyEl() || !state.inStory || locked || e.metaKey || e.ctrlKey || e.altKey) return;
     const tag = (e.target as HTMLElement | null)?.tagName;
     if (tag === 'INPUT' || tag === 'TEXTAREA') return;
     if (e.key === 'ArrowRight' || e.key === 'PageDown') {
@@ -338,7 +346,7 @@ function parseDeepLink(): number | null {
 /** Con la película detenida la dirección apunta al instante actual (se puede compartir). */
 let linkTimer = 0;
 function syncDeepLink() {
-  if (state.playing || state.flying) return;
+  if (state.playing || state.flying || locked) return;
   window.clearTimeout(linkTimer);
   linkTimer = window.setTimeout(() => {
     if (state.playing || state.flying) return;
@@ -358,7 +366,7 @@ export function shareUrl() {
 if (import.meta.env.DEV && typeof window !== 'undefined') {
   (window as unknown as { __story?: unknown }).__story = {
     seekNow, flyTo, play, stop, storyStore, TOTAL_SECONDS,
-    freeze: (t: number) => { devLock = false; seekNow(t); devLock = true; },
-    unfreeze: () => { devLock = false; },
+    freeze: (t: number) => { locked = false; seekNow(t); locked = true; },
+    unfreeze: () => { locked = false; },
   };
 }

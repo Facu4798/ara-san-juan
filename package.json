@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit",
     "preview": "vite preview",
     "verify": "node scripts/verify-data.mjs",
-    "motion": "node scripts/check-motion.mjs"
+    "motion": "node scripts/check-motion.mjs",
+    "tour": "node scripts/check-tour.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.9",

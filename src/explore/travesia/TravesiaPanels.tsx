@@ -88,6 +88,7 @@ export function TravesiaTimeline() {
       </div>
       <div
         className="tl-track"
+        data-tour="trav-track"
         ref={track}
         onPointerDown={(e) => { try { (e.target as HTMLElement).setPointerCapture?.(e.pointerId); } catch { /* sin captura: el arrastre sigue funcionando */ } seek(e.clientX); }}
         onPointerMove={(e) => { if (e.buttons === 1) seek(e.clientX); }}
@@ -179,7 +180,7 @@ export function TravesiaLayers() {
       <fieldset className="field">
         <legend>Capas del mapa</legend>
         {TRAVESIA_LAYERS.map((l) => (
-          <label key={l.id} className="toggle">
+          <label key={l.id} className="toggle" data-tour={`layer-${l.id}`}>
             <input type="checkbox" checked={layers[l.id]} onChange={(e) => setApp({ layers: { ...layers, [l.id]: e.target.checked } })} />
             <span>
               {l.label}
@@ -188,7 +189,7 @@ export function TravesiaLayers() {
           </label>
         ))}
       </fieldset>
-      <button type="button" className="btn-ghost small block" onClick={() => setApp({ subInspect: true, selectedPart: null })}>
+      <button type="button" className="btn-ghost small block" data-tour="sub3d" onClick={() => setApp({ subInspect: true, selectedPart: null })}>
         Ver el submarino en 3D
       </button>
       <TravesiaFindings />

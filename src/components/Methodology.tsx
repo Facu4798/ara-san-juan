@@ -134,6 +134,14 @@ export function Methodology() {
           </p>
         </div>
         <div>
+          <h3>Tour de 1 minuto</h3>
+          <p>
+            Recorrido automático de 60 s por la película y por los cuatro módulos de Explorar. No agrega datos ni afirmaciones: sus
+            subtítulos describen lo que se ve y conservan los rótulos (reconstrucción, representación conceptual, profundidad del
+            colapso no publicada). El cursor es una guía visual: los cambios que se ven son los mismos que haría una persona.
+          </p>
+        </div>
+        <div>
           <h3>Pendiente</h3>
           <p>
             OCR del informe de la Comisión Bicameral (los PDF son escaneos) · requerimiento fiscal completo · coordenada oficial del hallazgo

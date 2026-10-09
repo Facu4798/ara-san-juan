@@ -131,6 +131,15 @@ exageración vertical del relieve o la escala 1:1, según la escena.
 **Panel de evidencia**, en cada acontecimiento: qué se sabe, el fragmento citado (identificado como
 transcripción), el documento asociado, el lugar, las fuentes con sus limitaciones y la clasificación.
 
+## Tour de 1 minuto
+
+El botón **«▶ Tour 1 min»** de la barra superior (y de la portada) recorre toda la página en **60,000 segundos exactos**:
+34 s de lo mejor de la película del submarino (zarpe, última coordenada con su evidencia, descenso con manómetro,
+colapso, hallazgo, línea de tiempo con hitos) y 26 s de **Explorar** (las 44 vidas, la travesía con el submarino en 3D,
+la búsqueda y 907 m). Tiene subtítulos, un cursor fantasma que muestra dónde se hace clic y una tarjeta final. `Esc` sale.
+Con `#tour` en la dirección, la página abre con el tour listo para empezar. El guion está en `src/tour/script.ts` y
+`npm run tour` verifica que dure exactamente 60 s y que cada control señalado exista.
+
 ## El viaje continuo
 
 - **Un solo reloj** (`story/store.ts`): el scroll es la entrada y el tiempo que ve la escena se mueve con inercia; la

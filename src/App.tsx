@@ -8,6 +8,8 @@ import { useSoundDirector } from './audio/useSound';
 import { useApp } from './app/appStore';
 import { TopBar } from './app/TopBar';
 import { ExploreUI } from './explore/ExploreUI';
+import { TourOverlay } from './tour/TourOverlay';
+import { initTourLink, useTour } from './tour/director';
 
 /** La escena 3D (three.js) se descarga aparte, mientras se ve la portada. */
 const Stage = lazy(() => import('./three/Stage'));
@@ -23,10 +25,13 @@ export default function App() {
   const { data: geo, error } = useGeoData();
   const webgl = useMemo(() => hasWebGL(), []);
   const mode = useApp((s) => s.mode);
-  const explore = useExploreData(mode === 'explore');
+  const touring = useTour((s) => s.phase === 'running' || s.phase === 'ended' || s.phase === 'gate');
+  // Durante el tour se precargan los datos de Explorar para que el cambio de módulo no espere.
+  const explore = useExploreData(mode === 'explore' || touring);
   const storyScroll = useRef(0);
 
   useEffect(() => installStoryDriver(), []);
+  useEffect(() => initTourLink(), []);
   useSoundDirector();
 
   // Al pasar de un modo a otro se conserva la posición de la historia guiada.
@@ -53,6 +58,7 @@ export default function App() {
   return (
     <>
       <TopBar />
+      <TourOverlay />
       <div className="stage">
         {webgl && geo && (
           <Suspense fallback={null}>

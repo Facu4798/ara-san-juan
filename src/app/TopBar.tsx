@@ -2,6 +2,7 @@ import { MODULES, openModule, setApp, useApp } from './appStore';
 import { useAudioState } from '../audio/useSound';
 import { setMuted, setVolume, start } from '../audio/engine';
 import { stop as stopStory } from '../story/store';
+import { startTour } from '../tour/director';
 
 /**
  * Barra superior: título, cambio entre historia guiada y exploración libre, acceso directo a
@@ -28,6 +29,7 @@ export function TopBar() {
           <button
             key={m.id}
             type="button"
+            data-tour={`nav-${m.id}`}
             aria-current={mode === 'explore' && module === m.id}
             onClick={() => { stopStory(); openModule(m.id); }}
             title={m.label}
@@ -39,6 +41,9 @@ export function TopBar() {
         ))}
       </nav>
       <div className="tools">
+        <button type="button" className="tour-btn" data-tour="tour-btn" onClick={() => startTour()} title="Una vuelta por toda la página en 60 segundos">
+          <span aria-hidden="true">▶</span> Tour <span className="lbl">1 min</span>
+        </button>
         <button
           type="button"
           className="link"

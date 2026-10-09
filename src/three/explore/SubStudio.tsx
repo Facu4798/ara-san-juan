@@ -1,60 +1,32 @@
-import { useMemo } from 'react';
+import { useEffect } from 'react';
 import { Html } from '@react-three/drei';
-import * as THREE from 'three';
 import { useApp, setApp } from '../../app/appStore';
 import { SUBMARINE } from '../../data/depth';
 import { SUB_PARTS } from '../../explore/travesia/subParts';
+import { SubmarineModel, collapseUniform } from '../SubmarineModel';
 
 /**
- * Submarino para inspeccionar (escala 1:1, en metros). Forma ESQUEMÁTICA: sólo la eslora
- * (65,93 m) y el ancho del casco resistente (7 m) son datos. Las secciones proa / centro / popa
- * se resaltan al seleccionarlas; sus límites son convencionales.
+ * Submarino para inspeccionar (escala 1:1, en metros): el mismo modelo esquemático de la película.
+ * Sólo la eslora (65,93 m) y el ancho del casco resistente (7 m) son datos. Las zonas proa / casco / popa
+ * se resaltan al seleccionarlas con un marco; sus límites son convencionales.
  */
 const L = SUBMARINE.esloraM;
 const R = SUBMARINE.cascoResistenteAnchoM / 2;
 
-/** Radio del casco a lo largo de la eslora (x de −L/2 a L/2): proa redondeada, popa afinada. */
-function radiusAt(x: number) {
-  const u = (x + L / 2) / L; // 0 popa → 1 proa
-  if (u > 0.9) return R * Math.sqrt(Math.max(0, 1 - ((u - 0.9) / 0.1) ** 2));
-  if (u < 0.22) return R * (0.12 + 0.88 * Math.sin(((u / 0.22) * Math.PI) / 2));
-  return R;
-}
-
-function hullSection(x0: number, x1: number) {
-  const pts: THREE.Vector2[] = [];
-  const n = 40;
-  for (let i = 0; i <= n; i++) {
-    const x = x0 + ((x1 - x0) * i) / n;
-    pts.push(new THREE.Vector2(Math.max(0.001, radiusAt(x)), x));
-  }
-  // Lathe gira alrededor de Y: se rota para que la eslora quede sobre X.
-  return new THREE.LatheGeometry(pts, 48).rotateZ(-Math.PI / 2);
-}
-
-const SECTIONS = {
-  popa: [-L / 2, -12],
-  casco: [-12, 18],
-  proa: [18, L / 2],
-} as const;
+/** Zona de cada parte sobre el modelo: [centro x, largo] (m); la vela se marca en su posición. */
+const ZONES: Record<string, { cx: number; len: number; cy: number; h: number }> = {
+  popa: { cx: (-L / 2 + -12) / 2, len: L / 2 - 12, cy: 0, h: 2 * R + 1.2 },
+  casco: { cx: 3, len: 30, cy: 0, h: 2 * R + 1.2 },
+  proa: { cx: (18 + L / 2) / 2, len: L / 2 - 18, cy: 0, h: 2 * R + 1.2 },
+  vela: { cx: 8.5, len: 11.5, cy: R + 3.6, h: 7.4 },
+};
 
 export function SubStudio() {
   const selected = useApp((s) => s.selectedPart);
-  const geoms = useMemo(() => ({
-    popa: hullSection(...SECTIONS.popa),
-    casco: hullSection(...SECTIONS.casco),
-    proa: hullSection(...SECTIONS.proa),
-  }), []);
-
-  const mat = (id: string) => (
-    <meshStandardMaterial
-      color={selected === id ? '#cfe9f3' : '#8ea3ad'}
-      emissive={selected === id ? '#2f6f87' : '#000000'}
-      emissiveIntensity={selected === id ? 0.6 : 0}
-      roughness={0.6}
-      metalness={0.25}
-    />
-  );
+  useEffect(() => {
+    collapseUniform.value = 0;
+  }, []);
+  const z = selected ? ZONES[selected] : null;
 
   return (
     <group>
@@ -65,28 +37,14 @@ export function SubStudio() {
       {/* Grilla de piso: 10 m por celda, para leer la escala. */}
       <gridHelper args={[160, 16, '#5d7a87', '#2a4654']} position={[0, -R - 2, 0]} />
 
-      <mesh geometry={geoms.popa} onClick={(e) => { e.stopPropagation(); setApp({ selectedPart: 'popa' }); }}>{mat('popa')}</mesh>
-      <mesh geometry={geoms.casco} onClick={(e) => { e.stopPropagation(); setApp({ selectedPart: 'casco' }); }}>{mat('casco')}</mesh>
-      <mesh geometry={geoms.proa} onClick={(e) => { e.stopPropagation(); setApp({ selectedPart: 'proa' }); }}>{mat('proa')}</mesh>
+      <SubmarineModel />
 
-      {/* Vela (forma genérica) */}
-      <mesh position={[8, R + 3.2, 0]} onClick={(e) => { e.stopPropagation(); setApp({ selectedPart: 'vela' }); }}>
-        <boxGeometry args={[11, 6.4, 2.4]} />
-        {mat('vela')}
-      </mesh>
-      {/* Timones de popa en cruz y hélice (formas genéricas) */}
-      <mesh position={[-L / 2 + 3, 0, 0]}>
-        <boxGeometry args={[4, 2 * R + 4, 0.5]} />
-        <meshStandardMaterial color="#7d919b" roughness={0.7} />
-      </mesh>
-      <mesh position={[-L / 2 + 3, 0, 0]}>
-        <boxGeometry args={[4, 0.5, 2 * R + 4]} />
-        <meshStandardMaterial color="#7d919b" roughness={0.7} />
-      </mesh>
-      <mesh position={[-L / 2 - 0.6, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
-        <cylinderGeometry args={[1.6, 1.6, 0.4, 24]} />
-        <meshStandardMaterial color="#6d828c" roughness={0.6} />
-      </mesh>
+      {z && (
+        <mesh position={[z.cx, z.cy, 0]}>
+          <boxGeometry args={[z.len, z.h, 2 * R + 1.4]} />
+          <meshBasicMaterial color="#70bbd8" wireframe transparent opacity={0.7} />
+        </mesh>
+      )}
 
       {/* Puntos interactivos */}
       {SUB_PARTS.map((p) => (

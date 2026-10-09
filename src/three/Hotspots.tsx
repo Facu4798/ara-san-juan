@@ -2,8 +2,7 @@ import { useRef, useState } from 'react';
 import { Html } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
-import { storyStore } from '../story/store';
-import { flyTo } from '../story/store';
+import { storyStore, flyTo, isStoryLocked } from '../story/store';
 import { setApp } from '../app/appStore';
 import { ANCHOR } from '../journey/anchors';
 import { HITOS, T } from '../journey/timeline';
@@ -34,8 +33,9 @@ export function Hotspots() {
     const st = storyStore.get();
     const dist = cameraAt(st.t).dist;
     // Sólo con la película detenida y la cámara en vista de mapa (los puntos de lugar).
-    const on = !st.playing && !st.flying && dist > 25 && st.t < T.descenso - 1;
-    const on2 = !st.playing && !st.flying && st.t >= T.distancia + 3.4 && st.t < T.cierre;
+    const idle = !st.playing && !st.flying && !isStoryLocked();
+    const on = idle && dist > 25 && st.t < T.descenso - 1;
+    const on2 = idle && st.t >= T.distancia + 3.4 && st.t < T.cierre;
     const v = on || on2;
     if (v !== last.current) {
       last.current = v;
@@ -79,7 +79,7 @@ export function SubPartSpots() {
     const st = storyStore.get();
     const s = subAt(st.t);
     const d = camera.position.distanceTo(s.pos);
-    const v = !st.playing && !st.flying && d < 0.15 && (s.mode === 'solido' || s.mode === 'reconstruccion') && s.opacity > 0.6;
+    const v = !st.playing && !st.flying && !isStoryLocked() && d < 0.15 && (s.mode === 'solido' || s.mode === 'reconstruccion') && s.opacity > 0.6;
     if (v !== last.current) {
       last.current = v;
       setShow(v);

@@ -58,6 +58,7 @@ export function BusquedaTimeline() {
       </div>
       <div
         className="tl-track"
+        data-tour="busq-track"
         ref={track}
         onPointerDown={(e) => { try { (e.target as HTMLElement).setPointerCapture?.(e.pointerId); } catch { /* sin captura: el arrastre sigue funcionando */ } seek(e.clientX); }}
         onPointerMove={(e) => { if (e.buttons === 1) seek(e.clientX); }}

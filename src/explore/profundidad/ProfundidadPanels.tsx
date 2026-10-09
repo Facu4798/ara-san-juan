@@ -40,6 +40,7 @@ export function DepthControl() {
       <div className="depth-body">
         <div
           className="depth-track"
+          data-tour="depth-track"
           ref={track}
           role="slider"
           tabIndex={0}

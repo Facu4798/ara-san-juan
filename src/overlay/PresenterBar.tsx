@@ -75,6 +75,7 @@ export function PresenterBar() {
 
       <div
         ref={track}
+        data-tour="jt"
         className={`jt${dragging ? ' dragging' : ''}`}
         role="slider"
         tabIndex={0}
@@ -119,7 +120,7 @@ export function PresenterBar() {
         <div className="jt-handle" style={{ left: `${(t / TOTAL_SECONDS) * 100}%` }} aria-hidden="true" />
       </div>
       <span className="jt-now" aria-live="polite">{hito ? `${hito.label}` : ''}</span>
-      <button type="button" className="share" onClick={() => void share()} title="Copiar el enlace a este instante de la película" aria-label="Copiar enlace a este instante">
+      <button type="button" className="share" data-tour="share" onClick={() => void share()} title="Copiar el enlace a este instante de la película" aria-label="Copiar enlace a este instante">
         {copied ? '✓ copiado' : '🔗 enlace'}
       </button>
     </nav>

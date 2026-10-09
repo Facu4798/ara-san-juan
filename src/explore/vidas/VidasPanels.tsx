@@ -93,6 +93,7 @@ function ProvinceBars({ results, selected }: { results: CrewProfile[]; selected:
             key={p.nombre}
             type="button"
             role="listitem"
+            data-tour={`prov-${p.nombre}`}
             className={`hbar${on ? ' on' : ''}`}
             aria-pressed={on}
             onClick={() => {
@@ -260,6 +261,7 @@ function Mosaic({ highlight, selected }: { highlight: Set<number>; selected: num
           <li key={p.orden}>
             <button
               type="button"
+              data-tour={`face-${p.orden}`}
               className={`face${on ? '' : ' dim'}${selected === p.orden ? ' on' : ''}`}
               aria-pressed={selected === p.orden}
               title={`${p.nombre} · ${p.grado} · ${p.edad} años · ${p.nacimiento.localidad}, ${shortProv(p.nacimiento.provincia)}${on ? '' : ' (no cumple los filtros)'}`}

@@ -763,3 +763,45 @@ details > summary { cursor: pointer; }
 
 .presenter .share { background: transparent; border: 1px solid var(--line); color: var(--ink-2); border-radius: 2px; cursor: pointer; font-family: var(--mono); font-size: 12px; height: 32px; padding: 0 10px; white-space: nowrap; }
 .presenter .share:hover { color: var(--ink); border-color: var(--ink-2); }
+
+/* ——— Tour de 1 minuto ——— */
+.topbar .tour-btn { background: rgba(112, 187, 216, 0.16); border: 1px solid var(--estimacion); color: var(--ink); font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em; height: 28px; padding: 0 12px; border-radius: 14px; cursor: pointer; white-space: nowrap; }
+.topbar .tour-btn:hover { background: rgba(112, 187, 216, 0.3); color: #fff; }
+.topbar .tour-btn span { color: var(--estimacion); }
+.btn-ghost.tour-cta { border-color: var(--estimacion); color: var(--ink); }
+
+.tour-shield { position: fixed; inset: 0; z-index: 30; background: transparent; cursor: default; }
+.tour-fade { position: fixed; inset: 0; z-index: 31; background: #02070c; pointer-events: none; }
+.tour-ring { position: fixed; z-index: 32; border: 2px solid var(--estimacion); border-radius: 8px; box-shadow: 0 0 0 4px rgba(112, 187, 216, 0.18), 0 0 22px rgba(112, 187, 216, 0.55); pointer-events: none; opacity: 0; transition: opacity 220ms ease; }
+.tour-cursor { position: fixed; left: 0; top: 0; z-index: 34; pointer-events: none; opacity: 0; transition: opacity 200ms ease; filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.5)); margin: -3px 0 0 -3px; will-change: transform; }
+.tour-ripple { position: fixed; z-index: 33; width: 14px; height: 14px; margin: -7px 0 0 -7px; border: 2px solid var(--estimacion); border-radius: 50%; pointer-events: none; animation: tour-ripple 650ms ease-out forwards; }
+@keyframes tour-ripple { from { transform: scale(0.4); opacity: 0.95; } to { transform: scale(4.6); opacity: 0; } }
+
+.tour-bar { position: fixed; left: 0; right: 0; top: 0; height: 4px; z-index: 40; background: rgba(234, 244, 248, 0.14); pointer-events: none; }
+.tour-bar .fill { height: 100%; background: var(--estimacion); box-shadow: 0 0 10px rgba(112, 187, 216, 0.8); }
+.tour-bar i { position: absolute; top: 0; width: 2px; height: 8px; background: rgba(234, 244, 248, 0.5); transform: translateX(-1px); }
+.tour-bar i.major { height: 12px; background: var(--ink); }
+.tour-chip { position: fixed; z-index: 41; top: calc(var(--top) + 10px); left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 12px; background: rgba(8, 30, 50, 0.86); border: 1px solid var(--line); padding: 6px 8px 6px 12px; border-radius: 16px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2); backdrop-filter: blur(6px); }
+.tour-chip .time { color: var(--ink); font-size: 14px; min-width: 2.6em; text-align: right; }
+.tour-live { width: 8px; height: 8px; border-radius: 50%; background: var(--alerta); box-shadow: 0 0 8px var(--alerta); animation: tour-live 1.2s ease-in-out infinite; }
+@keyframes tour-live { 50% { opacity: 0.35; } }
+.tour-exit { background: transparent; border: 1px solid var(--line); color: var(--ink-2); border-radius: 12px; font-family: var(--mono); font-size: 11px; padding: 3px 10px; cursor: pointer; letter-spacing: 0.06em; }
+.tour-exit:hover { color: var(--ink); border-color: var(--ink-2); }
+.tour-caption { position: fixed; z-index: 41; left: 50%; bottom: calc(var(--bar) + 58px); transform: translateX(-50%); margin: 0; max-width: min(860px, calc(100% - 2 * var(--gutter))); text-align: center; font-size: clamp(16px, 1.7vw, 22px); font-weight: 400; line-height: 1.35; color: #fff; background: rgba(5, 20, 34, 0.82); padding: 10px 20px; border-radius: 6px; border-left: 3px solid var(--estimacion); backdrop-filter: blur(6px); animation: tour-cap 420ms ease both; pointer-events: none; }
+@keyframes tour-cap { from { opacity: 0; transform: translate(-50%, 8px); } to { opacity: 1; transform: translate(-50%, 0); } }
+
+.tour-final, .tour-gate { position: fixed; z-index: 42; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+.tour-gate { background: rgba(3, 12, 20, 0.7); pointer-events: auto; backdrop-filter: blur(4px); }
+.tour-final > *, .tour-gate-card { pointer-events: auto; }
+.tour-final, .tour-gate-card { text-align: center; }
+.tour-final { flex-direction: column; background: radial-gradient(ellipse at center, rgba(5, 20, 34, 0.86) 0%, rgba(5, 20, 34, 0.55) 55%, rgba(5, 20, 34, 0) 80%); padding: 0 var(--gutter); animation: tour-fade-in 500ms ease both; }
+.tour-gate-card { max-width: 560px; background: var(--panel-solid); border: 1px solid var(--line); padding: 28px 32px; border-radius: 4px; }
+.tour-final h2, .tour-gate-card h2 { margin: 6px 0 10px; font-weight: 500; font-size: clamp(26px, 3.4vw, 40px); line-height: 1.2; }
+.tour-final p, .tour-gate-card p { margin: 0 0 18px; max-width: 560px; color: var(--ink-2); font-size: 18px; }
+.tour-actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+@media (max-width: 760px) { .topbar .tour-btn { padding: 0 9px; } .topbar .tour-btn .lbl { display: none; } .tour-chip .chap { display: none; } .tour-caption { bottom: calc(var(--bar) + 50px); font-size: 15px; } }
+
+/* Con el tour en marcha se ocultan los controles que no se pueden tocar */
+body.touring .cover-actions, body.touring .cover-hint, body.touring .look-controls, body.touring .tour-btn { visibility: hidden; }
+
+@keyframes tour-fade-in { from { opacity: 0; } to { opacity: 1; } }
