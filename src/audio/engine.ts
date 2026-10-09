@@ -92,24 +92,37 @@ function buildGraph(c: BaseAudioContext) {
 /** Debe llamarse desde un gesto del usuario (los navegadores bloquean el audio automático). */
 export async function start() {
   if (ctx) {
-    await ctx.resume();
-    if (!state.ready) emit({ ready: true });
+    try {
+      await ctx.resume();
+    } catch {
+      /* se reintenta con el próximo gesto */
+    }
+    if (ctx.state === 'running' && !state.ready) emit({ ready: true });
     return;
   }
   const Ctor = window.AudioContext ?? (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
   if (!Ctor) return;
   ctx = new Ctor();
   const c = ctx;
-  await c.resume();
 
+  // El grafo se arma de inmediato; el contexto arranca (o se reanuda) con el gesto del usuario.
   const g = buildGraph(c);
   master = g.master;
   ambient = g.ambient;
   layers = g.layers;
   layers.setEnv(env, 2.5);
-
-  emit({ ready: true });
   master.gain.setTargetAtTime(state.muted ? 0 : MASTER * state.volume, c.currentTime, 1.2);
+
+  const markReady = () => {
+    if (c.state === 'running' && !state.ready) emit({ ready: true });
+  };
+  c.addEventListener('statechange', markReady);
+  try {
+    await c.resume();
+  } catch {
+    /* si el navegador lo bloquea, el siguiente gesto lo reintenta */
+  }
+  markReady();
 }
 
 function applyEnv(tc?: number) {
@@ -189,6 +202,7 @@ export function stopEvidence() {
 // Sólo en desarrollo: renderiza el colapso sin conectarlo a los parlantes y mide su nivel.
 if (import.meta.env.DEV && typeof window !== 'undefined') {
   (window as unknown as { __audio?: unknown }).__audio = {
+    info: () => ({ ctx: ctx?.state ?? 'sin contexto', layers: !!layers, ready: state.ready, muted: state.muted }),
     async renderCollapse(seconds = 9) {
       const off = new OfflineAudioContext(2, Math.floor(44100 * seconds), 44100);
       const g = buildGraph(off);
