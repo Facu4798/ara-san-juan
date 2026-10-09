@@ -2,6 +2,9 @@ import { useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
+
+/** mergeGeometries exige que todas las piezas estén indexadas o ninguna: se pasan todas a no indexadas. */
+const ni = (g: THREE.BufferGeometry) => (g.index ? g.toNonIndexed() : g);
 import { SUBMARINE } from '../data/depth';
 
 /**
@@ -94,7 +97,7 @@ function buildParts(): Parts {
 
   // Cubierta (casing) sobre el casco: franja baja y alargada.
   const casing = new THREE.CapsuleGeometry(1.15, 36, 6, 14).rotateZ(Math.PI / 2).scale(1, 0.34, 1.35).translate(-5, R * 0.93, 0);
-  const hullAll = mergeGeometries([hull.toNonIndexed(), casing.toNonIndexed()])!;
+  const hullAll = mergeGeometries([ni(hull), ni(casing)])!;
 
   // Vela: perfil hidrodinámico extruido.
   const s = new THREE.Shape();
@@ -113,7 +116,7 @@ function buildParts(): Parts {
   const mastC = new THREE.CylinderGeometry(0.06, 0.06, 2.0, 8).translate(8.4, R * 0.8 + 6.45 + 0.8, 0.0);
   // Planos de la vela (formas genéricas).
   const planeA = new THREE.BoxGeometry(2.6, 0.18, 2.4).translate(10.2, R * 0.8 + 3.7, 0);
-  const sail = mergeGeometries([fair.toNonIndexed(), mastA.toNonIndexed(), mastB.toNonIndexed(), mastC.toNonIndexed(), planeA.toNonIndexed()])!;
+  const sail = mergeGeometries([fair, mastA, mastB, mastC, planeA].map(ni))!;
 
   // Timones de popa en cruz.
   const fin = () => {
@@ -130,7 +133,7 @@ function buildParts(): Parts {
   const f2 = fin().rotateX(Math.PI).translate(fx, 0, 0);
   const f3 = fin().rotateX(Math.PI / 2).translate(fx, 0, 0);
   const f4 = fin().rotateX(-Math.PI / 2).translate(fx, 0, 0);
-  const fins = mergeGeometries([f1, f2, f3, f4].map((g) => g.toNonIndexed()))!;
+  const fins = mergeGeometries([f1, f2, f3, f4].map(ni))!;
 
   // Hélice de 5 palas (gira alrededor de x).
   const blades: THREE.BufferGeometry[] = [];
@@ -139,17 +142,17 @@ function buildParts(): Parts {
     b.rotateY(0.55);
     b.translate(0, 1.55, 0);
     b.rotateX((i / 5) * Math.PI * 2);
-    blades.push(b.toNonIndexed());
+    blades.push(b);
   }
   const hub = new THREE.CylinderGeometry(0.34, 0.5, 1.2, 14).rotateZ(Math.PI / 2);
   const cap = new THREE.ConeGeometry(0.34, 0.9, 14).rotateZ(Math.PI / 2).translate(-1.0, 0, 0);
-  const prop = mergeGeometries([...blades, hub.toNonIndexed(), cap.toNonIndexed()])!;
+  const prop = mergeGeometries([...blades, hub, cap].map(ni))!;
   prop.translate(-L / 2 - 0.9, 0, 0);
 
   // Cúpula del sonar de proa y escotilla: detalles que rompen la silueta lisa.
   const dome = new THREE.SphereGeometry(1.7, 18, 12).scale(0.8, 1, 1).translate(L / 2 - 6.4, -0.6, 0);
   const hatch = new THREE.CylinderGeometry(0.9, 0.9, 0.22, 20).translate(-14, R * 0.93 + 0.4, 0);
-  const bronze = mergeGeometries([dome.toNonIndexed(), hatch.toNonIndexed()])!;
+  const bronze = mergeGeometries([dome, hatch].map(ni))!;
 
   partsCache = { hull: hullAll, sail, fins, prop, bronze };
   return partsCache;

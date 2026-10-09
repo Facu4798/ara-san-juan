@@ -61,7 +61,17 @@ button { font: inherit; color: inherit; }
 
 /* ——— Escena 3D fija ——— */
 .stage { position: fixed; inset: 0; z-index: 0; background: var(--bg); }
-.stage canvas { display: block; }
+.stage canvas { display: block; cursor: grab; }
+.stage canvas:active { cursor: grabbing; }
+#story { pointer-events: none; }
+
+/* Controles de mirada libre */
+.look-controls { position: fixed; left: 50%; bottom: calc(var(--bar) + 12px); transform: translateX(-50%); z-index: 4; display: flex; align-items: center; gap: 6px; }
+.look-controls button { background: rgba(8, 30, 50, 0.7); border: 1px solid var(--line); color: var(--ink-2); font-family: var(--mono); font-size: 14px; height: 30px; min-width: 32px; padding: 0 9px; border-radius: 2px; cursor: pointer; backdrop-filter: blur(4px); }
+.look-controls button:hover:not(:disabled) { color: var(--ink); border-color: var(--ink-2); }
+.look-controls button:disabled { opacity: 0.35; cursor: default; }
+.look-controls button[aria-pressed='true'] { color: var(--estimacion); border-color: var(--estimacion); }
+.look-hint { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; color: var(--muted); margin-left: 6px; text-shadow: 0 0 6px rgba(7, 29, 50, 0.9); }
 
 /* ——— Capa de interfaz ——— */
 .overlay { position: fixed; inset: 0; z-index: 2; pointer-events: none; transition: opacity 400ms ease; }
@@ -197,7 +207,7 @@ button { font: inherit; color: inherit; }
 .closing {
   position: fixed; inset: 0 0 var(--bar) 0; z-index: 3; overflow-y: auto; text-align: center;
   padding: calc(var(--top) + 24px) var(--gutter) 28px;
-  background: linear-gradient(to bottom, rgba(12, 31, 41, 0.78), rgba(12, 31, 41, 0.55));
+  background: linear-gradient(to bottom, rgba(9, 26, 40, 0.93), rgba(9, 26, 40, 0.88));
 }
 .closing h2 { margin: 6px 0 18px; font-weight: 500; font-size: clamp(28px, 3.6vw, 44px); }
 .figures { display: flex; justify-content: center; flex-wrap: wrap; gap: 14px 40px; margin-bottom: 26px; }
@@ -741,3 +751,15 @@ details > summary { cursor: pointer; }
   .topbar .modules { justify-content: space-around; }
   .mode-switch button { padding: 6px 5px; font-size: 10px; letter-spacing: 0.02em; }
 }
+
+/* Puntos interactivos de la escena y paneles de la historia */
+.story-panels { position: fixed; inset: var(--top) 0 var(--bar) 0; z-index: 6; pointer-events: none; }
+.story-panels > * { pointer-events: auto; }
+.spot { display: inline-flex; align-items: center; gap: 8px; background: rgba(8, 30, 50, 0.82); border: 1px solid var(--line); color: var(--ink); font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.03em; padding: 5px 10px 5px 8px; border-radius: 14px; cursor: pointer; white-space: nowrap; backdrop-filter: blur(4px); transition: background 150ms ease, border-color 150ms ease; }
+.spot i { width: 9px; height: 9px; transform: rotate(45deg); border: 1.5px solid var(--hecho); background: transparent; box-shadow: 0 0 8px rgba(234, 244, 248, 0.5); flex: none; }
+.spot.estimacion i { border-color: var(--estimacion); box-shadow: 0 0 8px var(--estimacion); }
+.spot:hover, .spot:focus-visible { background: rgba(20, 60, 90, 0.92); border-color: var(--ink-2); }
+.part-card section { margin: 8px 0; }
+
+.presenter .share { background: transparent; border: 1px solid var(--line); color: var(--ink-2); border-radius: 2px; cursor: pointer; font-family: var(--mono); font-size: 12px; height: 32px; padding: 0 10px; white-space: nowrap; }
+.presenter .share:hover { color: var(--ink); border-color: var(--ink-2); }

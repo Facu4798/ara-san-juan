@@ -4,8 +4,11 @@ Experiencia de datos en 3D para el concurso **Contar con Datos** (Universidad de
 documental interactivo, un atlas tridimensional, un memorial digital y un laboratorio de exploración de datos.
 Tiene dos modos que comparten datos y componentes:
 
-- **Historia guiada:** un relato de un minuto, con 66 s en modo exposición. Empieza por las 44 personas, sigue
-  por el viaje, las últimas horas, el silencio y el descenso a 907 m, y cierra con los 44 nombres.
+- **Historia guiada («viaje continuo»):** una película de 70 s en un solo mundo 3D, sin cortes de cámara. Empieza por
+  las 44 personas (44 luces sobre el mar), sigue el viaje del submarino, las últimas horas, el silencio, el descenso
+  ilustrativo a escala real, el colapso (representación conceptual), los 367 días hasta el hallazgo a 907 m y el
+  memorial. Se puede pausar en cualquier momento, **arrastrar la línea de tiempo**, saltar a los **hitos documentados**,
+  **mirar alrededor arrastrando** sobre la escena y abrir la evidencia de cada lugar.
 - **Exploración libre:** cuatro módulos conectados en los que cada persona filtra, compara y consulta las
   fuentes.
 
@@ -28,6 +31,7 @@ Requisitos: Node.js 20 o superior y un navegador con WebGL.
 npm install
 npm run dev        # http://localhost:5173
 npm run verify     # verificación de datos (fuentes, distancias, provincias, edades, trazado, retratos)
+npm run motion     # continuidad del movimiento: la cámara y el submarino no dan saltos (60 cuadros/s)
 npm run build      # typecheck + build de producción en dist/
 ```
 
@@ -127,20 +131,35 @@ exageración vertical del relieve o la escala 1:1, según la escena.
 **Panel de evidencia**, en cada acontecimiento: qué se sabe, el fragmento citado (identificado como
 transcripción), el documento asociado, el lugar, las fuentes con sus limitaciones y la clasificación.
 
+## El viaje continuo
+
+- **Un solo reloj** (`story/store.ts`): el scroll es la entrada y el tiempo que ve la escena se mueve con inercia; la
+  reproducción, la barra de tiempo y los vuelos a un hito comparten el mismo tiempo.
+- **Un solo mundo** (`three/JourneyWorld.tsx`, 1 u = 1 km): el mapa y el sitio del hallazgo (a escala 1:1) viven en la
+  misma escena; el relieve se **desexagera** de forma continua al acercarse.
+- **Un solo protagonista** (`three/HeroSub.tsx`, `journey/subPath.ts`): el submarino se ve sólido donde su posición es un
+  dato, fantasma donde no se sabe y ◇ reconstrucción en el descenso ilustrativo.
+- **Una cámara sin cortes** (`journey/camera.ts`): trayectoria monótona C1 función del tiempo; `scripts/check-motion.mjs` lo verifica.
+- **Clima = presión y profundidad** (`journey/env.ts`): color del agua, niebla, viñeta, ruido, temblor, nieve marina y sonido
+  siguen a la profundidad y a una «tensión» de puesta en escena que arranca en el límite preventivo de 100 m.
+- **Las 44 luces** (`three/fx/Lights44.tsx`): una por persona; hilo emocional de principio a fin.
+
 ## Estructura
 
 ```
 src/
   app/            estado compartido (modo, módulo, filtros, tiempo, capas, profundidad) y barra superior
-  story/          historia guiada: guion de 13 momentos, controlador de scroll y reproducción, descenso
+  story/          historia guiada: guion de 12 momentos (70 s), reloj suavizado, vuelos a hitos, enlaces profundos
+  journey/        función pura del tiempo: submarino, cámara, clima, hitos, mirada libre (sin React)
   explore/        exploración: modelos de datos y paneles de cada módulo, panel de evidencia
     vidas/ travesia/ busqueda/ profundidad/
   three/          escena 3D (un solo Canvas)
     map/              piezas del mapa compartidas (relieve, costa, marcas, hipótesis)
     explore/          mundos de cada módulo y cámara orbital (CameraControls)
-    MapWorld · DepthWorld · Landmarks · ImplosionConcept · Memorial · SubmarineModel
+    JourneyWorld · JourneyRig · HeroSub · Ocean · SubmarineModel · Landmarks · depthParts
+    fx/             las 44 luces, nieve marina y el colapso
   overlay/        interfaz de la historia guiada
-  audio/          ambiente sintetizado (mar, casco, profundidad); sin voz
+  audio/          sonido sintetizado por capas (mar, temporal, casco, hélice, sonar, crujidos, latido, colapso, memorial); sin voz
   data/           datos con fuente y certeza, separados de la interfaz
     generated/        tripulantes_memorial.json, retratos44.json, posiciones del buque
 public/data/      batimetría GEBCO (plataforma, región, sitio, Argentina), costa, provincias IGN
@@ -161,19 +180,24 @@ npm run verify                                  # comprueba todo lo anterior con
 
 ## Sonido
 
-El ambiente es sintetizado (Web Audio), sin voz ni grabaciones reales. Arranca con el primer gesto del usuario
-y se puede activar, silenciar y ajustar el volumen desde la barra superior. Tiene tres capas, mar, casco y
-profundidad, que siguen al momento de la historia o al módulo y a la profundidad elegida. En
-`public/evidencia/evidencia.json` queda preparado un lugar para un audio documental con fuente verificable.
+Todo es sintetizado (Web Audio), sin voz ni grabaciones reales. Arranca con el primer gesto del usuario y se puede
+activar, silenciar y ajustar desde la barra superior. Un motor recibe el entorno de la película (profundidad, tensión,
+velocidad, temporal, si la cámara está bajo el agua) y mezcla: mar y temporal, casco, hélice, retumbo profundo, sonar con
+reverb, crujidos del casco desde los 100 m, burbujas, latido que acelera, un riser de tensión, radio en cada llamada, el
+silencio previo al colapso, el estruendo del colapso (golpe grave con barrido, retumbo, reverb larga y acúfeno tenue) y 44
+campanillas muy bajas durante el ascenso final. Hay limitador en el bus maestro. En `public/evidencia/evidencia.json` queda
+preparado un lugar para un audio documental con fuente verificable.
 
 ## Principios
 
 - **No se inventan** coordenadas, horarios, trayectorias, fotografías, audios, causas, polígonos ni mediciones.
+- **El colapso es una representación:** destello, onda de presión y estruendo, sin fuego, fragmentos ni restos. No se publicó
+  la profundidad a la que ocurrió y la película no muestra ningún número en ese momento.
 - **Rotulado de lo que no está documentado:** el trazado del viaje es esquemático, el alcance a 5 nudos y la
   implosión son reconstrucciones, y las formas de los modelos 3D son genéricas.
 - **Escalas declaradas:**
   - mapa: relieve ×25 bajo el mar y ×8 en tierra;
-  - profundidad: escala real 1:1;
+  - profundidad y sitio del hallazgo: escala real 1:1 (el relieve se desexagera al acercarse);
   - submarino en el mapa: símbolo, no a escala.
 - **Retratos:** oficiales, cotejados uno por uno con el Decreto 212/2020. No se muestran imágenes de los
   restos, por pedido de las familias.

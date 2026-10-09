@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { beats } from '../story/beats';
@@ -12,6 +12,7 @@ import { terrainUniforms } from './terrain';
 import { oceanLook, skyLook } from './Ocean';
 import { heroLook } from './SubmarineModel';
 import { T } from '../journey/timeline';
+import { beginDrag, canDrag, dragBy, endDrag, resetLook, tickLook, zoomBy, lookStore } from '../journey/freeLook';
 
 /**
  * DIRECTOR DEL VIAJE: cada cuadro lee el tiempo suavizado del relato y coloca la cámara, el entorno
@@ -22,7 +23,7 @@ const BG_DAY = new THREE.Color('#d6e6ec');
 const GROUND = new THREE.Color('#0b1a22');
 
 export function JourneyRig() {
-  const { camera, scene, size, get } = useThree();
+  const { camera, scene, size, get, gl } = useThree();
   // Sólo desarrollo: acceso al estado de R3F para medir cuadros desde la consola.
   if (import.meta.env.DEV) (window as unknown as { __r3f?: unknown }).__r3f = get;
   const hemi = useRef<THREE.HemisphereLight>(null);
@@ -35,9 +36,66 @@ export function JourneyRig() {
   const fov = useRef(45);
   const reduced = useMemo(() => typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches, []);
 
+  // Mirada libre: arrastrar orbita, pellizcar acerca, doble clic vuelve al plano de la película.
+  useEffect(() => {
+    const el = gl.domElement;
+    const pts = new Map<number, { x: number; y: number }>();
+    let pinch = 0;
+    const spread = () => {
+      const [a, b] = [...pts.values()];
+      return Math.hypot(a.x - b.x, a.y - b.y);
+    };
+    const down = (e: PointerEvent) => {
+      if (!canDrag(e.pointerType)) return;
+      pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      el.setPointerCapture(e.pointerId);
+      if (pts.size === 1) beginDrag();
+      if (pts.size === 2) pinch = spread();
+    };
+    const move = (e: PointerEvent) => {
+      const p = pts.get(e.pointerId);
+      if (!p) return;
+      const dx = e.clientX - p.x;
+      const dy = e.clientY - p.y;
+      p.x = e.clientX;
+      p.y = e.clientY;
+      if (pts.size >= 2) {
+        const s = spread();
+        if (pinch > 0 && s > 0) zoomBy(pinch / s);
+        pinch = s;
+      } else dragBy(dx, dy);
+    };
+    const up = (e: PointerEvent) => {
+      pts.delete(e.pointerId);
+      if (pts.size === 0) endDrag();
+    };
+    const dbl = () => resetLook();
+    const sync = () => {
+      el.style.touchAction = lookStore.getTouch() ? 'none' : 'pan-y';
+    };
+    sync();
+    const off = lookStore.subscribe(sync);
+    el.addEventListener('pointerdown', down);
+    el.addEventListener('pointermove', move);
+    el.addEventListener('pointerup', up);
+    el.addEventListener('pointercancel', up);
+    el.addEventListener('dblclick', dbl);
+    return () => {
+      off();
+      el.removeEventListener('pointerdown', down);
+      el.removeEventListener('pointermove', move);
+      el.removeEventListener('pointerup', up);
+      el.removeEventListener('pointercancel', up);
+      el.removeEventListener('dblclick', dbl);
+      resetLook();
+    };
+  }, [gl]);
+
   useFrame((_, dt) => {
-    const t = storyStore.get().t;
-    const idx = storyStore.get().index;
+    const st = storyStore.get();
+    const t = st.t;
+    const idx = st.index;
+    tickLook(Math.min(dt, 0.1), st.playing || st.flying);
     const cam = cameraAt(t);
     const cp = camera as THREE.PerspectiveCamera;
 

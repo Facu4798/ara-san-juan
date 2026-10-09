@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { ACTS, beats, TOTAL_SECONDS } from '../story/beats';
-import { flyTo, next, prev, seekNow, stop, togglePlay, useStory } from '../story/store';
+import { flyTo, next, prev, seekNow, shareUrl, stop, togglePlay, useStory } from '../story/store';
 import { HITOS, hitoAt } from '../journey/timeline';
 import { start } from '../audio/engine';
 
@@ -16,6 +16,17 @@ export function PresenterBar() {
   const track = useRef<HTMLDivElement>(null);
   const [dragging, setDragging] = useState(false);
   const hito = hitoAt(t);
+  const [copied, setCopied] = useState(false);
+  const share = async () => {
+    const url = shareUrl();
+    try {
+      await navigator.clipboard.writeText(url);
+    } catch {
+      window.prompt('Copiá el enlace a este instante:', url);
+    }
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1800);
+  };
 
   const tAt = (clientX: number) => {
     const r = track.current!.getBoundingClientRect();
@@ -108,6 +119,9 @@ export function PresenterBar() {
         <div className="jt-handle" style={{ left: `${(t / TOTAL_SECONDS) * 100}%` }} aria-hidden="true" />
       </div>
       <span className="jt-now" aria-live="polite">{hito ? `${hito.label}` : ''}</span>
+      <button type="button" className="share" onClick={() => void share()} title="Copiar el enlace a este instante de la película" aria-label="Copiar enlace a este instante">
+        {copied ? '✓ copiado' : '🔗 enlace'}
+      </button>
     </nav>
   );
 }

@@ -6,6 +6,8 @@ import { Closing } from './Closing';
 import { ActLabel, Clock, Compass, DepthHud, ScaleNote } from './Hud';
 import { PresenterBar } from './PresenterBar';
 import { ScreenFx } from './ScreenFx';
+import { LookControls } from './LookControls';
+import { StoryPanels } from './StoryPanels';
 
 /**
  * Capa HTML fija sobre la escena 3D: texto, indicadores y controles.
@@ -38,6 +40,8 @@ export function Overlay({ status }: { status: 'ok' | 'loading' | 'no-webgl' | 'e
         </p>
       )}
 
+      {beat.layout !== 'cover' && beat.layout !== 'closing' && <LookControls />}
+      <StoryPanels />
       <PresenterBar />
     </div>
   );

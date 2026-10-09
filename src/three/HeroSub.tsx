@@ -5,6 +5,7 @@ import { storyStore } from '../story/store';
 import { subAt } from '../journey/subPath';
 import { symbolScale } from '../journey/camera';
 import { SubmarineModel, heroLook, collapseUniform } from './SubmarineModel';
+import { SubPartSpots } from './Hotspots';
 
 /**
  * EL PROTAGONISTA. Un único submarino para toda la película: su posición, rumbo, profundidad y
@@ -48,6 +49,7 @@ export function HeroSub() {
   return (
     <group ref={group} frustumCulled={false}>
       <SubmarineModel hero />
+      <SubPartSpots />
       <mesh ref={ring} rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.2, 0]}>
         <ringGeometry args={[52, 56, 64]} />
         <meshBasicMaterial color="#eaf4f8" transparent opacity={0.5} side={THREE.DoubleSide} depthWrite={false} />

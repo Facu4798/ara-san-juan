@@ -130,3 +130,19 @@ Hallazgos que surgen de cruzar los datos (calculados en vivo en la experiencia):
 - La prensa de 2017 consigna a menudo la localidad de residencia; el memorial, la de nacimiento (por ejemplo, Coronel: Libertador según la prensa, Calilegua según el memorial). El mapa usa el nacimiento.
 
 Lo que la exploración NO puede mostrar por falta de datos publicados: zonas o polígonos de búsqueda de 2017, recorridos de buques y aeronaves de 2017, superficie relevada en 2018, ubicación interna de las baterías y de la ventilación, temperatura del sitio en la fecha, posición del submarino después de las 00:28.
+
+
+## 11. Viaje continuo (09/10/2026)
+
+Decisiones de diseño de la versión de 70 s en un solo mundo 3D (sin datos nuevos de fuentes):
+
+| Tema | Decisión | Motivo |
+|---|---|---|
+| Descenso | Se muestra sobre la coordenada del hallazgo y se rotula «ilustrativo / reconstrucción» | La posición posterior a las 00:28 no está publicada; 907 m es la única profundidad verificada |
+| Colapso | Implosión conceptual (destello, onda de presión, estruendo); sin fuego, fragmentos ni restos; sin número de profundidad | La profundidad del colapso no se publicó; los restos no se muestran por pedido de las familias |
+| Clima | La «tensión» visual y sonora arranca en el límite preventivo (100 m) y crece hasta el colapso | Mapeo de diseño; sólo 18/40/100/907 m, la presión y la zona de luz NOAA son datos |
+| Manómetro | En el tramo sin datos pinta la banda 11–91 atm en vez de un número | Hacer visible la incertidumbre |
+| 44 luces | Una luz por persona, abstractas (no indican ubicaciones a bordo) | Hilo emocional sin mostrar personas ni restos |
+| Submarino | Un único modelo esquemático, agrandado como símbolo en el mapa | Continuidad; sólo la eslora y el ancho del casco son datos |
+| Sonido | Todo sintetizado; el estruendo está limitado y el volumen del usuario manda | Sin grabaciones con fuente y licencia verificables |
+| Movimiento | `npm run motion` mide giro de mirada, zoom, paneo y rumbo a 60 cuadros/s | Garantizar que no haya cortes ni saltos |

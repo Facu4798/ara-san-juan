@@ -1,5 +1,6 @@
 import { useSyncExternalStore } from 'react';
 import { beats, BEAT_START, TOTAL_SECONDS } from './beats';
+import { HITOS } from '../journey/timeline';
 
 /**
  * CONTROLADOR DEL RELATO.
@@ -303,6 +304,10 @@ export function installStoryDriver(): () => void {
   };
   readScroll();
   setT(scrollT);
+  // Enlace profundo: #t=42 abre la película en ese segundo; #hito=c0028 en un hito documentado.
+  const deep = parseDeepLink();
+  if (deep != null) requestAnimationFrame(() => seekNow(deep));
+  const offLink = storyStore.subscribe(syncDeepLink);
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onScroll);
   window.addEventListener('wheel', onUserScroll, { passive: true });
@@ -318,7 +323,35 @@ export function installStoryDriver(): () => void {
     window.removeEventListener('wheel', onUserScroll);
     window.removeEventListener('touchstart', onUserScroll);
     window.removeEventListener('keydown', onKey);
+    offLink();
   };
+}
+
+/** Segundo indicado por #t= o #hito= en la dirección, o null. */
+function parseDeepLink(): number | null {
+  const m = /^#(?:t=(\d+(?:\.\d+)?)|hito=([a-z0-9]+))$/i.exec(location.hash);
+  if (!m) return null;
+  if (m[1] != null) return Math.min(TOTAL_SECONDS, Math.max(0, Number(m[1])));
+  return HITOS.find((h) => h.id === m[2])?.t ?? null;
+}
+
+/** Con la película detenida la dirección apunta al instante actual (se puede compartir). */
+let linkTimer = 0;
+function syncDeepLink() {
+  if (state.playing || state.flying) return;
+  window.clearTimeout(linkTimer);
+  linkTimer = window.setTimeout(() => {
+    if (state.playing || state.flying) return;
+    const h = location.hash;
+    if (h && !/^#(t=|hito=)/.test(h)) return; // no pisar anclas de la metodología
+    const url = state.t < 0.5 ? location.pathname + location.search : `${location.pathname}${location.search}#t=${Math.round(state.t * 10) / 10}`;
+    history.replaceState(null, '', url);
+  }, 400);
+}
+
+/** Dirección que abre la película en el instante actual. */
+export function shareUrl() {
+  return `${location.origin}${location.pathname}#t=${Math.round(state.t * 10) / 10}`;
 }
 
 // Sólo en desarrollo: atajo para saltar a cualquier instante desde la consola del navegador.

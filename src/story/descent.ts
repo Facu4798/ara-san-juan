@@ -2,19 +2,9 @@ import { depthMarkers, WRECK_DEPTH_M } from '../data/depth';
 import { LANDMARKS, tipDepthM } from '../data/landmarks';
 
 /**
- * Profundidad mostrada durante el descenso en función del avance del momento (p de 0 a 1).
- * Empieza quieta en superficie (comparación del submarino con el Obelisco), baja despacio
- * por los primeros 100 m —donde están todos los datos de 2017— y acelera después.
+ * Marcas del carril de profundidad (HUD de la película y del módulo 907 m). La profundidad que se ve en la película
+ * sale de journey/subPath.ts; acá sólo están las referencias documentadas y de altura.
  */
-export const DESCENT_SURFACE_HOLD = 0.14;
-export const DESCENT_BOTTOM_AT = 0.9;
-
-export function descentDepth(p: number): number {
-  if (p <= DESCENT_SURFACE_HOLD) return 0;
-  const t = Math.min(1, (p - DESCENT_SURFACE_HOLD) / (DESCENT_BOTTOM_AT - DESCENT_SURFACE_HOLD));
-  return WRECK_DEPTH_M * Math.pow(t, 1.7);
-}
-
 export type MarkKind = 'hecho' | 'estimacion' | 'referencia';
 
 export interface RailMark {

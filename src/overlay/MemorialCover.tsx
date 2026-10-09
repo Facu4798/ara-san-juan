@@ -54,7 +54,7 @@ export function MemorialCover({ beat, p }: { beat: Beat; p: number }) {
 
       <div className="cover-actions">
         <button type="button" className="btn-primary" onClick={() => { void start(); play(); }}>
-          ▶ Ver la exposición · 1 min
+          ▶ Ver la película · 1 min 10 s
         </button>
         <button type="button" className="btn-ghost" onClick={() => { void start(); next(); }}>
           Recorrer a mi ritmo ↓
@@ -63,7 +63,7 @@ export function MemorialCover({ beat, p }: { beat: Beat; p: number }) {
           Explorar los datos
         </button>
       </div>
-      <p className="cover-hint">Con sonido ambiente. Flechas o espacio para avanzar. Cada retrato abre su ficha.</p>
+      <p className="cover-hint">Mejor con auriculares. Arrastrá para mirar alrededor, tocá la línea de tiempo para saltar a cualquier hecho. Cada retrato abre su ficha.</p>
 
       <div className="cover-foot">
         <CertaintyLegend />

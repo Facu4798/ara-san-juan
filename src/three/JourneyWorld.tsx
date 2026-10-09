@@ -24,6 +24,7 @@ import { HeroSub } from './HeroSub';
 import { Lights44 } from './fx/Lights44';
 import { MarineSnow } from './fx/MarineSnow';
 import { Collapse } from './fx/Collapse';
+import { Hotspots } from './Hotspots';
 import { Seabed, WreckSite, DepthPlanes } from './depthParts';
 import { Silhouette, Landmarks } from './Landmarks';
 import { terrainUniforms } from './terrain';
@@ -95,6 +96,7 @@ export function JourneyWorld({ geo }: { geo: GeoData }) {
       <Lights44 />
       <MarineSnow />
       <Collapse />
+      <Hotspots />
     </group>
   );
 }
@@ -244,7 +246,7 @@ function FindLayer({ t, pinK }: { t: number; pinK: number }) {
           </Label>
         </>
       )}
-      {map && (
+      {map && t < T.cierre && (
         <>
           {secoPts.map(({ s, v }) => (
             <mesh key={s.id} position={[v.x, 1, v.z]}>

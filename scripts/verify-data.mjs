@@ -80,6 +80,16 @@ try {
   // ——— Duración ———
   ok(TOTAL_SECONDS >= 60 && TOTAL_SECONDS <= 70, `el guion dura ${TOTAL_SECONDS} s (entre 60 y 70)`);
 
+  // Viaje continuo: hitos de la línea de tiempo y honestidad del colapso.
+  const { HITOS } = await load('/src/journey/timeline.ts');
+  ok(HITOS.every((h, i) => i === 0 || h.t >= HITOS[i - 1].t), `los ${HITOS.length} hitos de la línea de tiempo están en orden cronológico`);
+  ok(HITOS.every((h) => h.t >= 0 && h.t <= TOTAL_SECONDS), 'todos los hitos caen dentro de la película');
+  ok(HITOS.every((h) => events.some((e) => e.id === h.eventId)), 'cada hito apunta a un acontecimiento con fuente');
+  const colapso = beats.find((b) => b.id === 'colapso');
+  const colapsoTxt = [colapso.title, colapso.big ?? '', ...colapso.lines.map((l) => l.text), colapso.note ?? ''].join(' ');
+  ok(!/\d\s?m/.test(colapsoTxt), 'el texto del colapso no declara ninguna profundidad (no se publicó)');
+  ok(/no reproduce el hecho/i.test(colapsoTxt), 'el colapso se rotula como representación que no reproduce el hecho');
+
   // ——— Costa (Natural Earth) ———
   const topo = JSON.parse(fs.readFileSync(path.join(root, 'public/data/land-50m.json'), 'utf8'));
   const land = feature(topo, topo.objects.land);

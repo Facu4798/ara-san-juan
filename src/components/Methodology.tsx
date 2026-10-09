@@ -34,8 +34,8 @@ export function Methodology() {
           <CertaintyBadge c="hipotesis" />
           <h3>Reconstrucción o hipótesis</h3>
           <p>
-            Construcción propia, siempre rotulada: el trazado esquemático del viaje, el área alcanzable a 5 nudos, la representación
-            conceptual de la implosión y las formas de los modelos 3D. Ícono ◇, ámbar.
+            Construcción propia, siempre rotulada: el trazado esquemático del viaje, el área alcanzable a 5 nudos, el descenso
+            ilustrativo, la representación conceptual del colapso y las formas de los modelos 3D. Ícono ◇, ámbar.
           </p>
         </div>
         <div>
@@ -50,8 +50,11 @@ export function Methodology() {
           <h3>Qué no se muestra y por qué</h3>
           <p>
             <strong>Recorrido real del submarino:</strong> nunca se publicó. Sólo se dibuja un trazado esquemático entre lugares documentados.{' '}
-            <strong>Posición a las 07:19:</strong> no se publicó. <strong>Descenso del submarino:</strong> no se sabe cuándo ni cómo bajó de los
-            18 m, así que no se anima. <strong>Profundidad del colapso:</strong> no se publicó.{' '}
+            <strong>Posición a las 07:19:</strong> no se publicó, y desde entonces el submarino se ve como un fantasma sin posición.{' '}
+            <strong>Descenso del submarino:</strong> no se sabe cuándo ni cómo bajó de los 18 m. El descenso que se ve es una
+            <em> reconstrucción ilustrativa</em> y se muestra sobre la coordenada del hallazgo —único lugar con profundidad verificada—;
+            la película lo rotula así. <strong>Profundidad del colapso:</strong> no se publicó: el indicador pasa a «—» y el manómetro
+            muestra la banda de lo posible (11 a 91 atm) en lugar de un número.{' '}
             <strong>Zonas de búsqueda de 2017:</strong> no hay polígonos oficiales. <strong>Elipses de error del CTBTO sobre el mapa:</strong> no
             se publicaron su centro ni su orientación. Tampoco se muestran el interior del buque ni causas o responsabilidades, que se debaten
             en juicio.
@@ -101,7 +104,10 @@ export function Methodology() {
           <h3>Escalas</h3>
           <p>
             <strong>Mapa:</strong> Mercator, 1 unidad = 1 km, relieve exagerado ×25 bajo el mar y ×8 en tierra (se indica en pantalla). En el mapa, el submarino es un
-            símbolo y no está a escala. <strong>Profundidad:</strong> escala real 1:1 en las tres dimensiones.{' '}
+            símbolo y no está a escala. <strong>Al acercarse al sitio del hallazgo,</strong> el relieve se desexagera de forma continua hasta la
+            escala real 1:1 (se indica en pantalla). <strong>Profundidad:</strong> escala real 1:1 en las tres dimensiones.{' '}
+            <strong>Submarino:</strong> un único modelo esquemático; sólo la eslora (65,93 m) y el ancho del casco resistente (7 m) son datos.
+            Se agranda como símbolo cuando la cámara está lejos y llega a 1:1 de cerca.{' '}
             <strong>Referencias de altura:</strong> Obelisco 67,5 m, Torre Eiffel 330 m y Burj Khalifa 828 m, con la altura oficial y forma
             esquemática, apoyados a 907 m.<SourceRefs ids={['obeliscoGCBA', 'eiffelParis', 'ctbuhBurj']} /> En la exploración, como la cámara es
             libre, la escala y el norte se declaran siempre en pantalla: la barra mide una distancia real en el plano del punto de mira y la rosa
@@ -109,12 +115,22 @@ export function Methodology() {
           </p>
         </div>
         <div>
+          <h3>Clima visual y sonoro (presión y profundidad)</h3>
+          <p>
+            <strong>Datos:</strong> las profundidades 18 m (07:19), 40 m (intención declarada), 100 m (límite preventivo) y 907 m
+            (hallazgo), la fórmula de presión y la zona de luz de NOAA (0–200 m eufótica, 200–1.000 m disfótica).{' '}
+            <strong>Diseño:</strong> todo el mapeo de esos números a color del agua, niebla, viñeta, ruido de película, temblor de cámara,
+            nieve marina, latido y crujidos. Esa «tensión» arranca en el límite de 100 m y crece hasta el colapso: es una variable de puesta en
+            escena, no una medición ni un dato sobre el estado del casco.<SourceRefs ids={['noaaLuz', 'infobae2026requerimiento']} />
+          </p>
+        </div>
+        <div>
           <h3>Sonido</h3>
           <p>
-            Ambiente <strong>sintetizado en el navegador</strong> (Web Audio API), en tres capas que se mezclan según el momento: mar, casco y
-            profundidad. No hay narración por voz ni grabaciones del submarino, del mar o del evento del 15/11/2017. Las señales puntuales
-            (un ping al llegar a un lugar documentado, un tic al aparecer un documento, una ola grave en la representación conceptual) son
-            convenciones de diseño, no datos.
+            Todo el sonido está <strong>sintetizado en el navegador</strong> (Web Audio API): mar, temporal, casco, hélice, retumbo profundo,
+            sonar, crujidos, burbujas, latido, radio, el estruendo del colapso y las 44 campanillas del memorial. No hay narración por voz ni
+            grabaciones del submarino, del mar o del evento del 15/11/2017. Es diseño sonoro, no dato. El estruendo del colapso es una
+            representación conceptual y está limitado en volumen; el control de sonido del usuario manda siempre.
           </p>
         </div>
         <div>
