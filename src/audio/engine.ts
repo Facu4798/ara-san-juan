@@ -43,6 +43,8 @@ export const audioStore = {
 let ctx: AudioContext | null = null;
 let master: GainNode | null = null;
 let ambient: GainNode | null = null;
+let bed: GainNode | null = null;
+let voiceBus: GainNode | null = null;
 let layers: Layers | null = null;
 
 /** Entorno vigente. Los módulos de exploración sólo fijan escena y profundidad; el viaje fija todo. */
@@ -79,14 +81,22 @@ function buildGraph(c: BaseAudioContext) {
   wet.gain.value = 0.7;
   conv.connect(wet).connect(master);
 
+  // «Lecho» = ambiente + efectos: baja mientras habla la narración del tour.
+  const bed = c.createGain();
+  bed.gain.value = 1;
+  bed.connect(master);
   const ambient = c.createGain();
   ambient.gain.value = 1;
-  ambient.connect(master);
+  ambient.connect(bed);
   const fx = c.createGain();
   fx.gain.value = 1;
-  fx.connect(master);
+  fx.connect(bed);
+  // Voz: va directo al maestro (con el volumen y el silencio del usuario) y no se atenúa.
+  const voice = c.createGain();
+  voice.gain.value = 1;
+  voice.connect(master);
 
-  return { master, ambient, layers: new Layers(c, { ambient, fx, reverb }) };
+  return { master, ambient, bed, voice, layers: new Layers(c, { ambient, fx, reverb }) };
 }
 
 /** Debe llamarse desde un gesto del usuario (los navegadores bloquean el audio automático). */
@@ -109,6 +119,8 @@ export async function start() {
   const g = buildGraph(c);
   master = g.master;
   ambient = g.ambient;
+  bed = g.bed;
+  voiceBus = g.voice;
   layers = g.layers;
   layers.setEnv(env, 2.5);
   master.gain.setTargetAtTime(state.muted ? 0 : MASTER * state.volume, c.currentTime, 1.2);
@@ -152,7 +164,10 @@ export function setDepth(d: number) {
 export function setMuted(m: boolean) {
   emit({ muted: m });
   if (ctx && master) master.gain.setTargetAtTime(m ? 0 : MASTER * state.volume, ctx.currentTime, 0.3);
-  if (m) stopEvidence();
+  if (m) {
+    stopEvidence();
+    stopVoice();
+  }
 }
 
 export function setVolume(v: number) {
@@ -170,6 +185,48 @@ export function cue(name: Cue) {
 /** Vuelve al estado previo al colapso (cuando se retrocede en la película). */
 export function resetStory() {
   layers?.reset();
+}
+
+// ——— Narración (tour guiado): voz sintetizada, por el mismo bus maestro ———
+const voiceSources = new Set<AudioBufferSourceNode>();
+
+/** Contexto de audio (o null si todavía no se creó o el navegador no lo soporta). */
+export const getAudioContext = () => ctx;
+
+const releaseBed = () => {
+  if (!voiceSources.size && bed && ctx) bed.gain.setTargetAtTime(1, ctx.currentTime, 0.45);
+};
+
+/** Reproduce un clip de narración y baja el ambiente mientras suena. */
+export function playVoice(buf: AudioBuffer) {
+  // Con el contexto suspendido (autoplay bloqueado) no se encolan frases: sonarían todas juntas al reanudar.
+  if (!ctx || !voiceBus || !bed || state.muted || ctx.state !== 'running') return;
+  const src = ctx.createBufferSource();
+  src.buffer = buf;
+  src.connect(voiceBus);
+  voiceSources.add(src);
+  bed.gain.setTargetAtTime(0.42, ctx.currentTime, 0.1);
+  src.onended = () => {
+    voiceSources.delete(src);
+    src.disconnect();
+    releaseBed();
+  };
+  src.start();
+}
+
+/** Corta la narración (al salir del tour o apagar la voz). */
+export function stopVoice() {
+  for (const s of voiceSources) {
+    s.onended = null;
+    try {
+      s.stop();
+    } catch {
+      /* ya había terminado */
+    }
+    s.disconnect();
+  }
+  voiceSources.clear();
+  releaseBed();
 }
 
 // ——— Evidencia sonora (sólo con un clic) ———

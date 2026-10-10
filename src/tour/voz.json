@@ -1,0 +1,86 @@
+{
+  "_comentario": "Narración del tour. `at` es el segundo del tour en que arranca cada clip; `dur` lo mide scripts/build_voz.py al generar el audio. scripts/check-tour.mjs comprueba que ningún clip se pise con el siguiente, que termine antes de los 60 s y que no tape el silencio del colapso (25 a 27,4 s). Los textos no agregan datos: repiten lo que muestran los subtítulos.",
+  "voz": "es-AR-TomasNeural",
+  "rate": "+12%",
+  "pitch": "-2Hz",
+  "clips": [
+    {
+      "id": "c01",
+      "at": 0.8,
+      "texto": "ARA San Juan. Cuarenta y cuatro personas.",
+      "dur": 3.696
+    },
+    {
+      "id": "c02",
+      "at": 6.3,
+      "texto": "Zarpó de Mar del Plata, pasó por Ushuaia y salió a patrullar.",
+      "dur": 3.936
+    },
+    {
+      "id": "c03",
+      "at": 11.0,
+      "texto": "Arrastrá para mirar alrededor.",
+      "dur": 2.256
+    },
+    {
+      "id": "c04",
+      "at": 13.5,
+      "texto": "Última coordenada. Cada dato, con su fuente.",
+      "dur": 4.08
+    },
+    {
+      "id": "c05",
+      "at": 17.8,
+      "texto": "El descenso: a más presión, más oscuridad.",
+      "dur": 3.288
+    },
+    {
+      "id": "c06",
+      "at": 21.4,
+      "texto": "Pasados los cien metros, no hay datos.",
+      "dur": 3.048
+    },
+    {
+      "id": "c07",
+      "at": 27.6,
+      "texto": "Diez cincuenta y uno: una representación.",
+      "dur": 3.072
+    },
+    {
+      "id": "c08",
+      "at": 31.1,
+      "texto": "Trescientos sesenta y siete días después.",
+      "dur": 2.76
+    },
+    {
+      "id": "c09",
+      "at": 34.7,
+      "texto": "Las cuarenta y cuatro vidas: filtrá por provincia y abrí cada ficha.",
+      "dur": 4.248
+    },
+    {
+      "id": "c10",
+      "at": 40.7,
+      "texto": "La travesía: recorré la línea de tiempo y mirá el submarino en tres D.",
+      "dur": 4.56
+    },
+    {
+      "id": "c11",
+      "at": 46.9,
+      "texto": "La búsqueda: trescientos sesenta y siete días de rastreo.",
+      "dur": 3.696
+    },
+    {
+      "id": "c12",
+      "at": 51.9,
+      "texto": "Novecientos siete metros, a escala real.",
+      "dur": 3.12
+    },
+    {
+      "id": "c13",
+      "at": 55.6,
+      "texto": "Cuarenta y cuatro personas. Una coordenada.",
+      "dur": 3.84
+    }
+  ]
+}

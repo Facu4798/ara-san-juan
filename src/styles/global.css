@@ -805,3 +805,9 @@ details > summary { cursor: pointer; }
 body.touring .cover-actions, body.touring .cover-hint, body.touring .look-controls, body.touring .tour-btn { visibility: hidden; }
 
 @keyframes tour-fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+.tour-voice { background: transparent; border: 1px solid var(--line); color: var(--ink-2); border-radius: 12px; font-family: var(--mono); font-size: 11px; padding: 3px 10px; cursor: pointer; letter-spacing: 0.06em; text-transform: none; }
+.tour-voice[aria-pressed='true'] { color: var(--estimacion); border-color: var(--estimacion); }
+.tour-voice:hover { color: var(--ink); }
+.tour-gate-voice { margin: -6px 0 16px; }
+.tour-final p.tour-credit { font-size: 12.5px; color: var(--muted); margin: 14px 0 0; max-width: 520px; }

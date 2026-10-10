@@ -6,6 +6,7 @@ import { resetLook } from '../journey/freeLook';
 import { start as startAudio } from '../audio/engine';
 import { TourRunner, type Hooks } from './runner';
 import { EXPLORE_START, TOUR_SECONDS, type Cue, type CursorGoal } from './script';
+import { decodeVoice, preloadVoiceFiles, speak, stopSpeaking } from './voice';
 
 /**
  * DIRECTOR DEL TOUR. Conecta el guion (tour/script.ts, puro) con la página: mueve el tiempo de la
@@ -83,8 +84,14 @@ let storyT = 0;
 let clock: () => number = () => performance.now();
 let removeKeys: (() => void) | null = null;
 
-function applyCue(c: Cue) {
+/** Una frase que llega más de este tiempo tarde (pestaña oculta, equipo trabado) se descarta: no pisa a la siguiente. */
+const VOICE_LATE_S = 0.6;
+
+function applyCue(c: Cue, e: number) {
   switch (c.kind) {
+    case 'voice':
+      if (e - c.at <= VOICE_LATE_S) speak(c.id);
+      break;
     case 'cursor':
       emit({ cursor: c.goal });
       break;
@@ -176,6 +183,9 @@ function installKeys() {
 function begin(isManual: boolean) {
   if (state.phase === 'running') return;
   void startAudio();
+  // Narración: descarga (si falta) y decodifica los clips con el contexto que acaba de crear el clic.
+  preloadVoiceFiles();
+  void decodeVoice();
   snapshot = appStore.get();
   storyT = storyStore.get().t;
   setStoryLocked(true);
@@ -206,6 +216,7 @@ export function exitTour(kind: 'close' | 'film' | 'explore' | 'repeat') {
   runner = null;
   removeKeys?.();
   removeKeys = null;
+  stopSpeaking();
   document.body.classList.remove('touring');
   setStoryLocked(false);
   resetLook();

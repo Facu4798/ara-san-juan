@@ -139,6 +139,9 @@ export function Methodology() {
             Recorrido automático de 60 s por la película y por los cuatro módulos de Explorar. No agrega datos ni afirmaciones: sus
             subtítulos describen lo que se ve y conservan los rótulos (reconstrucción, representación conceptual, profundidad del
             colapso no publicada). El cursor es una guía visual: los cambios que se ven son los mismos que haría una persona.
+            <strong> Narración:</strong> voz masculina sintetizada con IA (Microsoft Edge TTS, voz es-AR-TomasNeural), generada una sola vez
+            a partir del guion del tour y servida como audio estático. No es una persona real ni una grabación, y el texto de cada frase repite lo
+            que muestran los subtítulos, sin datos nuevos.
           </p>
         </div>
         <div>

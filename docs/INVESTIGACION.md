@@ -146,3 +146,13 @@ Decisiones de diseño de la versión de 70 s en un solo mundo 3D (sin datos nuev
 | Submarino | Un único modelo esquemático, agrandado como símbolo en el mapa | Continuidad; sólo la eslora y el ancho del casco son datos |
 | Sonido | Todo sintetizado; el estruendo está limitado y el volumen del usuario manda | Sin grabaciones con fuente y licencia verificables |
 | Movimiento | `npm run motion` mide giro de mirada, zoom, paneo y rumbo a 60 cuadros/s | Garantizar que no haya cortes ni saltos |
+
+## 12. Narración del tour (09/10/2026)
+
+| Tema | Decisión | Motivo |
+|---|---|---|
+| Voz | Masculina argentina neural (Microsoft Edge TTS, `es-AR-TomasNeural`), generada una vez con `scripts/build_voz.py` | Acento y naturalidad; los archivos son estáticos y la página no depende de ningún servicio |
+| Licencia | El servicio en línea de Edge no está documentado como API pública ni tiene una licencia explícita para redistribuir el audio; uso no comercial. Alternativas abiertas evaluadas: Piper `es_ES-davefx` (CC0) | Transparencia: se declara en el README, en la Metodología y en la tarjeta final del tour |
+| Contenido | Frases cortas que repiten lo que muestran los subtítulos; ninguna agrega datos | Mantener «no se inventan» |
+| Colapso | Sin voz entre 24,9 y 27,4 s (silencio previo y estruendo) | Dramaturgia y respeto: lo cuenta el sonido |
+| Mezcla | El ambiente baja a ~40 % mientras habla la voz; el volumen y el silencio del usuario mandan; botón «Voz» para apagarla | Inteligibilidad y control |

@@ -11,7 +11,8 @@ import { CAPTIONS, CUES, EXPLORE_AT, TOUR_SECONDS, captionAt, fadeAt, filmTimeAt
  */
 export interface Hooks {
   film(t: number): void;
-  cue(c: Cue): void;
+  /** `e` es el instante real del tour: permite descartar acciones que llegaron tarde (p. ej. con la pestaña oculta). */
+  cue(c: Cue, e: number): void;
   look(v: Look | null): void;
   track(v: { travesiaT?: number; busquedaT?: number; depth?: number }): void;
   /** Cursor «arrastrando» un control (sobre la última acción de cursor), o null. */
@@ -34,7 +35,7 @@ export class TourRunner {
     this.lastE = e;
 
     // 1) Acciones únicas cruzadas desde la última llamada, en orden.
-    while (this.next < CUES.length && CUES[this.next].at <= e) this.hooks.cue(CUES[this.next++]);
+    while (this.next < CUES.length && CUES[this.next].at <= e) this.hooks.cue(CUES[this.next++], e);
 
     // 2) Película (sólo en la primera parte).
     if (e < EXPLORE_AT) this.hooks.film(filmTimeAt(e));

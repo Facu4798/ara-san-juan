@@ -8,6 +8,7 @@ import { start } from '../audio/engine';
 import type { Beat } from '../story/beats';
 import { openModule } from '../app/appStore';
 import { startTour } from '../tour/director';
+import { preloadVoiceFiles } from '../tour/voice';
 
 const NO_DATA = 'sin dato en las fuentes consultadas';
 const smooth = (t: number) => t * t * (3 - 2 * t);
@@ -57,7 +58,7 @@ export function MemorialCover({ beat, p }: { beat: Beat; p: number }) {
         <button type="button" className="btn-primary" onClick={() => { void start(); play(); }}>
           ▶ Ver la película · 1 min 10 s
         </button>
-        <button type="button" className="btn-ghost tour-cta" onClick={() => startTour()}>
+        <button type="button" className="btn-ghost tour-cta" onPointerEnter={preloadVoiceFiles} onClick={() => startTour()}>
           ▶ Tour de 1 minuto
         </button>
         <button type="button" className="btn-ghost" onClick={() => { void start(); next(); }}>

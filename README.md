@@ -137,6 +137,10 @@ El botón **«▶ Tour 1 min»** de la barra superior (y de la portada) recorre 
 34 s de lo mejor de la película del submarino (zarpe, última coordenada con su evidencia, descenso con manómetro,
 colapso, hallazgo, línea de tiempo con hitos) y 26 s de **Explorar** (las 44 vidas, la travesía con el submarino en 3D,
 la búsqueda y 907 m). Tiene subtítulos, un cursor fantasma que muestra dónde se hace clic y una tarjeta final. `Esc` sale.
+Lleva **narración con una voz masculina argentina sintetizada con IA** (Microsoft Edge TTS, `es-AR-TomasNeural`): son 13 clips
+MP3 generados una sola vez con `scripts/build_voz.py` a partir de `src/tour/voz.json` y servidos como archivos estáticos (la
+página no llama a ningún servicio de voz). No es una persona real ni una grabación; se puede apagar con el botón «Voz». Para
+regenerar los audios: `pip install edge-tts mutagen && python scripts/build_voz.py`.
 Con `#tour` en la dirección, la página abre con el tour listo para empezar. El guion está en `src/tour/script.ts` y
 `npm run tour` verifica que dure exactamente 60 s y que cada control señalado exista.
 

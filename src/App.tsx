@@ -10,6 +10,7 @@ import { TopBar } from './app/TopBar';
 import { ExploreUI } from './explore/ExploreUI';
 import { TourOverlay } from './tour/TourOverlay';
 import { initTourLink, useTour } from './tour/director';
+import { preloadVoiceFiles } from './tour/voice';
 
 /** La escena 3D (three.js) se descarga aparte, mientras se ve la portada. */
 const Stage = lazy(() => import('./three/Stage'));
@@ -32,6 +33,11 @@ export default function App() {
 
   useEffect(() => installStoryDriver(), []);
   useEffect(() => initTourLink(), []);
+  // La narración del tour (unos 350 KB) se baja en segundo plano, cuando la página ya está lista.
+  useEffect(() => {
+    const id = window.setTimeout(preloadVoiceFiles, 4000);
+    return () => window.clearTimeout(id);
+  }, []);
   useSoundDirector();
 
   // Al pasar de un modo a otro se conserva la posición de la historia guiada.

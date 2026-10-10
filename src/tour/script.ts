@@ -5,6 +5,7 @@ import { T_HALLAZGO } from '../explore/busqueda/busquedaModel';
 import { PROFILES } from '../explore/vidas/crewModel';
 import { WRECK_DEPTH_M } from '../data/depth';
 import { clamp, frac, smooth, track } from '../journey/track';
+import voz from './voz.json';
 
 /**
  * GUION DEL TOUR DE 1 MINUTO (60,000 s exactos).
@@ -125,7 +126,9 @@ export type Cue =
   | { at: number; kind: 'module'; module: ModuleId }
   | { at: number; kind: 'filters'; patch: Partial<CrewFilters> }
   | { at: number; kind: 'app'; patch: Partial<AppState> }
-  | { at: number; kind: 'evidence'; id: string | null };
+  | { at: number; kind: 'evidence'; id: string | null }
+  /** Narración: clip de voz (tour/voz.json). */
+  | { at: number; kind: 'voice'; id: string };
 
 /** Rostro de una persona nacida en Jujuy (con retrato) para mostrar su ficha. */
 const jujuy = PROFILES.find((p) => p.nacimiento.provincia === 'Jujuy' && p.retrato) ?? PROFILES[0];
@@ -175,6 +178,10 @@ const RAW_CUES: Cue[] = [
   // Fin
   { at: 56.4, kind: 'cursor', goal: null },
 ];
+
+/** Narración: un clip de voz por cada entrada de voz.json (a su hora). */
+export const VOICE_CLIPS = voz.clips as { id: string; at: number; texto: string; dur?: number }[];
+for (const c of VOICE_CLIPS) RAW_CUES.push({ at: c.at, kind: 'voice', id: c.id });
 
 /** Las acciones, ordenadas por instante (el orden de escritura se conserva cuando coinciden). */
 export const CUES: Cue[] = RAW_CUES.map((c, i) => ({ c, i })).sort((a, b) => a.c.at - b.c.at || a.i - b.i).map((x) => x.c);

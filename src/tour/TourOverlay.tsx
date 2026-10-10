@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { dismissGate, exitTour, startTour, tourStore, useTour } from './director';
+import { preloadVoiceFiles, setVoiceOn, useVoiceOn } from './voice';
 import { CUTS, EXPLORE_AT, TOUR_SECONDS } from './script';
 import type { CursorGoal } from './script';
 
@@ -42,13 +43,24 @@ export function TourOverlay() {
   return <Running />;
 }
 
+function VoiceToggle() {
+  const on = useVoiceOn();
+  return (
+    <button type="button" className="tour-voice" aria-pressed={on} onClick={() => setVoiceOn(!on)} title="Narración con voz masculina sintetizada con IA">
+      {on ? '🔊' : '🔇'} Voz
+    </button>
+  );
+}
+
 function Gate() {
+  preloadVoiceFiles();
   return (
     <div className="tour-gate" role="dialog" aria-label="Tour de 1 minuto">
       <div className="tour-gate-card">
         <div className="eyebrow">Tour de 1 minuto</div>
         <h2>Una vuelta rápida por toda la página</h2>
-        <p>El recorrido del submarino y un vistazo a Explorar, en 60 segundos exactos. Mejor con auriculares.</p>
+        <p>El recorrido del submarino y un vistazo a Explorar, en 60 segundos exactos, con narración de una voz masculina sintetizada con IA. Mejor con auriculares.</p>
+        <div className="tour-gate-voice"><VoiceToggle /></div>
         <div className="tour-actions">
           <button type="button" className="btn-primary" onClick={() => startTour()}>▶ Comenzar el tour</button>
           <button type="button" className="btn-ghost" onClick={dismissGate}>Ir a la página</button>
@@ -156,6 +168,7 @@ function Running() {
         <span className="tour-live" aria-hidden="true" />
         <span className="chap">{chapter}</span>
         <span className="time" role="timer" aria-label={`Quedan ${Math.ceil(left)} segundos`}>{mmss(Math.ceil(left))}</span>
+        <VoiceToggle />
         <button type="button" className="tour-exit" onClick={() => exitTour('close')}>Salir · Esc</button>
       </div>
       {!showFinal && (
@@ -168,6 +181,7 @@ function Running() {
           <div className="eyebrow">Fin del tour · 1:00</div>
           <h2>44 personas, una coordenada, 367 días</h2>
           <p>Todo lo que viste es explorable: la película, el submarino, los 4 módulos de datos y cada fuente.</p>
+          <p className="tour-credit">Narración: voz masculina sintetizada con IA (Microsoft Edge TTS · es-AR-TomasNeural). No es una persona real.</p>
           <div className="tour-actions">
             <button type="button" className="btn-primary" onClick={() => exitTour('film')}>▶ Ver la película</button>
             <button type="button" className="btn-ghost" onClick={() => exitTour('explore')}>Explorar los datos</button>

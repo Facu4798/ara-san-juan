@@ -91,6 +91,22 @@ try {
   const missing = S.tourTargets().filter((t) => !present(t));
   ok(missing.length === 0, `todos los controles señalados existen (${S.tourTargets().length})${missing.length ? ': faltan ' + missing.join(', ') : ''}`);
 
+  // ——— Narración (voz masculina con IA) ———
+  const clips = S.VOICE_CLIPS;
+  ok(clips.length > 0 && clips.every((c) => typeof c.dur === 'number' && c.dur > 0), `los ${clips.length} clips de voz tienen duración medida (scripts/build_voz.py)`);
+  ok(clips.every((c) => fs.existsSync(path.join(root, 'public', 'tour', 'voz', `${c.id}.mp3`))), 'cada clip de voz tiene su archivo MP3');
+  ok(clips.every((c, i) => i === 0 || c.at > clips[i - 1].at), 'los clips de voz están en orden');
+  const gaps = clips.slice(1).map((c, i) => c.at - (clips[i].at + clips[i].dur));
+  ok(gaps.every((g) => g >= 0.12), `ningún clip se pisa con el siguiente (hueco mínimo ${Math.min(...gaps).toFixed(2)} s)`);
+  const last = clips[clips.length - 1];
+  ok(last.at + last.dur <= 59.9, `la narración termina antes de los 60 s (en ${(last.at + last.dur).toFixed(2)} s)`);
+  const segCol2 = film.find((f) => f.film <= T.colapso && f.film + f.dur >= T.colapso);
+  const colapsoTour = segCol2.at + (T.colapso - segCol2.film);
+  const quiet = [colapsoTour - 1.1, colapsoTour + 1.4];
+  ok(clips.every((c) => c.at + c.dur <= quiet[0] || c.at >= quiet[1]), `ninguna frase tapa el silencio y el estruendo del colapso (${quiet[0].toFixed(1)}–${quiet[1].toFixed(1)} s)`);
+  ok(clips.every((c) => !/\d/.test(c.texto)), 'los textos de voz escriben los números con letras (para que se lean bien)');
+  ok(cues.filter((c) => c.kind === 'voice').length === clips.length, 'hay una acción de voz por cada clip');
+
   // ——— Simulación con reloj propio ———
   function simulate(frameMs, label) {
     const log = [];

@@ -3,6 +3,7 @@ import { useAudioState } from '../audio/useSound';
 import { setMuted, setVolume, start } from '../audio/engine';
 import { stop as stopStory } from '../story/store';
 import { startTour } from '../tour/director';
+import { preloadVoiceFiles } from '../tour/voice';
 
 /**
  * Barra superior: título, cambio entre historia guiada y exploración libre, acceso directo a
@@ -41,7 +42,7 @@ export function TopBar() {
         ))}
       </nav>
       <div className="tools">
-        <button type="button" className="tour-btn" data-tour="tour-btn" onClick={() => startTour()} title="Una vuelta por toda la página en 60 segundos">
+        <button type="button" className="tour-btn" data-tour="tour-btn" onPointerEnter={preloadVoiceFiles} onFocus={preloadVoiceFiles} onClick={() => startTour()} title="Una vuelta por toda la página en 60 segundos, con narración">
           <span aria-hidden="true">▶</span> Tour <span className="lbl">1 min</span>
         </button>
         <button
